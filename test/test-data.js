@@ -1,5 +1,6 @@
 import Trip from '../src/Trip.js'
 import Destination from '../src/Destination.js'
+import Agency from '../src/Agency.js';
 
 
 export const tripData = [
@@ -61,5 +62,7 @@ export const destinationData = [
     "alt": "frozen man in a block of ice"
   })
 ];
+
+export const agency = new Agency(tripData, destinationData);
 
 
