@@ -11,6 +11,14 @@ class Trip {
     this.suggestedActivities = trip.suggestedActivities || [];
   }
 
+  //user clicks post .. then trip is created
+  // destination repo is passed in to this trip instance and this method is called.
+
+    calculateTotalTripCost(destinationData) {
+      return destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration;
+    }
+
+
   // THIS IS FORM VALIDATION, not class prop validation.
   // SAD PATH: validate date test? Does this make sense to put on this class or outside
   // Check against 0 travelers

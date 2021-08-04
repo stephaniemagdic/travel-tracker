@@ -1,9 +1,11 @@
 import chai from 'chai';
 const expect = chai.expect;
 import Trip from '../src/Trip.js'
+import Destination from '../src/Destination.js'
 
 describe('Trip', function() {
   let trip;
+  let destinationData;
 
   before(() => {
     trip = new Trip({
@@ -16,6 +18,26 @@ describe('Trip', function() {
       "status": "approved",
       "suggestedActivities": ['skiing', 'hiking']
     })
+
+    destinationData = [new Destination({
+      "id": 51,
+      "destination": "Chicago, Illinois",
+      "estimatedLodgingCostPerDay": 60,
+      "estimatedFlightCostPerPerson": 150,
+      "image": "https://i.ibb.co/LPVszn3/dylan-lapierre-Rfeqh-K9-Bd-VI-unsplash.jpg",
+      "alt": "overview of city buildings and a lakeshore"
+    }),
+
+    new Destination({
+      "id": 52,
+      "destination": "Cedar Lake, Indiana",
+      "estimatedLodgingCostPerDay": 50,
+      "estimatedFlightCostPerPerson": 100,
+      "image": "https://i.ibb.co/LPVszn3/dylan-lapierre-Rfeqh-K9-Bd-VI-unsplash.jpg",
+      "alt": "two boats on the lake making waves"
+    })
+   ]
+
   });
 
   it('should return true', function() {
@@ -68,6 +90,10 @@ describe('Trip', function() {
 
   it('should store suggested activities', () => {
     expect(trip.suggestedActivities).to.deep.equal(['skiing', 'hiking'])
+  });
+
+  it('should return the total trip cost', () => {
+    expect(trip.calculateTotalTripCost(destinationData)).to.equal(2520)
   });
 
 
