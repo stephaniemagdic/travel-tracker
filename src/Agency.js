@@ -7,23 +7,29 @@ class Agency {
     this.destinations = destinationData.map(data => new Destination(data))
   }
 
-  // returnTotalNumTrips() {
-  //   this.tripData.length;
-  // }
+  returnTotalNumTrips() {
+    return this.trips.length;
+  }
 
-  // getTripById(id) {
+  //  test all below still. -------
+  getTripById(id) {
+    return this.trips.find(trip => {
+      trip.id === id
+    })
+  }
 
-  // }
-
-  // returnTripsByUser(id, status, date) {
-  //   //filter through trips where id matches and return trips.
-  //   // filter through where id matches and status matches pending
+  // returnTripsByUser(id, status, searchYear) {
+  //   this.trips.filter(trip => trip.id === id && trip.status === status && trip.date.split('/').[2] === searchYear)
   // }
   
-  // returnTravelerCostPerYear(id) {
-  //   //sort by id
-  //   //sort all trips
-  //   // trip.returnTripCost (reduce)
+  //this could also go on the user ... culd have a property that is set to trips = filter(trip => trip.id === trip.id) // but do they modify their own trips/ or do they? .. look at spec... 
+  // returnTravelExpensesPerYearByTraveler(id) {
+  // //   //sort by id
+  // //   //sort all trips
+  // //   // trip.returnTripCost (reduce)
+
+  // //JUST THE YEAR with the last date of 2021 ... so current year!!
+  // // also pending trips may or may not be considered paid for.
   // }
 
 }

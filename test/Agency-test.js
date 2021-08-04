@@ -51,6 +51,9 @@ describe('Agency', function() {
     expect(agency.destinations[0]).to.be.an.instanceof(Destination);
   });
 
+  it('should return the total number of trips', () => {
+    expect(agency.returnTotalNumTrips()).to.equal(agency.trips.length);
+  });
 
 });
 

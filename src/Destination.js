@@ -11,6 +11,7 @@ class Destination {
   calculateDestinationCost() {
     return this.estLodgingCostPerDay + this.estFlightCostPerPerson;
   }
+
 }
 
 export default Destination;
