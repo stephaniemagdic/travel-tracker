@@ -2,7 +2,7 @@ import chai from 'chai';
 const expect = chai.expect;
 import Agency from '../src/Agency.js'
 
-describe('See if the tests are running', function() {
+describe('Agency', function() {
 
   let tripData;
   let destinationData;
