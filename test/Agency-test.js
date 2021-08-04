@@ -2,11 +2,8 @@ import chai from 'chai';
 const expect = chai.expect;
 import Agency from '../src/Agency.js'
 import Trip from '../src/Trip.js';
-// import Trip from '../src/Trip.js'
-// import Destination from '../src/Destination.js'
-// import tripData from './test-data.js'
+import Destination from '../src/Destination.js'
 import { agency } from './test-data.js'
-// import destinationData from './test-data.js'
 
 describe('Agency', function() {
 
@@ -39,9 +36,20 @@ describe('Agency', function() {
     expect(agency.trips[0]).to.be.an.instanceof(Trip);
   });
 
-  // it('should store a list of Destinations', () => {
-  //   expect(trip.id).to.equal(201);
-  // });
+  it('should store a list of Destinations', () => {
+    expect(agency.destinations[0]).to.deep.equal(
+      new Destination( {
+        "id": 51,
+        "destination": "Chicago, Illinois",
+        "estimatedLodgingCostPerDay": 60,
+        "estimatedFlightCostPerPerson": 150,
+        "image": "https://i.ibb.co/LPVszn3/dylan-lapierre-Rfeqh-K9-Bd-VI-unsplash.jpg",
+        "alt": "overview of city buildings and a lakeshore"
+      })
+    );
+
+    expect(agency.destinations[0]).to.be.an.instanceof(Destination);
+  });
 
 
 });
