@@ -38,5 +38,9 @@ describe('Traveler', function() {
     expect(traveler.travelerType).to.equal("relaxer");
   });
 
+  it('should return a travelers first name', () => {
+    expect(traveler.returnFirstName()).to.equal("Stephanie");
+  });
+
 
 });
