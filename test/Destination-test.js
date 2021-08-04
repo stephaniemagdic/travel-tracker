@@ -53,5 +53,10 @@ describe('Destination', function() {
     expect(destination.alt).to.equal("overview of city buildings and a lakeshore");
   });
 
+  it('should return the total destination cost', () => {
+    expect(destination.calculateDestinationCost()).to.equal(210);
+  });
+  
+
 
 });

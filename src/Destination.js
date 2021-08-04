@@ -8,6 +8,9 @@ class Destination {
     this.alt = destination.alt;
   }
 
+  calculateDestinationCost() {
+    return this.estLodgingCostPerDay + this.estFlightCostPerPerson;
+  }
 }
 
 export default Destination;
