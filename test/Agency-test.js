@@ -3,7 +3,7 @@ const expect = chai.expect;
 import Agency from '../src/Agency.js'
 import Trip from '../src/Trip.js';
 import Destination from '../src/Destination.js'
-import { agency } from './test-data.js'
+import { agency, todayDate } from './test-data.js'
 
 describe('Agency', function() {
 
@@ -60,7 +60,7 @@ describe('Agency', function() {
   });
 
   it('should return a users past trips', () => {
-   
+    expect(agency.getTripsByUser(51, "approved", todayDate)).to.equal();
   });
 
   it('should return a users current trips', () => {

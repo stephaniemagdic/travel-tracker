@@ -21,17 +21,51 @@ class Agency {
     //#2: this also will be used to return trips by user just for a year that can then be calculated.
      // return yearly costs
        // return trips by that year... by user id, by status of approved only.
-  returnTripsByUser(id, status, searchYear = null) {
-    //search year is an optional param.
   
-    //is null falsy?
+ getTripsByUser(usersId, status, currentDate, searchYear = null) {
+  //search year is an optional param.
+
+  //how will you use currentDate for each scenario: 
+     // if previous date filter by 
+     // pass in a currentDate ... 
+     // take everything before that date...
+     // have to filter by date ... if date less than.
+
+     // have a second filter after the first.
+
+  //is null falsy?
     if (searchYear) {
-    return this.trips.filter(trip => trip.id === id && trip.status === status && trip.date.split('/')[2] === searchYear)
+    const allTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === status && trip.date.split('/')[2] === searchYear)
     } else {
-      return this.trips.filter(trip => trip.id === id && trip.status === status)
+      
+      const allTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === status);
+
+
+      const filtered = allTrips.filter(trip => {
+        
+        return (
+          (trip.date.split("/")[0] < todayDate.split("/")[0]) 
+        || (trip.date.split("/")[0] === todayDate.split("/")[0] &&
+          trip.date.split("/")[1] < todayDate.split("/")[1]) 
+        || (trip.date.split("/")[0] === todayDate.split("/")[0] &&
+          trip.date.split("/")[1] === todayDate.split("/")[1] &&
+          trip.date.split("/")[2] < todayDate.split("/")[2])
+          
+          ) 
+        })
+    
+      return filtered.sort((tripA, tripB) => tripA.date - tripB.date);
+
     }
-  }
+}
+
+
   
+
+
+
+
+
   //this could also go on the user ... culd have a property that is set to trips = filter(trip => trip.id === trip.id) // but do they modify their own trips/ or do they? .. look at spec... 
   // returnTravelExpensesPerYearByTraveler(id) {
   // //   //sort by id
