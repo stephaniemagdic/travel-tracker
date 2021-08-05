@@ -47,7 +47,7 @@ describe('Agency', function() {
   });
 
   it('should return a trip by id', () => {
-    expect(agency.getTripById(201)).to.equal(agency.trips[2]);
+    expect(agency.getTripById(203)).to.equal(agency.trips[0]);
   });
 
   it('should return a users past trips', () => {

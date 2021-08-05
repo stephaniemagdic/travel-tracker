@@ -17,7 +17,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 204,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -27,7 +27,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 201,
+    "id": 205,
     "userID": 51,
     "destinationID": 51,
     "travelers": 2,
@@ -37,7 +37,7 @@ export const tripData = [
     "suggestedActivities": ['skiing', 'hiking']
   },
   {
-    "id": 202,
+    "id": 206,
     "userID": 51,
     "destinationID": 51,
     "travelers": 3,
@@ -47,7 +47,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 207,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -57,7 +57,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 208,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -77,7 +77,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 209,
     "userID": 53,
     "destinationID": 51,
     "travelers": 1,
@@ -88,7 +88,7 @@ export const tripData = [
   },
   //pending
   {
-    "id": 203,
+    "id": 210,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -98,7 +98,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 211,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -109,7 +109,7 @@ export const tripData = [
   },
   //past
   {
-    "id": 203,
+    "id": 212,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -119,7 +119,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 213,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -129,7 +129,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 214,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -139,7 +139,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 215,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -150,7 +150,7 @@ export const tripData = [
   },
   //different user
   {
-    "id": 203,
+    "id": 205,
     "userID": 52,
     "destinationID": 51,
     "travelers": 1,
@@ -161,7 +161,7 @@ export const tripData = [
   },
   //future
   {
-    "id": 203,
+    "id": 206,
     "userID": 52,
     "destinationID": 51,
     "travelers": 1,
@@ -171,7 +171,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 216,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -181,7 +181,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 217,
     "userID": 51,
     "destinationID": 51,
     "travelers": 1,
@@ -191,7 +191,7 @@ export const tripData = [
     "suggestedActivities": []
   },
   {
-    "id": 203,
+    "id": 218,
     "userID": 52,
     "destinationID": 51,
     "travelers": 1,
@@ -217,7 +217,7 @@ export const currentTrips = [ new Trip({
 //DATA FOR PAST TRIPS (STATUS APPROVED, ID OF 51, date previous to )
 export const pastTrips = [
   new Trip({
-    id: 203,
+    id: 204,
     userID: 51,
     destinationID: 51,
     travelers: 1,
@@ -227,7 +227,7 @@ export const pastTrips = [
     suggestedActivities: []
   }),
   new Trip({
-    id: 203,
+    id: 212,
     userID: 51,
     destinationID: 51,
     travelers: 1,
@@ -237,7 +237,7 @@ export const pastTrips = [
     suggestedActivities: []
   }),
   new Trip({
-    id: 203,
+    id: 213,
     userID: 51,
     destinationID: 51,
     travelers: 1,
@@ -247,7 +247,7 @@ export const pastTrips = [
     suggestedActivities: []
   }),
   new Trip({
-    id: 203,
+    id: 214,
     userID: 51,
     destinationID: 51,
     travelers: 1,
