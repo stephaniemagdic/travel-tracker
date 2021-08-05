@@ -5,7 +5,10 @@ class Agency {
   constructor(tripData, destinationData) {
     this.trips = tripData.map(data => new Trip(data));
     this.destinations = destinationData.map(data => new Destination(data))
+    //travelers
   }
+
+  //returnTripsByUser() // this could be passed to Traveler
 
   returnTotalNumTrips() {
     return this.trips.length;

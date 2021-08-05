@@ -11,14 +11,12 @@ class Trip {
     this.suggestedActivities = trip.suggestedActivities || [];
   }
 
-  //user clicks post .. then trip is created
-  // destination repo is passed in to this trip instance and this method is called.
-
   calculateTotalTripCost(destinationData) {
     if (this.status === "pending") {
       return 0;
     } else {
       return destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration;
+      //need to add 10 % on here!*
     }
   }
 
