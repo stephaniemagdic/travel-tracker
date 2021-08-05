@@ -55,6 +55,10 @@ describe('Agency', function() {
     expect(agency.returnTotalNumTrips()).to.equal(agency.trips.length);
   });
 
+  it('should return a trip by id', () => {
+    expect(agency.getTripById(201)).to.equal(agency.trips[0]);
+  });
+
 });
 
 

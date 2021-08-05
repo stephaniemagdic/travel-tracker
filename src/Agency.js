@@ -5,20 +5,17 @@ class Agency {
   constructor(tripData, destinationData) {
     this.trips = tripData.map(data => new Trip(data));
     this.destinations = destinationData.map(data => new Destination(data))
-    //travelers
+    //travelers// needed for iteration 4
   }
-
-  //returnTripsByUser() // this could be passed to Traveler
 
   returnTotalNumTrips() {
     return this.trips.length;
   }
 
-  //  test all below still. -------
+  //  test below still. -------
+  //why is this method needed? // in order to grab after we create an instance and pull .. we want this to display the data for the cost of the trip*
   getTripById(id) {
-    return this.trips.find(trip => {
-      trip.id === id
-    })
+    return this.trips.find(trip => trip.id === id);
   }
 
   // returnTripsByUser(id, status, searchYear) {
