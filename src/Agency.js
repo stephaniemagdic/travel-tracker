@@ -22,7 +22,7 @@ class Agency {
      // return yearly costs
        // return trips by that year... by user id, by status of approved only.
   
- getTripsByUser(usersId, status, currentDate, searchYear = null) {
+ getTripsByUser(usersId, status, todayDate, searchYear = null) {
   //search year is an optional param.
 
   //how will you use currentDate for each scenario: 
@@ -42,7 +42,9 @@ class Agency {
 
 
       const filtered = allTrips.filter(trip => {
-        
+        ///You can do a string comparison to make this simpler.. who knew? "2021/09/05" < "2021/10/05" true.
+      
+
         return (
           (trip.date.split("/")[0] < todayDate.split("/")[0]) 
         || (trip.date.split("/")[0] === todayDate.split("/")[0] &&

@@ -3,7 +3,7 @@ const expect = chai.expect;
 import Agency from '../src/Agency.js'
 import Trip from '../src/Trip.js';
 import Destination from '../src/Destination.js'
-import { agency, todayDate } from './test-data.js'
+import { agency, todayDate, tripData, pastTrips } from './test-data.js'
 
 describe('Agency', function() {
 
@@ -20,18 +20,9 @@ describe('Agency', function() {
   }); 
 
   it('should store a list of Trips', () => {
-    expect(agency.trips[0]).to.deep.equal(
-      new Trip( {
-        "id": 201,
-        "userID": 51,
-        "destinationID": 51,
-        "travelers": 2,
-        "date": "2022/10/16",
-        "duration": 6,
-        "status": "approved",
-        "suggestedActivities": ['skiing', 'hiking']
-      })
-    );
+    // console.log(agency.trips)
+    // console.log(tripData)
+    expect(agency.trips).to.deep.equal(tripData);
 
     expect(agency.trips[0]).to.be.an.instanceof(Trip);
   });
@@ -56,11 +47,11 @@ describe('Agency', function() {
   });
 
   it('should return a trip by id', () => {
-    expect(agency.getTripById(201)).to.equal(agency.trips[0]);
+    expect(agency.getTripById(201)).to.equal(agency.trips[2]);
   });
 
   it('should return a users past trips', () => {
-    expect(agency.getTripsByUser(51, "approved", todayDate)).to.equal();
+    expect(agency.getTripsByUser(51, "approved", todayDate)).to.deep.equal(pastTrips);
   });
 
   it('should return a users current trips', () => {

@@ -44,6 +44,7 @@ export const tripData = [
     "date": "2022/09/16",
     "duration": 6,
     "status": "approved",
+    "suggestedActivities": []
   },
   {
     "id": 203,
@@ -214,9 +215,49 @@ export const currentTrips = [ new Trip({
 
 
 //DATA FOR PAST TRIPS (STATUS APPROVED, ID OF 51, date previous to )
-// export const pastTrips = [
- 
-//   ]
+export const pastTrips = [
+  new Trip({
+    id: 203,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2021/08/04',
+    duration: 6,
+    status: 'approved',
+    suggestedActivities: []
+  }),
+  new Trip({
+    id: 203,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2020/01/26',
+    duration: 6,
+    status: 'approved',
+    suggestedActivities: []
+  }),
+  new Trip({
+    id: 203,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2021/04/07',
+    duration: 6,
+    status: 'approved',
+    suggestedActivities: []
+  }),
+  new Trip({
+    id: 203,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2020/10/31',
+    duration: 6,
+    status: 'approved',
+    suggestedActivities: []
+  })
+]
+
 export const destinationData = [
   {
     "id": 51,
