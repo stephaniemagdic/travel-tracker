@@ -59,6 +59,35 @@ describe('Agency', function() {
     expect(agency.getTripById(201)).to.equal(agency.trips[0]);
   });
 
+  it('should return a users past trips', () => {
+   
+  });
+
+  it('should return a users current trips', () => {
+   
+  });
+
+  it('should return an empty string if there are no current trips', () => {
+   
+  });
+
+  it('should return pending trips', () => {
+   
+  });
+
+  it('should return future trips', () => {
+   
+  });
+
+  it('should return all trips regardless of year by default', () => {
+   
+  });
+
+  it('should return trips by year', () => {
+   
+  });
+
+
 });
 
 
