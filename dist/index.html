@@ -46,20 +46,31 @@
         <!-- YEARLY TRIP SPENDING WILL GO HERE -->
       </p>
      </section>
-     <section class="book-a-trip hidden">
+     <section class="book-a-trip">
       <div>
         <form id="book-a-trip-form">
           <fieldset>
             <legend>Book A Trip</legend>
-              <label>
-                Destination
-              <input type="search" name="search-destination">
-              </label>
-              <!-- <br /> -->
-              <label for="start">Start date:</label>
               <input type="date" id="start" name="trip-start"
                 placeholder="dd-mm-yyyy" value=""
                 min="2016-01-01" max="2018-12-31" required>
+              <label for="start">Start date</label>
+              <input type="date" id="end" name="trip-end"
+                placeholder="dd-mm-yyyy" value=""
+                min="2016-01-01" max="2018-12-31" required>
+              <label for="end">End Date</label>
+              <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="city" required>
+
+              <!-- <input type="text" name="duration" id="duration" placeholder="duration" aria-label="Enter the duration of your trip"> -->
+              <select name="number-of-travlers" id="number-of-travelers" placeholder="select the number of travelers">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <!-- <option value="">other/special request</option> -->
               <input type="submit">
           </fieldset>
         </form>
