@@ -25,36 +25,42 @@ class Agency {
   //  getTripsByUser(usersId, status = "approved", todayDate, searchYear = null) {
   getTripsByUser(usersId, searchType, todayDate, searchYear = null) {
   //search year is an optional param.
-  const userApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === approved);
+    const userApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === 'approved');
 
+  
 
-    //is null falsy?
     if (searchYear) {
-      const allTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === status && trip.date.split('/')[2] === searchYear)
-    } else {
-      if (searchType === "past") {
-        userApprovedTrips.filter(trip => {
-        ///You can do a string comparison to make this simpler.. who knew? "2021/09/05" < "2021/10/05" true.
-      
-          //put in seperate fucntion that is called format date//
-          return (
-            (trip.date.split("/")[0] < todayDate.split("/")[0]) 
-        || (trip.date.split("/")[0] === todayDate.split("/")[0] &&
-          trip.date.split("/")[1] < todayDate.split("/")[1]) 
-        || (trip.date.split("/")[0] === todayDate.split("/")[0] &&
-          trip.date.split("/")[1] === todayDate.split("/")[1] &&
-          trip.date.split("/")[2] < todayDate.split("/")[2])
-          ) 
-        }).sort((tripA, tripB) => tripA.date - tripB.date);
-      } else if (searchType === "current") {
-        return this.trips.find(trip => trip.date === todayDate)
-      } else if (searchType === "future") {
-        return this.trips.filter(trip => trip.date > todayDate)
-      } else if (searchType === "pending") {
-        return this.trips.filter(trip => trip.status === "pending")
-      }
+      userApprovedTrips = userApprovedTrips.filter(trip => trip.date.split('/')[2] === searchYear)
     }
+
+
+    if (searchType === 'past') {
+      return userApprovedTrips.filter(trip => {
+    
+      ///You can do a string comparison to make this simpler.. who knew? '2021/09/05' < '2021/10/05' true.
+    
+      //put in seperate fucntion that is called format date//
+        return (
+          (trip.date.split('/')[0] < todayDate.split('/')[0]) ||
+          (trip.date.split('/')[0] === todayDate.split('/')[0] &&
+          trip.date.split('/')[1] < todayDate.split('/')[1]) || 
+          (trip.date.split('/')[0] === todayDate.split('/')[0] &&
+          trip.date.split('/')[1] === todayDate.split('/')[1] &&
+          trip.date.split('/')[2] < todayDate.split('/')[2])
+        ) 
+      }).sort((tripA, tripB) => tripA.date - tripB.date);
+    } else if (searchType === 'current') {
+      console.log(this.trips.find(trip => trip.date === todayDate))
+      return this.trips.find(trip => trip.date === todayDate)
+    } else if (searchType === 'future') {
+      return this.trips.filter(trip => trip.date > todayDate)
+    } else if (searchType === 'pending') {
+      return this.trips.filter(trip => trip.status === 'pending')
+    }
+    
   }
+
+
 
   
 
