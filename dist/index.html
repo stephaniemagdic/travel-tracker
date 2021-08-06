@@ -14,8 +14,16 @@
   <main>
     <section class="login-page hidden">
      //LOGIN PAGE
+      <fieldset>
+        <legend>User Login</legend>
+          <form class="user-login-form" id="user-login" aria-label="user-information">
+            <input type="text" id="username" name="username" aria-label="username" placeholder="username">
+            <input type="text" id="password" name="password" aria-label="password" placeholder="password">
+            <input type="submit" id="user-login-submit">
+          </form>
+      </fieldset>
     </section>
-    <section class="user-dashboard">
+    <section class="user-dashboard-page">
       //USER DASHBOARD
       <h1>Your Travel Data</h1>
       <article class="trip-container">
@@ -38,15 +46,15 @@
       </article>
       <article class="trip-container">
         <h2>Your Pending Trips</h2>
-        <div class="pendingt-trip-container"> 
-          <!-- pending trips will go here -->
+        <div class="pending-trip-container"> 
+          pending trips will go here
         </div>
       </article>
       <p class="yearly-trip-spending">
-        <!-- YEARLY TRIP SPENDING WILL GO HERE -->
+        YEARLY TRIP SPENDING WILL GO HERE
       </p>
      </section>
-     <section class="book-a-trip">
+     <section class="book-a-trip-page hidden">
       <div>
         <form id="book-a-trip-form">
           <fieldset>
@@ -62,7 +70,8 @@
               <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="city" required>
 
               <!-- <input type="text" name="duration" id="duration" placeholder="duration" aria-label="Enter the duration of your trip"> -->
-              <select name="number-of-travlers" id="number-of-travelers" placeholder="select the number of travelers">
+              <select name="number-of-travlers" id="number-of-travelers" required>
+                <option value="">number of travelers</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="4">4</option>
@@ -76,7 +85,7 @@
         </form>
       </div>
      </section>
-     <section class="agent-dashboard hidden">
+     <section class="agent-dashboard-page hidden">
       //AGENT DASHBOARD
      </section>
   <footer> 
@@ -86,6 +95,9 @@
       </button>
       <button class="display-trips-button hidden">
         See My Travel Data
+      </button>
+      <button>
+        Home
       </button>
     </nav>
   </footer>
