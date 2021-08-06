@@ -3,7 +3,7 @@ const expect = chai.expect;
 import Agency from '../src/Agency.js'
 import Trip from '../src/Trip.js';
 import Destination from '../src/Destination.js'
-import { agency, todayDate, tripData, pastTrips, currentTrip, futureTrips, pendingTrips } from './test-data.js'
+import { agency, todayDate, tripData, pastTrips, currentTrip, futureTrips, pendingTrips, tripsByYear } from './test-data.js'
 
 describe('Agency', function() {
 
@@ -50,9 +50,9 @@ describe('Agency', function() {
     expect(agency.getTripById(203)).to.equal(agency.trips[0]);
   });
 
-  it('should return a users past trips', () => {
-    expect(agency.getTripsByUser(51, 'past', todayDate)).to.deep.equal(pastTrips);
-  });
+  // it('should return a users past trips', () => {
+  //   expect(agency.getTripsByUser(51, 'past', todayDate)).to.deep.equal(pastTrips);
+  // });
 
   it('should return a users current trips', () => {
     expect(agency.getTripsByUser(51, 'current', todayDate)).to.deep.equal(currentTrip);
@@ -77,11 +77,18 @@ describe('Agency', function() {
     expect(agency.getTripsByUser(51, 'past', todayDate)[1].date).to.equal('2020/01/26');
   });
 
+
   it('should return trips by year', () => {
-    expect(agency.getTripsByUser(51, 'past', todayDate, 2021)).to.deep.equal();
-    expect(agency.getTripsByUser(51, 'past', todayDate, 2021)[0].date).to.equal();
-    // expect(agency.getTripsByUser(51, 'past', todayDate)[//last].date).to.equal('2020/01/26');
+    expect(agency.getTripsByUser(51, 'past', todayDate, 2021)).to.deep.equal(tripsByYear);
+    expect(agency.getTripsByUser(51, 'past', todayDate, 2021)[0].date).to.equal(
+      '2021/08/05');
+    expect(agency.getTripsByUser(51, 'past', todayDate, 2021)[2].date).to.equal('2021/10/16');
   });
+
+  // it('should return yearly expenses for a single user', () => {
+  //   expect(agency.getUserYearlyExpenses(//userID, searchYear, todayDate).to.deep.equal();
+  // });
+
 
 
 });

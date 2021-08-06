@@ -118,16 +118,16 @@ export const tripData = [
     "status": "approved",
     "suggestedActivities": []
   },
-  {
-    "id": 213,
-    "userID": 51,
-    "destinationID": 51,
-    "travelers": 1,
-    "date": "2021/04/07",
-    "duration": 6,
-    "status": "approved",
-    "suggestedActivities": []
-  },
+  // {
+  //   "id": 213,
+  //   "userID": 51,
+  //   "destinationID": 51,
+  //   "travelers": 1,
+  //   "date": "2021/04/07",
+  //   "duration": 6,
+  //   "status": "approved",
+  //   "suggestedActivities": []
+  // },
   {
     "id": 214,
     "userID": 51,
@@ -237,16 +237,16 @@ export const pastTrips = [
     status: 'approved',
     suggestedActivities: []
   }),
-  new Trip({
-    id: 213,
-    userID: 51,
-    destinationID: 51,
-    travelers: 1,
-    date: '2021/04/07',
-    duration: 6,
-    status: 'approved',
-    suggestedActivities: []
-  }),
+  // new Trip({
+  //   id: 213,
+  //   userID: 51,
+  //   destinationID: 51,
+  //   travelers: 1,
+  //   date: '2021/04/07',
+  //   duration: 6,
+  //   status: 'approved',
+  //   suggestedActivities: []
+  // }),
   new Trip({
     id: 214,
     userID: 51,
@@ -357,6 +357,51 @@ export const pendingTrips = [
     status: 'pending',
     suggestedActivities: []
   })
+]
+
+//paid for future trips if approved
+// data is for user id 51, approved trips in the year 2021.. could be at a date after todayDate of "2021/08/05" and including becuase it is in the year.
+export const tripsByYear = [
+  new Trip ({
+    id: 203,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2021/08/05',
+    duration: 6,
+    status: 'approved',
+    suggestedActivities: []
+  }),
+  new Trip ({
+    id: 204,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2021/08/04',
+    duration: 6,
+    status: 'approved',
+    suggestedActivities: []
+  }),
+  new Trip ({
+    id: 207,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2021/10/16',
+    duration: 6,
+    status: 'approved',
+    suggestedActivities: []
+  }),
+  // new Trip ({
+  //   id: 213,
+  //   userID: 51,
+  //   destinationID: 51,
+  //   travelers: 1,
+  //   date: '2021/04/07',
+  //   duration: 6,
+  //   status: 'approved',
+  //   suggestedActivities: []
+  // })
 ]
 
 
