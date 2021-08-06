@@ -85,9 +85,9 @@ describe('Agency', function() {
     expect(agency.getTripsByUser(51, 'past', todayDate, 2021)[2].date).to.equal('2021/10/16');
   });
 
-  // it('should return yearly expenses for a single user', () => {
-  //   expect(agency.getUserYearlyExpenses(//userID, searchYear, todayDate).to.deep.equal();
-  // });
+  it('should return yearly expenses for a single user', () => {
+    expect(agency.getUserYearlyExpenses(51, 2021, todayDate)).to.equal(4158);
+  });
 
 
 
