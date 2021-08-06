@@ -3,7 +3,7 @@ const expect = chai.expect;
 import Agency from '../src/Agency.js'
 import Trip from '../src/Trip.js';
 import Destination from '../src/Destination.js'
-import { agency, todayDate, tripData, pastTrips, currentTrip, futureTrips } from './test-data.js'
+import { agency, todayDate, tripData, pastTrips, currentTrip, futureTrips, pendingTrips } from './test-data.js'
 
 describe('Agency', function() {
 
@@ -68,7 +68,7 @@ describe('Agency', function() {
   });
 
   it('should return pending trips', () => {
-    expect(agency.getTripsByUser(51, 'pending', todayDate)).to.deep.equal();
+    expect(agency.getTripsByUser(51, 'pending', todayDate)).to.deep.equal(pendingTrips);
   });
 
   it('should return all trips regardless of year by default', () => {

@@ -326,6 +326,49 @@ export const futureTrips = [
   })
 ]
 
+export const pendingTrips = [
+  new Trip ({
+    id: 210,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2021/9/12',
+    duration: 6,
+    status: 'pending',
+    suggestedActivities: []
+  }),
+  new Trip ({
+    id: 211,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2021/02/02',
+    duration: 6,
+    status: 'pending',
+    suggestedActivities: []
+  }),
+  new Trip ({
+    id: 215,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2023/07/04',
+    duration: 6,
+    status: 'pending',
+    suggestedActivities: []
+  }),
+  new Trip ({
+    id: 217,
+    userID: 51,
+    destinationID: 51,
+    travelers: 1,
+    date: '2023/04/21',
+    duration: 6,
+    status: 'pending',
+    suggestedActivities: []
+  })
+]
+
 
 
 export const destinationData = [
