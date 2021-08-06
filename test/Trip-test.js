@@ -95,8 +95,9 @@ describe('Trip', function() {
   });
 
   it('should return the total trip cost', () => {
-    expect(trip.calculateTotalTripCost(destinationData)).to.equal(2520)
+    expect(trip.calculateTotalTripCost(destinationData)).to.equal(2772)
   });
+  
 
   //ADD TEST FOR PENDING TRIP... cost is 0...**
 

@@ -10,13 +10,23 @@ class Trip {
     this.status = trip.status;
     this.suggestedActivities = trip.suggestedActivities || [];
   }
-
+//passing in data to this class...
   calculateTotalTripCost(destinationData) {
+    const agentFee = (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) * .10
+
+    console.log("agentFee", agentFee)
+    console.log("trip cost", (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration))
+    console.log("totalTripCost", (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) + agentFee)
+
     if (this.status === "pending") {
       return 0;
     } else {
-      return destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration;
+      return (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) + agentFee;
       //need to add 10 % on here!*
+       // multiply this by .10% and add that on to the total.
+
+      
+
     }
   }
 
