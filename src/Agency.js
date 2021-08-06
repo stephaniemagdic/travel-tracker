@@ -17,31 +17,17 @@ class Agency {
     return this.trips.find(trip => trip.id === id);
   }
 
-  //#1: we need this for each type of trip (past, current, pending, future to itterate over and display on the dom.)
-  //#2: this also will be used to return trips by user just for a year that can then be calculated.
-  // return yearly costs
-  // return trips by that year... by user id, by status of approved only.
-  
-  //  getTripsByUser(usersId, status = "approved", todayDate, searchYear = null) {
   getTripsByUser(usersId, searchType, todayDate, searchYear = null) {
-  //search year is an optional param.
     let userApprovedTrips = this.trips.filter(trip => trip.userID === usersId &&trip.status === 'approved');
 
-    
-
-
-    // if (searchYear) {
-    //   userApprovedTrips = userApprovedTrips.filter(trip => trip.date.split('/')[2] === searchYear)
-    // }
-
-
     if (searchType === 'past') {
-      return userApprovedTrips.filter(trip => {
-       
-    
+      if (searchYear) {
+        return userApprovedTrips = userApprovedTrips.filter(trip => trip.date.split('/')[2] === searchYear)
+      }
+      
+      userApprovedTrips = userApprovedTrips.filter(trip => {
       ///You can do a string comparison to make this simpler.. who knew? '2021/09/05' < '2021/10/05' true.
-    
-      //put in seperate fucntion that is called format date//
+      //put in seperate fucntion that is called format date// ******
         return (
           (trip.date.split('/')[0] < todayDate.split('/')[0]) ||
           (trip.date.split('/')[0] === todayDate.split('/')[0] &&
@@ -51,24 +37,41 @@ class Agency {
           trip.date.split('/')[2] < todayDate.split('/')[2])
         ) 
       }).sort((tripA, tripB) => tripA.date - tripB.date);
+      console.log(userApprovedTrips);
     } else if (searchType === 'current') {
-      userApprovedTrips = userApprovedTrips.filter( trip => trip.status === 'approved');
-
       if (userApprovedTrips.find(trip => trip.date === todayDate)) {
-       
         return  userApprovedTrips.find(trip => trip.date === todayDate)
       } else {
-  
         return '';
       }
     } else if (searchType === 'future') {
-      return userApprovedTrips.filter(trip => trip.date > todayDate)
+      userApprovedTrips = userApprovedTrips
+        .filter(trip => trip.date > todayDate)
     } else if (searchType === 'pending') {
-      //pending status and only in the future.
-      console.log("pending--->", this.trips.filter(trip => trip.userID === usersId &&trip.status === 'pending'))
-      return this.trips.filter(trip => trip.userID === usersId &&trip.status === 'pending' && trip.date > todayDate);
+      return this.trips
+        .filter(trip => trip.userID === usersId &&trip.status === 'pending' && trip.date > todayDate)
+        .sort((tripA, tripB) => tripA.date - tripB.date);
     }
+    // sort once here.... and return once. * 
+    return userApprovedTrips.sort((tripA, tripB) => tripA.date - tripB.date)
     
+  }
+
+
+  //#2: this also will be used to return trips by user just for a year that can then be calculated.
+
+  getUserYearlyExpenses(userID, searchYear, todayDate) {
+    //we dont need a date here so make optional in previous function.
+    return this.getTripsByUser(userID, 'past', todayDate, searchYear)
+      .reduce((totalCost, trip) => {
+        totalCost += trip.calculateTotalTripCost(this.destinations);
+        return totalCost;
+      }, 0)
+
+    // forEach trip .... 
+    // call the caclulateTotalTripCost(this.destinations) on each item ...and accumulate.
+    //return that total*
+
   }
 
 

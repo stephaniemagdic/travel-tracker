@@ -72,11 +72,15 @@ describe('Agency', function() {
   });
 
   it('should return all trips regardless of year by default', () => {
-   
+    expect(agency.getTripsByUser(51, 'past', todayDate)).to.deep.equal(pastTrips);
+    expect(agency.getTripsByUser(51, 'past', todayDate)[0].date).to.equal('2021/08/04');
+    expect(agency.getTripsByUser(51, 'past', todayDate)[1].date).to.equal('2020/01/26');
   });
 
   it('should return trips by year', () => {
-   
+    expect(agency.getTripsByUser(51, 'past', todayDate, 2021)).to.deep.equal();
+    expect(agency.getTripsByUser(51, 'past', todayDate, 2021)[0].date).to.equal();
+    // expect(agency.getTripsByUser(51, 'past', todayDate)[//last].date).to.equal('2020/01/26');
   });
 
 
