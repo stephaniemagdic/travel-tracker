@@ -3,7 +3,7 @@ const expect = chai.expect;
 import Agency from '../src/Agency.js'
 import Trip from '../src/Trip.js';
 import Destination from '../src/Destination.js'
-import { agency, todayDate, tripData, pastTrips, currentTrip } from './test-data.js'
+import { agency, todayDate, tripData, pastTrips, currentTrip, futureTrips } from './test-data.js'
 
 describe('Agency', function() {
 
@@ -58,13 +58,13 @@ describe('Agency', function() {
     expect(agency.getTripsByUser(51, 'current', todayDate)).to.deep.equal(currentTrip);
   });
 
-  // it('should return an empty string if there are no current trips', () => {
-  //   expect(agency.getTripsByUser(//, 'current', todayDate)).to.deep.equal();
-  // });
+  it('should return an empty string if there are no current trips', () => {
+    expect(agency.getTripsByUser(52, 'current', todayDate)).to.deep.equal('');
+  });
 
 
   it('should return future trips', () => {
-    expect(agency.getTripsByUser(51, 'future', todayDate)).to.deep.equal();
+    expect(agency.getTripsByUser(51, 'future', todayDate)).to.deep.equal(futureTrips);
   });
 
   it('should return pending trips', () => {

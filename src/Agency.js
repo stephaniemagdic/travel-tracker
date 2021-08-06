@@ -25,17 +25,19 @@ class Agency {
   //  getTripsByUser(usersId, status = "approved", todayDate, searchYear = null) {
   getTripsByUser(usersId, searchType, todayDate, searchYear = null) {
   //search year is an optional param.
-    const userApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === 'approved');
+    let userApprovedTrips = this.trips.filter(trip => trip.userID === usersId &&trip.status === 'approved');
 
-  
+    
 
-    if (searchYear) {
-      userApprovedTrips = userApprovedTrips.filter(trip => trip.date.split('/')[2] === searchYear)
-    }
+
+    // if (searchYear) {
+    //   userApprovedTrips = userApprovedTrips.filter(trip => trip.date.split('/')[2] === searchYear)
+    // }
 
 
     if (searchType === 'past') {
       return userApprovedTrips.filter(trip => {
+       
     
       ///You can do a string comparison to make this simpler.. who knew? '2021/09/05' < '2021/10/05' true.
     
@@ -50,12 +52,21 @@ class Agency {
         ) 
       }).sort((tripA, tripB) => tripA.date - tripB.date);
     } else if (searchType === 'current') {
-      console.log(this.trips.find(trip => trip.date === todayDate))
-      return this.trips.find(trip => trip.date === todayDate)
+      userApprovedTrips = userApprovedTrips.filter( trip => trip.status === 'approved');
+
+      if (userApprovedTrips.find(trip => trip.date === todayDate)) {
+       
+        return  userApprovedTrips.find(trip => trip.date === todayDate)
+      } else {
+  
+        return '';
+      }
     } else if (searchType === 'future') {
-      return this.trips.filter(trip => trip.date > todayDate)
+      return userApprovedTrips.filter(trip => trip.date > todayDate)
     } else if (searchType === 'pending') {
-      return this.trips.filter(trip => trip.status === 'pending')
+      //pending status and only in the future.
+      console.log("pending--->", this.trips.filter(trip => trip.userID === usersId &&trip.status === 'pending'))
+      return this.trips.filter(trip => trip.userID === usersId &&trip.status === 'pending');
     }
     
   }
