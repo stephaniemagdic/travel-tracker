@@ -17,50 +17,46 @@ class Agency {
     return this.trips.find(trip => trip.id === id);
   }
 
-    //#1: we need this for each type of trip (past, current, pending, future to itterate over and display on the dom.)
-    //#2: this also will be used to return trips by user just for a year that can then be calculated.
-     // return yearly costs
-       // return trips by that year... by user id, by status of approved only.
+  //#1: we need this for each type of trip (past, current, pending, future to itterate over and display on the dom.)
+  //#2: this also will be used to return trips by user just for a year that can then be calculated.
+  // return yearly costs
+  // return trips by that year... by user id, by status of approved only.
   
- getTripsByUser(usersId, status, todayDate, searchYear = null) {
+  //  getTripsByUser(usersId, status = "approved", todayDate, searchYear = null) {
+  getTripsByUser(usersId, searchType, todayDate, searchYear = null) {
   //search year is an optional param.
+  const userApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === approved);
 
-  //how will you use currentDate for each scenario: 
-     // if previous date filter by 
-     // pass in a currentDate ... 
-     // take everything before that date...
-     // have to filter by date ... if date less than.
 
-     // have a second filter after the first.
-
-  //is null falsy?
+    //is null falsy?
     if (searchYear) {
-    const allTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === status && trip.date.split('/')[2] === searchYear)
+      const allTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === status && trip.date.split('/')[2] === searchYear)
     } else {
-      
-      const allTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === status);
-
-
-      const filtered = allTrips.filter(trip => {
+      if (searchType === "past") {
+        userApprovedTrips.filter(trip => {
         ///You can do a string comparison to make this simpler.. who knew? "2021/09/05" < "2021/10/05" true.
       
-
-        return (
-          (trip.date.split("/")[0] < todayDate.split("/")[0]) 
+          //put in seperate fucntion that is called format date//
+          return (
+            (trip.date.split("/")[0] < todayDate.split("/")[0]) 
         || (trip.date.split("/")[0] === todayDate.split("/")[0] &&
           trip.date.split("/")[1] < todayDate.split("/")[1]) 
         || (trip.date.split("/")[0] === todayDate.split("/")[0] &&
           trip.date.split("/")[1] === todayDate.split("/")[1] &&
           trip.date.split("/")[2] < todayDate.split("/")[2])
-          
           ) 
-        })
-    
-      return filtered.sort((tripA, tripB) => tripA.date - tripB.date);
-
+        }).sort((tripA, tripB) => tripA.date - tripB.date);
+      } else if (searchType === "current") {
+        return this.trips.find(trip => trip.date === todayDate)
+      } else if (searchType === "future") {
+        return this.trips.filter(trip => trip.date > todayDate)
+      } else if (searchType === "pending") {
+        return this.trips.filter(trip => trip.status === "pending")
+      }
     }
-}
+  }
 
+  
 
   
 

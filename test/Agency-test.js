@@ -51,23 +51,24 @@ describe('Agency', function() {
   });
 
   it('should return a users past trips', () => {
-    expect(agency.getTripsByUser(51, "approved", todayDate)).to.deep.equal(pastTrips);
+    expect(agency.getTripsByUser(51, "past", todayDate)).to.deep.equal(pastTrips);
   });
 
   it('should return a users current trips', () => {
-   
+    expect(agency.getTripsByUser(51, "current", todayDate)).to.deep.equal();
   });
 
-  it('should return an empty string if there are no current trips', () => {
-   
+  // it('should return an empty string if there are no current trips', () => {
+  //   expect(agency.getTripsByUser(//, "current", todayDate)).to.deep.equal();
+  // });
+
+
+  it('should return future trips', () => {
+    expect(agency.getTripsByUser(51, "future", todayDate)).to.deep.equal();
   });
 
   it('should return pending trips', () => {
-   
-  });
-
-  it('should return future trips', () => {
-   
+    expect(agency.getTripsByUser(51, "pending", todayDate)).to.deep.equal();
   });
 
   it('should return all trips regardless of year by default', () => {
