@@ -338,16 +338,6 @@ export const pendingTrips = [
     suggestedActivities: []
   }),
   new Trip ({
-    id: 211,
-    userID: 51,
-    destinationID: 51,
-    travelers: 1,
-    date: '2021/02/02',
-    duration: 6,
-    status: 'pending',
-    suggestedActivities: []
-  }),
-  new Trip ({
     id: 215,
     userID: 51,
     destinationID: 51,

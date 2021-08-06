@@ -66,7 +66,7 @@ class Agency {
     } else if (searchType === 'pending') {
       //pending status and only in the future.
       console.log("pending--->", this.trips.filter(trip => trip.userID === usersId &&trip.status === 'pending'))
-      return this.trips.filter(trip => trip.userID === usersId &&trip.status === 'pending');
+      return this.trips.filter(trip => trip.userID === usersId &&trip.status === 'pending' && trip.date > todayDate);
     }
     
   }
