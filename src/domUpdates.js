@@ -6,7 +6,16 @@ export const renderDestinations = (destinations) => {
       
     type: 'carousel',
     startAt: 0,
-    perView: 3
+    perView: 1,
+    //check breakpoint pixels.
+    breakpoints: {
+      1024: {
+        perView: 2
+      },
+      600: {
+        perView: 1
+      }
+    }
   
 }
 
