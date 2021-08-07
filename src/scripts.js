@@ -10,13 +10,16 @@ import Agency from './Agency';
 // import Trip from './Trip';
 
 
-import { renderDestinations } from './domUpdates'
+import { renderDestinations, glideSlides } from './domUpdates'
 
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
 
 // global variables:  current User(which is the object data that is fetched from the single user endpoint after the login. (ps you could call a method on the agency class to retrieve users data and use that when you instantiate your user class do give them their bookings)), date
+
+//temporarily a global variable (get userTrips and destination search bar needs it.)
+let destinations;
 
 //////////////EVENT LISTENERS/////////////
 // window.addEventListener('load', displayLoginPage());
@@ -26,6 +29,33 @@ document.getElementById('user-login-submit').addEventListener('click', (e) => {
   validateUser(e);
 })
 
+glideSlides.addEventListener('click', (e) => {
+  // if (e.target.classList.contains('home-button')) {
+  //   showHomePage()};
+  populateSearchBar(e);
+})
+
+const destinationSearchBar = document.getElementById('destination-search')
+
+destinationSearchBar.addEventListener('keyup', function(e) {
+  createFilteredList(e);
+});
+
+function populateSearchBar(e) {
+  console.log(e.target)
+
+  const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
+
+   console.log("destinationSearchBar", destinationSearchBar)
+   
+   console.log(destinationSearchBar.value);
+
+   console.log(destinationChosen, 'destinationChosen')
+
+   destinationSearchBar.value = destinationChosen.location
+
+ 
+}
 
 ////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
 
@@ -61,8 +91,7 @@ function fetchData(type) {
     .catch(err => console.log(`ERROR with ${type}: ${err}`))
 }
 
-//temporarily a global variable
-let destinations;
+
 //today date needs to be set ... 
 function getUserTrips(data, userID) {
   //passing in the data which is the instance of agency 
@@ -93,9 +122,9 @@ function getUserTrips(data, userID) {
 
 
 ///////FILTER DESTINATIONS//////////////
-document.getElementById('destination-search').addEventListener('keyup', function(e) {
-  createFilteredList(e);
-});
+// document.getElementById('destination-search').addEventListener('keyup', function(e) {
+//   createFilteredList(e);
+// });
   
 const createFilteredList = (e) => {
   const searchedDestination = e.target.value.toLowerCase();

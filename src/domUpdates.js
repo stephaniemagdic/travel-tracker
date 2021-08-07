@@ -1,5 +1,7 @@
 import Glide from '@glidejs/glide'
 
+export const glideSlides = document.getElementById('glide-slides');
+
     // create a card to display
     // put in a carousel. 
     // make sure they all have event listeners to be able to be selected by id 
@@ -24,13 +26,12 @@ export const renderDestinations = (destinations) => {
 }
 
   let glide = new Glide('.glide', config)
-  const glideSlides = document.getElementById('glide-slides');
   glideSlides.innerHTML = '';
 
   destinations.forEach(destination => {
     console.log('destination inside of forEach', destination)
     glideSlides.innerHTML += `
-      <li class="glide__slide" ${destination.id}>
+      <li class="glide__slide" id="${destination.id}">
         ${createCard(destination.location, destination.image, destination.alt)}
       </li>
     `
@@ -41,9 +42,6 @@ export const renderDestinations = (destinations) => {
 };
 
 
-
-//IF WANT TO ADD CARD DYNAMICALLY.
-// ${createCard(destination.location, destination.image, destination.alt)}
 function createCard(destination, img, alt) {
 
   return `
