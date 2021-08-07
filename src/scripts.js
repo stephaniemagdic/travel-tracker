@@ -158,6 +158,7 @@ function requestTrip(e) {
   const startDate = document.getElementById('start');
   const durationInput = document.getElementById('duration');
   const destinationID = getDestinationIdByName(destinationSearchBar.value.toString())
+  const numTravelers = document.getElementById('number-of-travelers')
 
   console.log('destinationID ====>', destinationID)
 
@@ -167,8 +168,8 @@ function requestTrip(e) {
     // date: formData.get('tripStart'),
     // id: ,
     // userID,
-    // destinationID,
-    // travelers: ,
+    destinationID: parseInt(destinationID),
+    travelers: parseInt(numTravelers.value),
     date: formatDate(startDate.value),
     duration: parseInt(durationInput.value),
     // status: ,
