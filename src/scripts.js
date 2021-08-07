@@ -18,13 +18,28 @@ console.log('This is the JavaScript entry file - your code begins here.');
 //////////////EVENT LISTENERS/////////////
 // window.addEventListener('load', displayLoginPage());
 
+document.getElementById('user-login-submit').addEventListener('click', (e) => {
+  console.log("here in event listener")
+  validateUser(e);
+})
+
+
 ////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
 
-fetchUserDashboardData();
+const validateUser = (e) => {
+  //logic to check user data and fetch at single user will go here.
+  console.log(e)
+  e.preventDefault()
+  console.log("here")
+  fetchUserDashboardDataByUserId(1)
+}
+//call this function after validate user function and then pass int the userID...
+// user ID WILL BE PASSED IN AS ARGUMENT EVENTUALLY HERE.
+// fetchUserDashboardDataByUserId(userID);
 //if users info is correct call this function.
-function fetchUserDashboardData() {
+function fetchUserDashboardDataByUserId(userID) {
   Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
-    .then((data) => getUserTrips(data));
+    .then((data) => getUserTrips(data, userID));
     console.log("test")
 }
 
@@ -43,12 +58,21 @@ function fetchData(type) {
     .catch(err => console.log(`ERROR with ${type}: ${err}`))
 }
 
-function getUserTrips(data) {
+//today date needs to be set ... 
+function getUserTrips(data, userID) {
   //passing in the data which is the instance of agency 
 
   // const agency = data; 
-  console.log(data)
-  console.log (" we are in get User trips!")
+  console.log("this should be an instance of agency-->", data)
+
+  console.log('this should be 1', userID)
+
+  // will use userID to fetch the correct trips.
+
+  const agency = data;
+
+  console.log(agency.getTripsByUser(userID, 'past', "2021/08/05"))
+  // need to call the next function in TYpora document which is to pass these in to a display function which will call the render functions!
 }
 ////////// GRAB THE FORM INPUT /////////////////////////
 
@@ -94,3 +118,5 @@ const formatDate = (dateToFormat) => {
   const rearrangedDate = [year, month, day];
   return rearrangedDate.join("/");
 }
+
+///// display all destination options****
