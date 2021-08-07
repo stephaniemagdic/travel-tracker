@@ -43,7 +43,7 @@ const validateUser = (e) => {
 function fetchUserDashboardDataByUserId(userID) {
   Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
     .then((data) => getUserTrips(data, userID));
-    console.log("test")
+  console.log("test")
 }
 
 function fetchAgencyData() {
@@ -61,6 +61,8 @@ function fetchData(type) {
     .catch(err => console.log(`ERROR with ${type}: ${err}`))
 }
 
+
+let destinations;
 //today date needs to be set ... 
 function getUserTrips(data, userID) {
   //passing in the data which is the instance of agency 
@@ -77,14 +79,37 @@ function getUserTrips(data, userID) {
   console.log(agency.getTripsByUser(userID, 'past', "2021/08/05"))
   // need to call the next function in TYpora document which is to pass these in to a display function which will call the render functions!
   // the render functions will include display destinations data .. see below
+  
+  
+  //make this global so you can see it with your filter.
 
-          displayDestinationsData(agency.destinations)
+  destinations = agency.destinations;
+  displayDestinationsData(agency.destinations)
 }
 ////////// GRAB THE FORM INPUT /////////////////////////
 
 
 
+///////FILTER DESTINATIONS//////////////
+document.getElementById('destination-search').addEventListener('keyup', function(e) {
+  createFilteredList(e);
+});
+  
+const createFilteredList = (e) => {
+  console.log("we are in the filtered function")
+  console.log(e.target)
+  const searchedDestination = e.target.value.toLowerCase();
 
+  let filteredDestinations = destinations.filter((destination) => {
+    return (
+      // change this to start with starts with ... not includes...
+      //use substring instead//unless they can search by country as well.
+      destination.location.toLowerCase().includes(searchedDestination)  
+    )
+  });
+ 
+  displayDestinationsData(filteredDestinations)
+}
 
 
 ///////BOOK A TRIP SUBMIT BUTTON /////////////////////
@@ -95,7 +120,7 @@ document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
 
 function requestTrip(e) {
   //change the form min to todays date... on page reload.
-    // grab element attribute and set to todayDate.
+  // grab element attribute and set to todayDate.
   const dateControl = document.querySelector('input[type="date"]');
  
   e.preventDefault();
