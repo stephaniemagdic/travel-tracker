@@ -8,6 +8,7 @@ import './css/base.scss';
 import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
+import { postData } from './apiCalls.js'
 
 
 import { renderDestinations, glideSlides } from './domUpdates'
@@ -20,7 +21,20 @@ console.log('This is the JavaScript entry file - your code begins here.');
 
 //temporarily a global variable (get userTrips and destination search bar needs it.)
 let destinations;
+let agency;
+///TEMPORARY USER OBJECT TO TEST POST:
+fetchUserData()
 
+function fetchUserData() {
+ fetchData('travelers/10').then(data => {
+   console.log("here is user data");
+   currentUser = data;
+   console.log(currentUser)
+ }) 
+ 
+}
+
+let currentUser;
 //////////////EVENT LISTENERS/////////////
 // window.addEventListener('load', displayLoginPage());
 
@@ -85,6 +99,8 @@ function fetchData(type) {
 }
 
 
+
+
 //today date needs to be set ... 
 function getUserTrips(data, userID) {
   //passing in the data which is the instance of agency 
@@ -93,7 +109,8 @@ function getUserTrips(data, userID) {
   console.log("this should be an instance of agency-->", data)
   console.log('this should be 1', userID)
 
-  const agency = data;
+ 
+  agency = data;
  
   console.log(agency.getTripsByUser(userID, "2021/08/05", 'past'))
 
@@ -166,16 +183,17 @@ function requestTrip(e) {
  
   const tripRequest = {
     // date: formData.get('tripStart'),
-    // id: ,
-    // userID,
+    id: parseInt((agency.returnTotalNumTrips() + 1)),
+    userID: currentUser.id,
     destinationID: parseInt(destinationID),
     travelers: parseInt(numTravelers.value),
     date: formatDate(startDate.value),
     duration: parseInt(durationInput.value),
-    // status: ,
-    // suggestedActivities: ,
+    status: 'pending',
+    suggestedActivities: [],
   }
-  console.log(tripRequest)
+  console.log("tripRequest--->", tripRequest);
+  postNewTrip(tripRequest);
 }
 
 
@@ -195,4 +213,15 @@ function displayDestinationsData(destinations) {
   console.log("here in destinations data function-->", destinations)
 
   renderDestinations(destinations);
+}
+
+///make post request
+//error handling 
+function postNewTrip(tripRequest) {
+
+};
+
+//POST DATA
+function postData(type) {
+
 }
