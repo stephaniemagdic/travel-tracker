@@ -6,6 +6,9 @@
 import './css/base.scss';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
+import Agency from './Agency';
+// import Trip from './Trip';
+
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
@@ -21,26 +24,30 @@ fetchUserDashboardData();
 //if users info is correct call this function.
 function fetchUserDashboardData() {
   Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
-    .then(() => getUserTrips());
+    .then((data) => getUserTrips(data));
     console.log("test")
 }
 
 function fetchAgencyData() {
-  return Promise.all([fetchData('trips') , fetchData('destinations')]).then(values => values);
+  return Promise.all([fetchData('trips'), fetchData('destinations')]).then(values => values);
 }
 
 function generateAgency(dataSets) {
-  agency = new Agency(dataSets[0], dataSets[1]);
+  return new Agency(dataSets[0].trips, dataSets[1].destinations);
 }
 
 function fetchData(type) {
-  return fetch(`http://localhost:3001/api/v1/{type}`)
+  return fetch(`http://localhost:3001/api/v1/${type}`)
     .then(response => response.json())
     .then(data => data)
     .catch(err => console.log(`ERROR with ${type}: ${err}`))
 }
 
-function getUserTrips() {
+function getUserTrips(data) {
+  //passing in the data which is the instance of agency 
+
+  // const agency = data; 
+  console.log(data)
   console.log (" we are in get User trips!")
 }
 ////////// GRAB THE FORM INPUT /////////////////////////
