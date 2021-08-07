@@ -1,86 +1,51 @@
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
-
 // An example of how you tell webpack to use a CSS (SCSS) file
-import './css/base.scss';
 
+
+import './css/base.scss';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
 
-
-
-// global variables:  current User, date
-
+// global variables:  current User(which is the object data that is fetched from the single user endpoint after the login. (ps you could call a method on the agency class to retrieve users data and use that when you instantiate your user class do give them their bookings)), date
 
 //////////////EVENT LISTENERS/////////////
-window.addEventListener('load', loadPage);
+// window.addEventListener('load', displayLoginPage());
 
 ////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
 
-// function loadPage() {
-//   Promise.resolve(fetchPageData()).then((data) => generateRepoClasses(data))
-//     .then(() => displayPageInfo());
-//     console.log("test")
-// }
+fetchUserDashboardData();
+//if users info is correct call this function.
+function fetchUserDashboardData() {
+  Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
+    .then(() => getUserTrips());
+    console.log("test")
+}
 
-// function fetchPageData() {
-//   const userRepoPromise = fetchData('users') 
-//   const hydrationRepoPromise = fetchData('hydration')  
-//   const sleepRepoPromise = fetchData('sleep')  
-//   return Promise.all([userRepoPromise, hydrationRepoPromise, sleepRepoPromise]).then(values => values);
-// }
+function fetchAgencyData() {
+  return Promise.all([fetchData('trips') , fetchData('destinations')]).then(values => values);
+}
 
-// function generateRepoClasses(dataSets) {
-//   allUserData = new UserRepository(dataSets[0].userData);
-//   allHydrationData = new HydrationRepository(dataSets[1].hydrationData);
-//   allSleepData = new SleepRepository(dataSets[2].sleepData);
-// }
+function generateAgency(dataSets) {
+  agency = new Agency(dataSets[0], dataSets[1]);
+}
 
-// function fetchData(type) {
-//   return fetch(`http://localhost:3001/api/v1/${type}`)
-//     .then(response => response.json())
-//     .then(data => data)
-//     .catch(err => console.log(`ERROR with ${type}: ${err}`))
-// }
+function fetchData(type) {
+  return fetch(`http://localhost:3001/api/v1/{type}`)
+    .then(response => response.json())
+    .then(data => data)
+    .catch(err => console.log(`ERROR with ${type}: ${err}`))
+}
 
-//---------------------ALL DISPLAY FUNCTIONS----------------------------------//
-// function displayPageInfo() {
-//   const randomUser = allUserData.userData[Math.floor(Math.random()* allUserData.userData.length)]
-//   const user = new User(allUserData.returnUserData(randomUser.id));
-//   displayUserCard(user);
-//   displayAllHydrationData(user);
-//   displayAllSleepData(user);
-// }
-
-
-
+function getUserTrips() {
+  console.log (" we are in get User trips!")
+}
 ////////// GRAB THE FORM INPUT /////////////////////////
 
-// import dayjs from 'dayjs';
-// let defaultDate = new Date();
-// let currentDate = dayjs(defaultDate).format('YYYY/MM/DD');
 
-
-/////////////// FORM SEARCH FUNCTIONALITY //////////////////
-//If no search criteria then show all**
-// searchBar.addEventListener('keyup', function(e) {
-//   createFilteredList(e);
-// });
-
-// const createFilteredList = (e) => {
-//   const searchedDestinations = e.target.value.toLowerCase();
-  
-//     let filteredDestinations = (AGENCYREPO.destinations).filter((destination) => {
-//       return (
-          // destination.name.toLowerCase().includes()  
-//       )
-//     });
-//     displayDestinations(filteredDestinations);
- 
-// }
 
 
 
