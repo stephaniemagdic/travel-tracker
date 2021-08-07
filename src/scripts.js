@@ -9,8 +9,8 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
 
-import { renderDestinations } from './domUpdates'
 
+import { renderDestinations } from './domUpdates'
 
 
 console.log('This is the JavaScript entry file - your code begins here.');
@@ -36,20 +36,20 @@ const validateUser = (e) => {
   console.log("here")
   fetchUserDashboardDataByUserId(1)
 }
-//call this function after validate user function and then pass int the userID...
+//call this function after validate user function and then pass int the userID..
 // user ID WILL BE PASSED IN AS ARGUMENT EVENTUALLY HERE.
 // fetchUserDashboardDataByUserId(userID);
 //if users info is correct call this function.
 function fetchUserDashboardDataByUserId(userID) {
   Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
     .then((data) => getUserTrips(data, userID));
-  console.log("test")
 }
 
 function fetchAgencyData() {
   return Promise.all([fetchData('trips'), fetchData('destinations')]).then(values => values);
 }
 
+//add traveler data.
 function generateAgency(dataSets) {
   return new Agency(dataSets[0].trips, dataSets[1].destinations);
 }
@@ -61,7 +61,7 @@ function fetchData(type) {
     .catch(err => console.log(`ERROR with ${type}: ${err}`))
 }
 
-
+//temporarily a global variable
 let destinations;
 //today date needs to be set ... 
 function getUserTrips(data, userID) {
@@ -69,23 +69,25 @@ function getUserTrips(data, userID) {
 
   // const agency = data; 
   console.log("this should be an instance of agency-->", data)
-
   console.log('this should be 1', userID)
+
+  const agency = data;
+ 
+  console.log(agency.getTripsByUser(userID, "2021/08/05", 'past'))
 
   // will use userID to fetch the correct trips.
 
-  const agency = data;
 
-  console.log(agency.getTripsByUser(userID, 'past', "2021/08/05"))
   // need to call the next function in TYpora document which is to pass these in to a display function which will call the render functions!
   // the render functions will include display destinations data .. see below
-  
   
   //make this global so you can see it with your filter.
 
   destinations = agency.destinations;
   displayDestinationsData(agency.destinations)
 }
+
+
 ////////// GRAB THE FORM INPUT /////////////////////////
 
 
@@ -96,13 +98,10 @@ document.getElementById('destination-search').addEventListener('keyup', function
 });
   
 const createFilteredList = (e) => {
-  console.log("we are in the filtered function")
-  console.log(e.target)
   const searchedDestination = e.target.value.toLowerCase();
 
   let filteredDestinations = destinations.filter((destination) => {
     return (
-      // change this to start with starts with ... not includes...
       //use substring instead//unless they can search by country as well.
       destination.location.toLowerCase().includes(searchedDestination)  
     )
