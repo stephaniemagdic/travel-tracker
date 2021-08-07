@@ -1,11 +1,12 @@
 import Trip from './Trip.js';
 import Destination from './Destination.js';
+import Traveler from './Traveler.js';
 
 class Agency {
   constructor(tripData, destinationData) {
     this.trips = tripData.map(data => new Trip(data));
-    this.destinations = destinationData.map(data => new Destination(data))
-    //travelers// needed for iteration 4
+    this.destinations = destinationData.map(data => new Destination(data));
+    // this.travelers = travelersData.map(data => new Traveler(data));
   }
 
   returnTotalNumTrips() {
@@ -17,58 +18,43 @@ class Agency {
     return this.trips.find(trip => trip.id === id);
   }
 
-  //include a test for null searchType
-  //move null to third parameter in all tests.
-  getTripsByUser(usersId, searchType = null, todayDate, searchYear = null) {
-    let userApprovedTrips = this.trips.filter(trip => trip.userID === usersId &&trip.status === 'approved');
 
-    /// this is if we want the trips in the past and but only in one year.
+
+  // getTripsByUser(usersId, searchType = null, todayDate, searchYear = null) {
+  getTripsByUser(usersId, todayDate, searchType, searchYear = null) {
+    let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId &&trip.status === 'approved');
+
     if (searchYear) {
-      //ignore the searchType. .. 
-      return userApprovedTrips.filter(trip => {
-        return parseInt(trip.date.split('/')[0]) === parseInt(searchYear)
-      }) 
-      
+      return usersApprovedTrips
+        .filter(trip => parseInt(trip.date.split('/')[0]) === parseInt(searchYear)) 
     }
-   //------------------
     if (searchType === 'past') {
-      return userApprovedTrips = userApprovedTrips.filter(trip => {
-      ///You can do a string comparison to make this simpler.. who knew? '2021/09/05' < '2021/10/05' true.
-      //put in seperate fucntion that is called format date// ******
-        return (
-          (trip.date.split('/')[0] < todayDate.split('/')[0]) ||
-          (trip.date.split('/')[0] === todayDate.split('/')[0] &&
-          trip.date.split('/')[1] < todayDate.split('/')[1]) || 
-          (trip.date.split('/')[0] === todayDate.split('/')[0] &&
-          trip.date.split('/')[1] === todayDate.split('/')[1] &&
-          trip.date.split('/')[2] < todayDate.split('/')[2])
-        ) 
-      }).sort((tripA, tripB) => tripA.date - tripB.date);
-      // console.log(userApprovedTrips);
+      usersApprovedTrips = usersApprovedTrips
+        .filter(trip => trip.date < todayDate)
     } else if (searchType === 'current') {
-      if (userApprovedTrips.find(trip => trip.date === todayDate)) {
-        return  userApprovedTrips.find(trip => trip.date === todayDate)
+      if (usersApprovedTrips.find(trip => trip.date === todayDate)) {
+        return  usersApprovedTrips.find(trip => trip.date === todayDate)
       } else {
         return '';
       }
     } else if (searchType === 'future') {
-      userApprovedTrips = userApprovedTrips
+      usersApprovedTrips = usersApprovedTrips
         .filter(trip => trip.date > todayDate)
     } else if (searchType === 'pending') {
       return this.trips
         .filter(trip => trip.userID === usersId &&trip.status === 'pending' && trip.date > todayDate)
         .sort((tripA, tripB) => tripA.date - tripB.date);
     }
-    // sort once here so they come out in order.... and return once. * 
-    return userApprovedTrips.sort((tripA, tripB) => tripA.date - tripB.date)
+   
+    return usersApprovedTrips.sort((tripA, tripB) => tripA.date - tripB.date)
   }
 
 
-
+ 
   getUserYearlyExpenses(userID, searchYear, todayDate) {
     //we dont need a date here so make optional in previous function.
 
-    return this.getTripsByUser(userID, 'past', todayDate, searchYear)
+    return this.getTripsByUser(userID, todayDate, 'past', searchYear)
       .reduce((totalCost, trip) => {
         totalCost += trip.calculateTotalTripCost(this.destinations);
         return totalCost;
@@ -100,3 +86,14 @@ class Agency {
 
 
 export default Agency;
+
+
+//ANOTHER WAY TO COMPARE DATES:
+     // return (
+        //   (trip.date.split('/')[0] < todayDate.split('/')[0]) ||
+        //   (trip.date.split('/')[0] === todayDate.split('/')[0] &&
+        //   trip.date.split('/')[1] < todayDate.split('/')[1]) || 
+        //   (trip.date.split('/')[0] === todayDate.split('/')[0] &&
+        //   trip.date.split('/')[1] === todayDate.split('/')[1] &&
+        //   trip.date.split('/')[2] < todayDate.split('/')[2])
+        // ) 
