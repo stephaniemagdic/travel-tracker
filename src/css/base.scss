@@ -1,7 +1,18 @@
+@use 'normalize.css' as *;
+//you could download , upload and import if you wanted.
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
+
+// Optional Theme Stylesheet
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
+
 /* This is an example of using Sass, otherwise plain CSS works too*/
 $primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
 ;
 
 body {
   background: $primary-background;
+}
+
+.hidden {
+  display: none;
 }

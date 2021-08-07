@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +8,117 @@
 </head>
 <body>
   <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+  <header>
+    //HEADER CONTENT
+  </header>
+  <main>
+    <section class="login-page">
+     //LOGIN PAGE
+      <fieldset>
+        <legend>User Login</legend>
+          <form class="user-login-form" id="user-login" aria-label="user-information">
+            <input type="text" id="username" name="username" aria-label="username" placeholder="username">
+            <input type="text" id="password" name="password" aria-label="password" placeholder="password">
+            <!-- <input type="submit" id="user-login-submit"> -->
+            <button id="user-login-submit">SUBMIT</button>
+          </form>
+      </fieldset>
+    </section>
+    <section class="user-dashboard-page">
+      //USER DASHBOARD
+      <h1>Your Travel Data</h1>
+      <article class="trip-container">
+        <h2>Your Trip History</h2>
+        <div class="past-trip-container"> 
+          <!-- past trips will go here -->
+        </div>
+      </article>
+      <article class="trip-container">
+        <h2>Your Present Trips</h2>
+        <div class="present-trip-container"> 
+          <!-- present trips will go here -->
+        </div>
+      </article>
+      <article class="trip-container">
+        <h2>Your Future Trips</h2>
+        <div class="future-trip-container"> 
+          <!-- future trips will go here -->
+        </div>
+      </article>
+      <article class="trip-container">
+        <h2>Your Pending Trips</h2>
+        <div class="pending-trip-container"> 
+          pending trips will go here
+        </div>
+      </article>
+      <p class="yearly-trip-spending">
+        YEARLY TRIP SPENDING WILL GO HERE
+      </p>
+     </section>
+     <section class="book-a-trip-page">
+      <div>
+        <form id="book-a-trip-form">
+          <fieldset>
+            <legend>Book A Trip</legend>
+              <input type="date" id="start" name="trip-start"
+                placeholder="dd-mm-yyyy" value=""
+                min="2016-01-01" max="2018-12-31" required>
+              <label for="start">Start date</label>
+              <input type="date" id="end" name="trip-end"
+                placeholder="dd-mm-yyyy" value=""
+                min="2016-01-01" max="2018-12-31" required>
+              <label for="end">End Date</label>
+              <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="city" required>
+
+              <!-- <input type="text" name="duration" id="duration" placeholder="duration" aria-label="Enter the duration of your trip"> -->
+              <select name="number-of-travlers" id="number-of-travelers" required>
+                <option value="">number of travelers</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <!-- <option value="">other/special request</option> -->
+              <input type="submit">
+          </fieldset>
+        </form>
+      </div>
+      <section id="destinations-container">
+        here is where the courosel will go
+        <div class="glide">
+          <div data-glide-el="track" class="glide__track">
+            <ul class="glide__slides">
+              <!-- <li class="glide__slide"></li>
+              <li class="glide__slide"></li>
+              <li class="glide__slide"></li> -->
+            </ul>
+          </div>
+          <div class="glide__arrows" data-glide-el="controls">
+            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+          </div>
+        </div>
+      </section>
+     </section>
+     <section class="agent-dashboard-page hidden">
+      //AGENT DASHBOARD
+     </section>
+  <footer> 
+    <nav>
+      <button class="display-booking-screen-button">
+        Book a Trip
+      </button>
+      <button class="display-trips-button hidden">
+        See My Travel Data
+      </button>
+      <button>
+        Home
+      </button>
+    </nav>
+  </footer>
+  </main>
   
   <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
