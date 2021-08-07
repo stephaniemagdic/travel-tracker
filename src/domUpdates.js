@@ -68,3 +68,10 @@ new Glide('.glide', config).mount()
   })
   
 };
+
+
+const destinationCardHTML = `
+
+
+
+`
