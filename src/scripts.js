@@ -194,6 +194,8 @@ function requestTrip(e) {
   }
   console.log("tripRequest--->", tripRequest);
   postNewTrip(tripRequest);
+
+  e.target.reset()
 }
 
 
@@ -218,10 +220,29 @@ function displayDestinationsData(destinations) {
 ///make post request
 //error handling 
 function postNewTrip(tripRequest) {
-
+  Promise.resolve(postData('trips', tripRequest)).then(res => {
+    console.log(res)
+    checkForErrors(res)
+  }).then(data => console.log("this is the returned parsed response-->", data))
+    //check for error...
+    // if res.ok ... then redisplay the page with pending trips.
+        // also show the trip cost.
+        //because this function is async
+        // it cant show the response right away
+        // therefore..show a message of response recieved... processing. wait one minute.
+        // then show response.
+    // if !res.ok ... display error message (this is in a catch//should throw an error)
+       // types of error messages include
 };
 
-//POST DATA
-function postData(type) {
 
+function checkForErrors(res) {
+  console.log(res);
+  if (!res.ok) {
+    throw new Error("Please make sure all feild are filled out");
+  } else  {
+  return res.json()
+  }
+  
 }
+
