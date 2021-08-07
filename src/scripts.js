@@ -9,6 +9,9 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
 
+import { renderDestinations } from './domUpdates'
+
+
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
@@ -73,6 +76,9 @@ function getUserTrips(data, userID) {
 
   console.log(agency.getTripsByUser(userID, 'past', "2021/08/05"))
   // need to call the next function in TYpora document which is to pass these in to a display function which will call the render functions!
+  // the render functions will include display destinations data .. see below
+
+          displayDestinationsData(agency.destinations)
 }
 ////////// GRAB THE FORM INPUT /////////////////////////
 
@@ -119,4 +125,11 @@ const formatDate = (dateToFormat) => {
   return rearrangedDate.join("/");
 }
 
-///// display all destination options****
+
+
+
+function displayDestinationsData(destinations) {
+  console.log("here in destinations data function-->", destinations)
+
+  renderDestinations(destinations);
+}
