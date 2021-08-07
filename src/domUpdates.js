@@ -1,9 +1,14 @@
 import Glide from '@glidejs/glide'
 
-export const renderDestinations = (destinations) => {
+    // create a card to display
+    // put in a carousel. 
+    // make sure they all have event listeners to be able to be selected by id 
+    // and populate the form with that city.
+    // then .find from all destinations based on that search.
 
-  const config = {
-      
+export const renderDestinations = (destinations) => {
+  console.log(destinations, "destinations inside of render destinations")
+    const config = {
     type: 'carousel',
     startAt: 0,
     perView: 1,
@@ -16,62 +21,39 @@ export const renderDestinations = (destinations) => {
         perView: 1
       }
     }
-  
 }
 
-new Glide('.glide', config).mount()
+  let glide = new Glide('.glide', config)
+  const glideSlides = document.getElementById('glide-slides');
+  glideSlides.innerHTML = '';
 
-
-  
-  const glideTrack = document.getElementById('glide__track');
-
-    destinations.forEach(destination => {
-    glideTrack.innerHTML += 
-
-    // create a card to display
-    // put in a carousel. 
-    // make sure they all have event listeners to be able to be selected by id 
-    // and populate the form with that city.
-    // then .find from all destinations based on that search.
-
-
-      <li class="glide__slide" >
-           //html for a card below goes in here.
-
+  destinations.forEach(destination => {
+    console.log('destination inside of forEach', destination)
+    glideSlides.innerHTML += `
+      <li class="glide__slide" ${destination.id}>
+        ${createCard(destination.location, destination.image, destination.alt)}
       </li>
-            
-
-    `<p>
-      ${destination.id}
-    </p>
-      ${destination.location}
-    <p>
-      ${destination.estLodgingCostPerDay}
-    </p>
-
-    <p>
-      ${destination.estFlightCostPerPerson}
-    </p>
-
-    <p>
-    ${destination.image}
-  </p>
-
-  <p>
-    ${destination.alt}
-  </p>
-  
-
     `
-
-
   })
+
+  glide.mount();
   
 };
 
 
-const destinationCardHTML = `
+
+//IF WANT TO ADD CARD DYNAMICALLY.
+// ${createCard(destination.location, destination.image, destination.alt)}
+function createCard(destination, img, alt) {
+
+  return `
+        <div class="card-top card-img-1 mobile-card-img-size">
+          <div class="destination-name-container">
+            <img src="${img}" alt="${alt}" >
+            <p class="destination-name-label">${destination}</p>
+          </div>
+        </div>
+  `
+}
 
 
-
-`
