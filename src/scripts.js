@@ -43,18 +43,11 @@ destinationSearchBar.addEventListener('keyup', function(e) {
 
 function populateSearchBar(e) {
   console.log(e.target)
-
   const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
-
    console.log("destinationSearchBar", destinationSearchBar)
-   
    console.log(destinationSearchBar.value);
-
    console.log(destinationChosen, 'destinationChosen')
-
    destinationSearchBar.value = destinationChosen.location
-
- 
 }
 
 ////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
@@ -122,10 +115,7 @@ function getUserTrips(data, userID) {
 
 
 ///////FILTER DESTINATIONS//////////////
-// document.getElementById('destination-search').addEventListener('keyup', function(e) {
-//   createFilteredList(e);
-// });
-  
+//filter function may not be as helpful with courosel.
 const createFilteredList = (e) => {
   const searchedDestination = e.target.value.toLowerCase();
 
@@ -136,6 +126,7 @@ const createFilteredList = (e) => {
     )
   });
  
+  console.log("filteredDestinations",filteredDestinations)
   displayDestinationsData(filteredDestinations)
 }
 
@@ -146,22 +137,40 @@ document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
   requestTrip(e)
 });
 
+  ///YOU ARE HERE
+  function getDestinationIdByName(name) {
+    //change both to lowercase.
+
+    return destinations.find(destination => {
+      
+      return destination.location.toLowerCase().includes(name.toLowerCase());
+    }).id;
+  }
+
 function requestTrip(e) {
-  //change the form min to todays date... on page reload.
-  // grab element attribute and set to todayDate.
-  const dateControl = document.querySelector('input[type="date"]');
- 
-  e.preventDefault();
+    e.preventDefault();
   // const formData = new FormData(e.target);
 
+
+  //change the form min to todays date... on page reload.
+  // grab element attribute and set to todayDate.
+  // const dateControl = document.querySelector('input[type="date"]');
+  const startDate = document.getElementById('start');
+  const durationInput = document.getElementById('duration');
+  const destinationID = getDestinationIdByName(destinationSearchBar.value.toString())
+
+  console.log('destinationID ====>', destinationID)
+
+  //to get the destination... we need to do a find through the destinations and get the id.
+ 
   const tripRequest = {
     // date: formData.get('tripStart'),
     // id: ,
     // userID,
     // destinationID,
     // travelers: ,
-    date: formatDate(dateControl.value),
-    // duration: ,
+    date: formatDate(startDate.value),
+    duration: parseInt(durationInput.value),
     // status: ,
     // suggestedActivities: ,
   }
