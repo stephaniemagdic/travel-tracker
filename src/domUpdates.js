@@ -65,3 +65,24 @@ export function clearTripRequestErrorField() {
 
 }
 
+export function renderUserTrips(past, current, future, pending, agency) {
+  const pastTripsContainer = document.getElementById('past-trips');
+  const presentTripsContainer = document.getElementById('present-trips');
+  const futureTripsContainer = document.getElementById('future-trips');
+  const pendingTripsContainer = document.getElementById('pending-trips');
+
+  pastTripsContainer.innerHTML = '';
+  presentTripsContainer.innerHTML = '';
+  futureTripsContainer.innerHTML = '';
+  pendingTripsContainer.innerHTML = '';
+
+  past.forEach(trip => {
+    pastTripsContainer.innerHTML += `
+      <div>
+      <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
+      <p>${trip.date}</p>
+      </div>
+    `
+  })
+
+}
