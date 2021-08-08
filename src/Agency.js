@@ -15,9 +15,18 @@ class Agency {
 
   //why is this method needed? // in order to grab after we create an instance for fetch after we store in a global variable we want to use the trip id to get trip by id to display the data the cost of the trip*
   getTripById(id) {
-    return this.trips.find(trip => trip.id === id);
+
+    return this.trips.find(trip => trip.id === parseInt(id));
   }
 
+  // findDestination()
+
+  //MAKE THIS A METHOD? //yu would have to make agency global...
+  // getDestinationIdByName(name) {
+  //   return this.destinations.find(destination => {
+  //     destination.location.includes(name);
+  //   }).id;
+  // }
 
 
   // getTripsByUser(usersId, searchType = null, todayDate, searchYear = null) {
@@ -54,13 +63,24 @@ class Agency {
   getUserYearlyExpenses(userID, searchYear, todayDate) {
     //we dont need a date here so make optional in previous function.
 
+  // this will only bring past trips... 
     return this.getTripsByUser(userID, todayDate, 'past', searchYear)
       .reduce((totalCost, trip) => {
         totalCost += trip.calculateTotalTripCost(this.destinations);
         return totalCost;
       }, 0)
 
+    //if we want to include future also. 
+    // we want future also.
+    // .getTripsByUser(userID, todayDate, 'future')
   }
+
+  ///new test needed for this one
+  //get destination by name by ID
+  getDestinationLocationByID(id) {
+    return this.destinations.find(destination => destination.id === id).location;
+  }
+  
 }
 
 
