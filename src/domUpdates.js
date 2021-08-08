@@ -1,15 +1,11 @@
 import Glide from '@glidejs/glide'
-
 export const glideSlides = document.getElementById('glide-slides');
 
-    // create a card to display
-    // put in a carousel. 
-    // make sure they all have event listeners to be able to be selected by id 
-    // and populate the form with that city.
-    // then .find from all destinations based on that search.
 
 export const renderDestinations = (destinations) => {
-  console.log(destinations, "destinations inside of render destinations")
+  // console.log(destinations, "destinations inside of render destinations")
+  glideSlides.innerHTML = '';
+
     const config = {
     type: 'carousel',
     startAt: 0,
@@ -17,7 +13,7 @@ export const renderDestinations = (destinations) => {
     //check breakpoint pixels.
     breakpoints: {
       1024: {
-        perView: 2
+        perView: 1
       },
       600: {
         perView: 1
@@ -27,8 +23,7 @@ export const renderDestinations = (destinations) => {
 
   let glide = new Glide('.glide', config)
   
-  glideSlides.innerHTML = '';
-
+  // glideSlides.innerHTML = ''; //moved this up.
 
   destinations.forEach(destination => {
     console.log('destination inside of forEach', destination)
@@ -38,14 +33,11 @@ export const renderDestinations = (destinations) => {
       </li>
     `
   })
-
   glide.mount();
   
 };
 
-
 function createCard(destination, img, alt) {
-
   return `
         <div class="card-top card-img-1 mobile-card-img-size">
           <div class="destination-name-container">
@@ -59,15 +51,12 @@ function createCard(destination, img, alt) {
 
 export function setBookingCalendar(todayDate) {
   let calendar = document.getElementById('start');
-
   let min = todayDate.split("/").join("-");
-
   let splitDate = todayDate.split('/');
   splitDate.splice(0, 1, (parseInt(todayDate.split('/')[0]) + 1));
   let max = splitDate.join("-");
 
   calendar.setAttribute('min', (min.toString()));
   calendar.setAttribute('max', (max.toString()));
-
 }
 
