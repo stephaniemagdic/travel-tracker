@@ -13,7 +13,7 @@ export const renderDestinations = (destinations) => {
     const config = {
     type: 'carousel',
     startAt: 0,
-    perView: 1,
+    perView: 4,
     //check breakpoint pixels.
     breakpoints: {
       1024: {
@@ -26,7 +26,9 @@ export const renderDestinations = (destinations) => {
 }
 
   let glide = new Glide('.glide', config)
+  
   glideSlides.innerHTML = '';
+
 
   destinations.forEach(destination => {
     console.log('destination inside of forEach', destination)
@@ -54,4 +56,18 @@ function createCard(destination, img, alt) {
   `
 }
 
+
+export function setBookingCalendar(todayDate) {
+  let calendar = document.getElementById('start');
+
+  let min = todayDate.split("/").join("-");
+
+  let splitDate = todayDate.split('/');
+  splitDate.splice(0, 1, (parseInt(todayDate.split('/')[0]) + 1));
+  let max = splitDate.join("-");
+
+  calendar.setAttribute('min', (min.toString()));
+  calendar.setAttribute('max', (max.toString()));
+
+}
 

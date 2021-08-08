@@ -1,7 +1,5 @@
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
-// An example of how you tell webpack to use a CSS (SCSS) file
-
 
 import './css/base.scss';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
@@ -9,13 +7,8 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
 import { postData } from './apiCalls.js'
-
-
-import { renderDestinations, glideSlides } from './domUpdates'
+import { renderDestinations, glideSlides, setBookingCalendar } from './domUpdates'
 import dayjs from 'dayjs';
-
-
-console.log('This is the JavaScript entry file - your code begins here.');
 
 
 // global variables:  current User(which is the object data that is fetched from the single user endpoint after the login. (ps you could call a method on the agency class to retrieve users data and use that when you instantiate your user class do give them their bookings)), date
@@ -23,12 +16,13 @@ console.log('This is the JavaScript entry file - your code begins here.');
 //temporarily a global variable (get userTrips and destination search bar needs it.)
 let destinations;
 let agency;
-
 let defaultDate = new Date();
 let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
-console.log("todayDate", todayDate)
 
 
+
+
+///////////////////////////FETCH USER --- USER LOGIN///////////////////////////
 ///TEMPORARY USER OBJECT TO TEST POST:
 fetchUserData()
 
@@ -43,7 +37,8 @@ function fetchUserData() {
 }
 
 let currentUser;
-//////////////EVENT LISTENERS/////////////
+
+//////////////EVENT LISTENERS////////////////////////////////////
 // window.addEventListener('load', displayLoginPage());
 
 document.getElementById('user-login-submit').addEventListener('click', (e) => {
@@ -68,18 +63,7 @@ const destinationSearchBar = document.getElementById('destination-search')
 //   checkForReset(e)
 // })
 
-function checkForReset(e) {
-    if (!e.target.value) {
-    // e.target.reset();
-    displayDestinationsData(destinations);
-  }
-}
 
-function populateSearchBar(e) {
-  console.log(e.target)
-  const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
-   destinationSearchBar.value = destinationChosen.location
-}
 
 ////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
 
@@ -136,8 +120,19 @@ function getUserTrips(data, userID) {
 
   destinations = agency.destinations;
   displayDestinationsData(agency.destinations)
+
+  displayUserDashboard(userID)
 }
 
+//////////////// DISPLAY USER DASHBOARD FUNCTION/////////////
+function displayUserDashboard(userId) {
+  //display user
+  //CALL FUNCTIONS TO POPULATE TRIPP DATA AND EXPENSES 
+}
+
+
+//////////////LOAD PAGE FUNCTION//////////////////////
+setBookingCalendar(todayDate)
 
 ////////// GRAB THE FORM INPUT /////////////////////////
 
@@ -164,32 +159,46 @@ function getUserTrips(data, userID) {
 
 
 ///////BOOK A TRIP SUBMIT BUTTON /////////////////////
+///// SERACH BAR/////
+function checkForReset(e) {
+    if (!e.target.value) {
+    // e.target.reset();
+    displayDestinationsData(destinations);
+  }
+}
+
+function populateSearchBar(e) {
+  console.log(e.target)
+  const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
+   destinationSearchBar.value = destinationChosen.location
+}
+
+//////////BOOK A BRIP FORM
 
 document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
   requestTrip(e)
 });
 
   ///YOU ARE HERE
-  function getDestinationIdByName(name) {
-    
-    let foundDestination;
-    
-    foundDestination = destinations.some(destination => {
-       return destination.location.toLowerCase().startsWith(name);
-    });
+function getDestinationIdByName(name) {
+  
+  let foundDestination;
+  
+  foundDestination = destinations.some(destination => {
+      return destination.location.toLowerCase().startsWith(name);
+  });
 
-    if(foundDestination) {
-      return destinations.find(destination => {
-       return destination.location.toLowerCase().startsWith(name);
-      }).id;
-    } else {
-      return null;
-    }
-
+  if(foundDestination) {
+    return destinations.find(destination => {
+      return destination.location.toLowerCase().startsWith(name);
+    }).id;
+  } else {
+    return null;
   }
 
- 
+}
 
+ 
 function requestTrip(e) {
     e.preventDefault();
   // const formData = new FormData(e.target);
