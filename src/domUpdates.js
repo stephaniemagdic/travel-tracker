@@ -26,7 +26,7 @@ export const renderDestinations = (destinations) => {
   // glideSlides.innerHTML = ''; //moved this up.
 
   destinations.forEach(destination => {
-    console.log('destination inside of forEach', destination)
+
     glideSlides.innerHTML += `
       <li class="glide__slide" id="${destination.id}">
         ${createCard(destination.location, destination.image, destination.alt)}
@@ -58,5 +58,10 @@ export function setBookingCalendar(todayDate) {
 
   calendar.setAttribute('min', (min.toString()));
   calendar.setAttribute('max', (max.toString()));
+}
+
+export function clearTripRequestErrorField() {
+  document.getElementById('trip-request-error-field').innerHTML = ''
+
 }
 
