@@ -6,7 +6,7 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
 import { postData } from './apiCalls.js'
-import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips, renderYearlyExpenses } from './domUpdates'
+import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips, renderYearlyExpenses, displayPage } from './domUpdates'
 import dayjs from 'dayjs';
 
 
@@ -59,6 +59,17 @@ const destinationSearchBar = document.getElementById('destination-search');
 // destinationSearchBar.addEventListener('click', function(e) {
 //   checkForReset(e)
 // })
+
+const bookATripButton = document.getElementById('book-a-trip-button');
+console.log(bookATripButton)
+
+bookATripButton.addEventListener('click', () => {
+  console.log("here inside button")
+  displayPage('bookATrip')
+})
+
+
+
 
 ////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
 

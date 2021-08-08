@@ -145,3 +145,24 @@ export const renderYearlyExpenses = (yearlyExpensesTotal, year) => {
   <p>You spent $${yearlyExpensesTotal} in ${year}</p>
   `
 }
+
+export const displayPage = (page) => {
+  if (page === 'bookATrip') {
+    hide('userDashboard')
+    show('bookATrip')
+  }
+}
+
+
+const hide = (what) => {
+  if (what === 'userDashboard'){
+    document.getElementById("user-dashboard-page").classList.add('hidden')
+  } 
+}
+
+const show = (what) => {
+  if (what === 'bookATrip'){
+    document.getElementById("book-a-trip").classList.remove('hidden')
+  }
+  
+}
