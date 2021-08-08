@@ -6,7 +6,7 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
 import { postData } from './apiCalls.js'
-import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField } from './domUpdates'
+import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips } from './domUpdates'
 import dayjs from 'dayjs';
 
 
@@ -67,7 +67,7 @@ const validateUser = (e) => {
   console.log(e)
   e.preventDefault()
   console.log("here")
-  fetchUserDashboardDataByUserId(1)
+  fetchUserDashboardDataByUserId(46)
 }
 //call this function after validate user function and then pass int the userID..
 // user ID WILL BE PASSED IN AS ARGUMENT EVENTUALLY HERE.
@@ -122,23 +122,29 @@ function getUserTrips(newAgency, userID) {
   
   //THIS ONLY NEEDS TO BE CALLED ON BOOK A TRIP PAGE, NOT IN HERE...
   displayDestinationsData(agency.destinations)
-  displayUserDashboard(userID)
+  getUserTripDataToDisplay(userID)
 
   return newAgency;
 }
 
+//REMOVE THIS FUNCITON--THIS WILL BE CALLED ON LOGIN>> JUST HERE TO TEST:
+
 //////////////// DISPLAY USER DASHBOARD FUNCTION/////////////
-function displayUserDashboard(userId) {
+function getUserTripDataToDisplay(userId) {
   //display user trips
   //CALL FUNCTIONS TO POPULATE TRIPP DATA AND EXPENSES 
     //function here to get user trips and pass those arrays into render.
-
-  console.log("------------ in displayUserDashboard")
+  
+  console.log("------------ in getUserTripDataToDisplay")
+  console.log("userId", userId)
+  console.log("agency.trips", agency.trips)
    const pastTrips = agency.getTripsByUser(userId, todayDate, 'past'); 
    const currentTrips = agency.getTripsByUser(userId, todayDate, 'current');
    const futureTrips = agency.getTripsByUser(userId, todayDate, 'future');
    const pendingTrips = agency.getTripsByUser(userId, todayDate,'pending');
    const yearlyTrips = agency.getTripsByUser(userId, todayDate, null, todayDate.split('/')[0]);
+   //yearly expenses only include past that have been approved and paid for.
+   const yearlyExpenses = agency.getUserYearlyExpenses(userId, parseInt(todayDate.split('/')[0]), todayDate)
 
    console.log("tests--------")
    console.log("pastTrips",  pastTrips);
@@ -147,8 +153,13 @@ function displayUserDashboard(userId) {
    console.log("pendingTrips", pendingTrips)
    console.log("yearlyTrips", yearlyTrips)
    console.log("year", todayDate.split('/')[0])
+   console.log("yearlyExpenses", yearlyExpenses)
    
+   displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
+}
 
+function displayUserTripData(past, current, future, pending, yearlyExpenses) {
+  renderUserTrips(past, current, future, pending, agency);
 }
 
 
