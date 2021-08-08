@@ -7,7 +7,7 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
 import { postData } from './apiCalls.js'
-import { renderDestinations, glideSlides, setBookingCalendar } from './domUpdates'
+import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField } from './domUpdates'
 import dayjs from 'dayjs';
 
 
@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 //temporarily a global variable (get userTrips and destination search bar needs it.)
 let destinations;
 let agency;
+
 let defaultDate = new Date();
 let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
 
@@ -54,9 +55,9 @@ glideSlides.addEventListener('click', (e) => {
 
 const destinationSearchBar = document.getElementById('destination-search');
 
-destinationSearchBar.addEventListener('keyup', function(e) {
-  createFilteredList(e);
-});
+// destinationSearchBar.addEventListener('keyup', function(e) {
+//   createFilteredList(e);
+// });
 
 // should this be a click event instead?
 // destinationSearchBar.addEventListener('click', function(e) {
@@ -79,8 +80,18 @@ const validateUser = (e) => {
 // fetchUserDashboardDataByUserId(userID);
 //if users info is correct call this function.
 function fetchUserDashboardDataByUserId(userID) {
-  Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
-    .then((data) => getUserTrips(data, userID));
+
+  //this needs to be returned to be used in the promise chain wthin fetch call.. DO NOT DELETE.
+  return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
+    .then((newAgency) => {
+      console.log("I am in fetch request", newAgency)
+      getUserTrips(newAgency, userID);
+      
+
+    })
+
+
+
 }
 
 function fetchAgencyData() {
@@ -89,7 +100,9 @@ function fetchAgencyData() {
 
 //add traveler data.
 function generateAgency(dataSets) {
-  return new Agency(dataSets[0].trips, dataSets[1].destinations);
+  agency =  new Agency(dataSets[0].trips, dataSets[1].destinations);
+  return agency;
+
 }
 
 function fetchData(type) {
@@ -101,13 +114,15 @@ function fetchData(type) {
 
 
 //today date needs to be set ... 
-function getUserTrips(data, userID) {
+function getUserTrips(newAgency, userID) {
   //passing in the data which is the instance of agency 
   // const agency = data; 
-  console.log("this should be an instance of agency-->", data)
+  console.log("this should be an instance of agency-->", newAgency)
   console.log('this should be 1', userID)
+
+  agency = newAgency;
  
-  agency = data;
+  
 
   console.log(agency.getTripsByUser(userID, "2021/08/05", 'past'))
 
@@ -122,6 +137,9 @@ function getUserTrips(data, userID) {
   displayDestinationsData(agency.destinations)
 
   displayUserDashboard(userID)
+
+   return newAgency;
+
 }
 
 //////////////// DISPLAY USER DASHBOARD FUNCTION/////////////
@@ -159,7 +177,10 @@ const createFilteredList = (e) => {
   });
  
   console.log("filteredDestinations",filteredDestinations)
-  displayDestinationsData(filteredDestinations)
+  if (filteredDestinations){
+   displayDestinationsData(filteredDestinations)
+  }
+
   
 }
 
@@ -185,22 +206,43 @@ document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
   requestTrip(e)
 });
 
-  ///YOU ARE HERE
-function getDestinationIdByName(name) {
+  ///YOU ARE HERE -------------------------------------------------------------
+function checkValidSearch(substring) {
   
-  let foundDestination;
-  
-  foundDestination = destinations.some(destination => {
-      return destination.location.toLowerCase().startsWith(name);
-  });
-
-  if(foundDestination) {
-    return destinations.find(destination => {
-      return destination.location.toLowerCase().startsWith(name);
-    }).id;
-  } else {
-    return null;
+  let newSubstring = substring.trim().toLowerCase().toString()
+  //if nothing in the field.
+  if(!newSubstring){
+    document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
+    return;
   }
+
+    if(newSubstring.length < 3){
+    document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
+    return;
+  }
+  
+
+  let isValid = agency.destinations.some(destination => {
+    console.log("newSubString",newSubstring)
+    return destination.location.toLowerCase().includes(newSubstring)
+  })
+
+  if(!isValid) {
+    document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination'
+  }
+  return isValid;
+}
+
+
+const getSubstringTripId = (substring) => {
+  let newSubstring = substring.trim().toLowerCase();
+
+  console.log(newSubstring, "newsubstring")
+  console.log(agency.destinations, "agency.destinations")
+
+  console.log(agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)), "ID HEREEEEE");
+
+  return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
 }
 
 ////////////////////////
@@ -208,24 +250,24 @@ function getDestinationIdByName(name) {
  
 function requestTrip(e) {
     e.preventDefault();
-  // const formData = new FormData(e.target);
+    clearTripRequestErrorField();
 
-  //change the form min to todays date... on page reload.
-  // grab element attribute and set to todayDate.
-  // const dateControl = document.querySelector('input[type="date"]');
+
   const startDate = document.getElementById('start');
   const durationInput = document.getElementById('duration');
   let destinationID; 
 
-  if (!getDestinationIdByName(destinationSearchBar.value.toString())) {
-    document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
-    console.log("I am here inside of invalid destination error !")
+ /// STEPS TO CHECK ID----------
+  /// if  is this a valid destination search.
+  if(!checkValidSearch(destinationSearchBar.value)) {
+    console.log("Invalid");
     return;
   } else {
-    console.log("I am here inside it was valid and I am about to post")
-    destinationID = getDestinationIdByName(destinationSearchBar.value.toString());
+    //getSubstringID()
+    //set ID
+    destinationID = getSubstringTripId(destinationSearchBar.value);
+    console.log("valid")
   }
-
 
   const numTravelers = document.getElementById('number-of-travelers')
 
@@ -260,38 +302,43 @@ const formatDate = (dateToFormat) => {
   return rearrangedDate.join("/");
 }
 
-
-
-
-function displayDestinationsData(destinations) {
+  function displayDestinationsData(destinations) {
  
   renderDestinations(destinations);
+
 }
 
-///make post request
-//error handling 
+
+//This Function will instantiate trip, will, create a message for user// will be async
+  const createTripRequestResponseForUser = (parsedData) => {
+  const tripRequestError = document.getElementById("trip-request-error-field");
+
+    tripRequestError.innerHTML = 'Your trip was successfully booked! Retrieving your estimated cost...'
+
+
+  let estimatedTripCost = 0;
+
+  Promise.resolve(fetchUserDashboardDataByUserId(parsedData.userID)).then(() => {
+    console.log("agency", agency);
+
+    return agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations)
+  }).then(totalCost => {
+    estimatedTripCost = totalCost;
+    console.log(estimatedTripCost, 'estimatedTripCost')
+  }).then(()=> {
+    tripRequestError.innerHTML = `Your estimated trip cost is $${estimatedTripCost}`
+  })
+
+}
+
+
 function postNewTrip(tripRequest) {
   Promise.resolve(postData('trips', tripRequest)).then(res => {
-    console.log(res)
-    return checkForErrors(res)
-  }).then(data => {
-///YOU ARE HERE  **********************************************
-//PUT THIS IN .then()
-    // if res.ok ... then redisplay the page with pending trips.
-        // also show the trip cost.
-        //because this function is async
-        // it cant show the response right away
-        // therefore..show a message of response recieved... processing. wait one minute.
-        // then show response.
-
-    //reciecing your repsonse. calculating estimated trip price..
-    console.log("this is the returned parsed response-->", data);
-    //take TripRequest.id and call the calculate cost function
-
-    
-  })
+    return checkForErrors(res);
+  }).then(parsedData => {
+    createTripRequestResponseForUser(parsedData.newTrip)
+  } )
   .catch(err => displayErrorMessage(err, "postNewTrip"))
-
 };
 
 
@@ -305,8 +352,10 @@ function checkForErrors(res) {
   if (!res.ok) {
     //what does this do? will it return this exact message ... return it and bring you into catch.
     throw new Error();
-  } else  {
-  return res.json()
+  } else {
+    // console.log("here is just the new trip", res);
+    
+  return res.json();
   //"Trip with id 203 successfully posted"
   }
   
@@ -316,22 +365,26 @@ function checkForErrors(res) {
 //user ternary operator.
 //put this in dom updates file.
 function displayErrorMessage(err, scenario) {
-  const tripRequestError = document.getElementById(".trip-request-error-field");
-  const userLoginError = document.getElementById(".user-login-error-field");
+  const tripRequestError = document.getElementById("trip-request-error-field");
+  const userLoginError = document.getElementById("user-login-error-field");
   
   let message;
 
   if (scenario === "postNewTrip") {
     if (err.status === 422) {
       message = "Please fill out all input fields";
+      tripRequestError.innerHTML = `${message}`;
     }
-    tripRequestError.innerHTML = `${message}`;
+   
   }
   if (scenario === "userLoginAuthenticationFailure") {
     if (err.status === 404) {
       message = "Invalid user credentials";
+      userLoginError.innerHTML = `${message}`;
     }
-    userLoginError.innerHMTL = `${message}`;
+    
   }
 
 }
+
+
