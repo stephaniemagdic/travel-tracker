@@ -52,11 +52,11 @@ glideSlides.addEventListener('click', (e) => {
   populateSearchBar(e);
 })
 
-const destinationSearchBar = document.getElementById('destination-search')
+const destinationSearchBar = document.getElementById('destination-search');
 
-// destinationSearchBar.addEventListener('keyup', function(e) {
-//   createFilteredList(e);
-// });
+destinationSearchBar.addEventListener('keyup', function(e) {
+  createFilteredList(e);
+});
 
 // should this be a click event instead?
 // destinationSearchBar.addEventListener('click', function(e) {
@@ -140,22 +140,28 @@ setBookingCalendar(todayDate)
 ///////FILTER DESTINATIONS//////////////
 // BUG in filter destination.
 // filter function may not be as helpful with courosel.
-// const createFilteredList = (e) => {
+const createFilteredList = (e) => {
+
   
+  
+  // const searchedDestination = e.target.value.toLowerCase();
+  //TRIM FIXED the checking just a bunch of empty spaces and freezing things.
+  const searchedDestination = e.target.value.trim().toLowerCase();
 
-//   const searchedDestination = e.target.value.toLowerCase();
+   console.log("my input value typed here", searchedDestination)
 
-//   let filteredDestinations = destinations.filter((destination) => {
-//     return (
-//       //use substring instead//unless they can search by country as well.
-//       destination.location.toLowerCase().startsWith(searchedDestination)  
-//     )
-//   });
+  let filteredDestinations = destinations.filter((destination) => {
+    return (
+      // //use substring instead//unless they can search by country as well.
+      // destination.location.toLowerCase().startsWith(searchedDestination)  
+      destination.location.toLowerCase().includes(searchedDestination)  
+    )
+  });
  
-//   // console.log("filteredDestinations",filteredDestinations)
-//   displayDestinationsData(filteredDestinations)
+  console.log("filteredDestinations",filteredDestinations)
+  displayDestinationsData(filteredDestinations)
   
-// }
+}
 
 
 ///////BOOK A TRIP SUBMIT BUTTON /////////////////////
@@ -195,9 +201,10 @@ function getDestinationIdByName(name) {
   } else {
     return null;
   }
-
 }
 
+////////////////////////
+//create a dynamic select bar that will populate all the destinations and then show only the options that match your search.***
  
 function requestTrip(e) {
     e.preventDefault();
@@ -257,8 +264,7 @@ const formatDate = (dateToFormat) => {
 
 
 function displayDestinationsData(destinations) {
-  console.log("here in destinations data function-->", destinations)
-
+ 
   renderDestinations(destinations);
 }
 
@@ -289,15 +295,13 @@ function postNewTrip(tripRequest) {
 };
 
 
-
-
 function checkForErrors(res) {
   console.log(res);
   // if (status === 404) {
 
   // }
 
-  
+
   if (!res.ok) {
     //what does this do? will it return this exact message ... return it and bring you into catch.
     throw new Error();
