@@ -65,7 +65,7 @@ export function clearTripRequestErrorField() {
 
 }
 
-export function renderUserTrips(past, current, future, pending, agency) {
+export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTrips, agency) {
   const pastTripsContainer = document.getElementById('past-trips');
   const presentTripsContainer = document.getElementById('present-trips');
   const futureTripsContainer = document.getElementById('future-trips');
@@ -75,14 +75,73 @@ export function renderUserTrips(past, current, future, pending, agency) {
   presentTripsContainer.innerHTML = '';
   futureTripsContainer.innerHTML = '';
   pendingTripsContainer.innerHTML = '';
+ 
+  if (pastTrips.length) {
+    pastTrips.forEach(trip => {
+      pastTripsContainer.innerHTML += `
+        <div>
+        <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
+        <p>${trip.date}</p>
+        </div>
+      `
+    })
+  } else {
+    pastTripsContainer.innerHTML += `<p> No current trips.</p>`
+  }
 
-  past.forEach(trip => {
-    pastTripsContainer.innerHTML += `
+  if (currentTrips.length) {
+    console.log(currentTrips, "currentTrips")
+       currentTrips.forEach(trip => {
+    presentTripsContainer.innerHTML += `
       <div>
       <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
       <p>${trip.date}</p>
       </div>
     `
-  })
+     })
 
+  } else {
+    presentTripsContainer.innerHTML += `<p> No present trips.</p>`
+  }
+ //future trips
+   if (futureTrips.length) {
+     console.log("herre instead", futureTrips)
+    futureTrips.forEach(trip => {
+    futureTripsContainer.innerHTML += `
+      <div>
+      <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
+      <p>${trip.date}</p>
+      </div>
+    `
+     })
+
+  } else {
+    console.log("inside")
+    futureTripsContainer.innerHTML += `<p> No future trips.</p>`
+  }
+
+  //pending trips
+
+     if (pendingTrips.length) {
+
+    pendingTrips.forEach(trip => {
+    pendingTripsContainer.innerHTML += `
+      <div>
+      <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
+      <p>${trip.date}</p>
+      </div>
+    `
+     })
+
+  } else {
+    pendingTripsContainer.innerHTML += `<p> No pending trips.</p>`
+  }
+  
+}
+
+export const renderYearlyExpenses = (yearlyExpensesTotal, year) => {
+  document.getElementById('yearly-spending').innerHTML += 
+  `
+  <p>You spent $${yearlyExpensesTotal} in ${year}</p>
+  `
 }

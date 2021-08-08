@@ -6,7 +6,7 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
 import { postData } from './apiCalls.js'
-import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips } from './domUpdates'
+import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips, renderYearlyExpenses } from './domUpdates'
 import dayjs from 'dayjs';
 
 
@@ -134,10 +134,7 @@ function getUserTripDataToDisplay(userId) {
   //display user trips
   //CALL FUNCTIONS TO POPULATE TRIPP DATA AND EXPENSES 
     //function here to get user trips and pass those arrays into render.
-  
-  console.log("------------ in getUserTripDataToDisplay")
-  console.log("userId", userId)
-  console.log("agency.trips", agency.trips)
+
    const pastTrips = agency.getTripsByUser(userId, todayDate, 'past'); 
    const currentTrips = agency.getTripsByUser(userId, todayDate, 'current');
    const futureTrips = agency.getTripsByUser(userId, todayDate, 'future');
@@ -146,20 +143,14 @@ function getUserTripDataToDisplay(userId) {
    //yearly expenses only include past that have been approved and paid for.
    const yearlyExpenses = agency.getUserYearlyExpenses(userId, parseInt(todayDate.split('/')[0]), todayDate)
 
-   console.log("tests--------")
-   console.log("pastTrips",  pastTrips);
-   console.log("currentTrips",  currentTrips);
-   console.log("futureTrips", futureTrips);
-   console.log("pendingTrips", pendingTrips)
-   console.log("yearlyTrips", yearlyTrips)
-   console.log("year", todayDate.split('/')[0])
-   console.log("yearlyExpenses", yearlyExpenses)
    
    displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
 }
 
 function displayUserTripData(past, current, future, pending, yearlyExpenses) {
+  const year = todayDate.split('/')[0]
   renderUserTrips(past, current, future, pending, agency);
+  renderYearlyExpenses(yearlyExpenses, year);
 }
 
 
