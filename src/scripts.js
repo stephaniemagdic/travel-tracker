@@ -25,6 +25,7 @@ let agency;
 ///TEMPORARY USER OBJECT TO TEST POST:
 fetchUserData()
 
+//put in fetch file**
 function fetchUserData() {
  fetchData('travelers/10').then(data => {
    console.log("here is user data");
@@ -164,6 +165,8 @@ document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
     }).id;
   }
 
+ 
+
 function requestTrip(e) {
     e.preventDefault();
   // const formData = new FormData(e.target);
@@ -174,7 +177,11 @@ function requestTrip(e) {
   // const dateControl = document.querySelector('input[type="date"]');
   const startDate = document.getElementById('start');
   const durationInput = document.getElementById('duration');
-  const destinationID = getDestinationIdByName(destinationSearchBar.value.toString())
+  const destinationID = getDestinationIdByName(destinationSearchBar.value.toString());
+  if(!destinationID) {
+    document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
+    return;
+  }
   const numTravelers = document.getElementById('number-of-travelers')
 
   console.log('destinationID ====>', destinationID)
@@ -222,27 +229,64 @@ function displayDestinationsData(destinations) {
 function postNewTrip(tripRequest) {
   Promise.resolve(postData('trips', tripRequest)).then(res => {
     console.log(res)
-    checkForErrors(res)
-  }).then(data => console.log("this is the returned parsed response-->", data))
-    //check for error...
+    return checkForErrors(res)
+  }).then(data => {
+///YOU ARE HERE
+//PUT THIS IN .then()
     // if res.ok ... then redisplay the page with pending trips.
         // also show the trip cost.
         //because this function is async
         // it cant show the response right away
         // therefore..show a message of response recieved... processing. wait one minute.
         // then show response.
-    // if !res.ok ... display error message (this is in a catch//should throw an error)
-       // types of error messages include
+
+
+    console.log("this is the returned parsed response-->", data)
+  })
+  .catch(err => displayErrorMessage(err, "postNewTrip"))
+
+
+
 };
 
 
 function checkForErrors(res) {
   console.log(res);
+  // if (status === 404) {
+
+  // }
+
+  
   if (!res.ok) {
-    throw new Error("Please make sure all feild are filled out");
+    //what does this do? will it return this exact message ... return it and bring you into catch.
+    throw new Error();
   } else  {
   return res.json()
+  //"Trip with id 203 successfully posted"
   }
   
 }
 
+
+//user ternary operator.
+//put this in dom updates file.
+function displayErrorMessage(err, scenario) {
+  const tripRequestError = document.querySelector(".trip-request-error-field");
+  const userLoginError = document.querySelector(".user-login-error-field");
+  
+  const message;
+
+  if (scenario === "postNewTrip") {
+    if (err.status === 422) {
+      message = "Please fill out all input fields";
+    }
+    tripRequestError.innerHMTL = `${message}`;
+  }
+  if (scenario === "userLoginAuthenticationFailure") {
+    if (err.status === 404) {
+      message = "Invalid user credentials";
+    }
+    userLoginError.innerHMTL = `${message}`;
+  }
+
+}
