@@ -12,6 +12,7 @@ import { postData } from './apiCalls.js'
 
 
 import { renderDestinations, glideSlides } from './domUpdates'
+import dayjs from 'dayjs';
 
 
 console.log('This is the JavaScript entry file - your code begins here.');
@@ -22,6 +23,12 @@ console.log('This is the JavaScript entry file - your code begins here.');
 //temporarily a global variable (get userTrips and destination search bar needs it.)
 let destinations;
 let agency;
+
+let defaultDate = new Date();
+let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
+console.log("todayDate", todayDate)
+
+
 ///TEMPORARY USER OBJECT TO TEST POST:
 fetchUserData()
 
@@ -52,16 +59,25 @@ glideSlides.addEventListener('click', (e) => {
 
 const destinationSearchBar = document.getElementById('destination-search')
 
-destinationSearchBar.addEventListener('keyup', function(e) {
-  createFilteredList(e);
-});
+// destinationSearchBar.addEventListener('keyup', function(e) {
+//   createFilteredList(e);
+// });
+
+// should this be a click event instead?
+// destinationSearchBar.addEventListener('click', function(e) {
+//   checkForReset(e)
+// })
+
+function checkForReset(e) {
+    if (!e.target.value) {
+    // e.target.reset();
+    displayDestinationsData(destinations);
+  }
+}
 
 function populateSearchBar(e) {
   console.log(e.target)
   const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
-   console.log("destinationSearchBar", destinationSearchBar)
-   console.log(destinationSearchBar.value);
-   console.log(destinationChosen, 'destinationChosen')
    destinationSearchBar.value = destinationChosen.location
 }
 
@@ -100,23 +116,18 @@ function fetchData(type) {
 }
 
 
-
-
 //today date needs to be set ... 
 function getUserTrips(data, userID) {
   //passing in the data which is the instance of agency 
-
   // const agency = data; 
   console.log("this should be an instance of agency-->", data)
   console.log('this should be 1', userID)
-
  
   agency = data;
- 
+
   console.log(agency.getTripsByUser(userID, "2021/08/05", 'past'))
 
   // will use userID to fetch the correct trips.
-
 
   // need to call the next function in TYpora document which is to pass these in to a display function which will call the render functions!
   // the render functions will include display destinations data .. see below
@@ -131,22 +142,25 @@ function getUserTrips(data, userID) {
 ////////// GRAB THE FORM INPUT /////////////////////////
 
 
-
 ///////FILTER DESTINATIONS//////////////
-//filter function may not be as helpful with courosel.
-const createFilteredList = (e) => {
-  const searchedDestination = e.target.value.toLowerCase();
+// BUG in filter destination.
+// filter function may not be as helpful with courosel.
+// const createFilteredList = (e) => {
+  
 
-  let filteredDestinations = destinations.filter((destination) => {
-    return (
-      //use substring instead//unless they can search by country as well.
-      destination.location.toLowerCase().includes(searchedDestination)  
-    )
-  });
+//   const searchedDestination = e.target.value.toLowerCase();
+
+//   let filteredDestinations = destinations.filter((destination) => {
+//     return (
+//       //use substring instead//unless they can search by country as well.
+//       destination.location.toLowerCase().startsWith(searchedDestination)  
+//     )
+//   });
  
-  console.log("filteredDestinations",filteredDestinations)
-  displayDestinationsData(filteredDestinations)
-}
+//   // console.log("filteredDestinations",filteredDestinations)
+//   displayDestinationsData(filteredDestinations)
+  
+// }
 
 
 ///////BOOK A TRIP SUBMIT BUTTON /////////////////////
@@ -157,12 +171,21 @@ document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
 
   ///YOU ARE HERE
   function getDestinationIdByName(name) {
-    //change both to lowercase.
+    
+    let foundDestination;
+    
+    foundDestination = destinations.some(destination => {
+       return destination.location.toLowerCase().startsWith(name);
+    });
 
-    return destinations.find(destination => {
-      
-      return destination.location.toLowerCase().includes(name.toLowerCase());
-    }).id;
+    if(foundDestination) {
+      return destinations.find(destination => {
+       return destination.location.toLowerCase().startsWith(name);
+      }).id;
+    } else {
+      return null;
+    }
+
   }
 
  
@@ -171,17 +194,23 @@ function requestTrip(e) {
     e.preventDefault();
   // const formData = new FormData(e.target);
 
-
   //change the form min to todays date... on page reload.
   // grab element attribute and set to todayDate.
   // const dateControl = document.querySelector('input[type="date"]');
   const startDate = document.getElementById('start');
   const durationInput = document.getElementById('duration');
-  const destinationID = getDestinationIdByName(destinationSearchBar.value.toString());
-  if(!destinationID) {
+  let destinationID; 
+
+  if (!getDestinationIdByName(destinationSearchBar.value.toString())) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
+    console.log("I am here inside of invalid destination error !")
     return;
+  } else {
+    console.log("I am here inside it was valid and I am about to post")
+    destinationID = getDestinationIdByName(destinationSearchBar.value.toString());
   }
+
+
   const numTravelers = document.getElementById('number-of-travelers')
 
   console.log('destinationID ====>', destinationID)
@@ -231,7 +260,7 @@ function postNewTrip(tripRequest) {
     console.log(res)
     return checkForErrors(res)
   }).then(data => {
-///YOU ARE HERE
+///YOU ARE HERE  **********************************************
 //PUT THIS IN .then()
     // if res.ok ... then redisplay the page with pending trips.
         // also show the trip cost.
@@ -240,14 +269,17 @@ function postNewTrip(tripRequest) {
         // therefore..show a message of response recieved... processing. wait one minute.
         // then show response.
 
+    //reciecing your repsonse. calculating estimated trip price..
+    console.log("this is the returned parsed response-->", data);
+    //take TripRequest.id and call the calculate cost function
 
-    console.log("this is the returned parsed response-->", data)
+    
   })
   .catch(err => displayErrorMessage(err, "postNewTrip"))
 
-
-
 };
+
+
 
 
 function checkForErrors(res) {
@@ -271,16 +303,16 @@ function checkForErrors(res) {
 //user ternary operator.
 //put this in dom updates file.
 function displayErrorMessage(err, scenario) {
-  const tripRequestError = document.querySelector(".trip-request-error-field");
-  const userLoginError = document.querySelector(".user-login-error-field");
+  const tripRequestError = document.getElementById(".trip-request-error-field");
+  const userLoginError = document.getElementById(".user-login-error-field");
   
-  const message;
+  let message;
 
   if (scenario === "postNewTrip") {
     if (err.status === 422) {
       message = "Please fill out all input fields";
     }
-    tripRequestError.innerHMTL = `${message}`;
+    tripRequestError.innerHTML = `${message}`;
   }
   if (scenario === "userLoginAuthenticationFailure") {
     if (err.status === 404) {
