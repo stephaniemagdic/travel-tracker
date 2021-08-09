@@ -12,7 +12,6 @@ import dayjs from 'dayjs';
 
 
 
-
 //temporarily a global variable (get userTrips and destination search bar needs it.)
 let destinations;
 let agency;
@@ -85,9 +84,7 @@ let user;
     displayErrorMessage(err, "fetchUser")
   })
 
-
 }
-
 
 
 const checkUserLoginInputs = () => {
@@ -95,51 +92,31 @@ const checkUserLoginInputs = () => {
   const username = usernameInput.value
   const userID = parseInt(username.slice(8))
 
-    if (document.getElementById('password').value.toString().trimEnd() === "travel") {
-      console.log("here with valid credentials");
-      
-      return fetchUser(`travelers/${userID}`).then((isValidUser) => isValidUser);
-      
-      console.log("return value", returnValue)
-
-
-     
-    } else {
-      document.getElementById("user-login-error-field").innerHTML = 'Please enter valid credentials.'
-    }
+  if (document.getElementById('password').value.toString().trimEnd() === "travel") {
+    return fetchUser(`travelers/${userID}`).then((isValidUser) => isValidUser);
+  } else {
+    document.getElementById("user-login-error-field").innerHTML = 'Please enter valid credentials.'
+  }
   
   usernameInput.value = null;
   document.getElementById('password').value = null;
   
 }
 
-//STEPS: the footer needs to be hidden before login.**
+
 const validateUser = (e) => {
-
-
   e.preventDefault();
   document.getElementById("user-login-error-field").innerHTML = ''
-
-  //logic to check user data and fetch at single user will go here.
   const usernameInput = document.getElementById('username')
-
-//now this is pending.
   const isValid = checkUserLoginInputs();
 
-  // if (isValid && currentUser) {
   if (isValid && currentUser) {
-    console.log("true")
     displayPage("userDashboard")
   } else {
-    console.log("false")
     return;
   }
 
-
 }
-
-
-
 
 function fetchUserDashboardDataByUserId(userID) {
 //Do not get rid of return.
@@ -163,31 +140,19 @@ function generateAgency(dataSets) {
   return agency;
 }
 
-// function fetchData(endpoint) {
-//   return fetch(`http://localhost:3001/api/v1/${endpoint}`)
-//     .then(response => response.json())
-//     .then(data => data)
-//     .catch(err => console.log(`ERROR with ${type}: ${err}`))
-// }
-
 
 //////////////// DISPLAY USER DASHBOARD FUNCTION/////////////
 function getUserTrips(newAgency, userID) {
-
   agency = newAgency;
-
   destinations = agency.destinations;
-  
 
    const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
    const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
    const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
    const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
-  //  const yearlyTrips = agency.getTripsByUser(userID, todayDate, null, todayDate.split('/')[0]);
    //yearly expenses only include past that have been approved and paid for.
    const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
 
-   
    displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
 
    return newAgency;
@@ -205,7 +170,6 @@ function displayUserTripData(past, current, future, pending, yearlyExpenses) {
 setBookingCalendar(todayDate);
 
 
-
 ///////FILTER DESTINATIONS//////////////
                            // To Do: BUG in filter destination.
                      // filter function may not be as helpful with courosel.
@@ -213,7 +177,6 @@ const createFilteredList = (e) => {
   // const searchedDestination = e.target.value.toLowerCase();
   //TRIM FIXED the checking just a bunch of empty spaces and freezing things.
   const searchedDestination = e.target.value.trim().toLowerCase();
-
 
   let filteredDestinations = destinations.filter((destination) => {
     return (
@@ -230,7 +193,7 @@ const createFilteredList = (e) => {
 }
 
 
-                                   ///// SEARCH BAR/////
+                           ///// SEARCH BAR/////
 // function checkForReset (e) {
 //     if (!e.target.value) {
 //     // e.target.reset();
@@ -243,7 +206,6 @@ function populateSearchBar(e) {
   const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
    destinationSearchBar.value = destinationChosen.location
 }
-
 
 ///POST A NEW TRIP FUNCTIONS ---------------------------------------------------------------
                              //////////BOOK A BRIP FORM////////////////
@@ -263,28 +225,12 @@ function checkValidSearch(substring) {
     return;
   }
 
-    // if (newSubstring.length < 3) {
-    // document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
-    // return;    
-  // }
-  // console.log(agency.destinations)
-  // console.log(destinations.map(destination => destination.location.split(",")))
-  // console.log("checking substring", agency.destinations.some(destination => {
-  //     return (destination.location.toLowerCase().split(",")[0]) === newSubstring
-  //   }));
-
   if (agency.destinations.some(destination => {
       return (destination.location.toLowerCase().split(",")[0]) === newSubstring
     })) {
       console.log("Found a match!")
       isValid = true;
     }
-  
-
-  // let isValid = agency.destinations.some(destination => {
-  //   console.log("newSubString",newSubstring)
-  //   return destination.location.toLowerCase().includes(newSubstring)
-  // })
 
   if (!isValid) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination'
@@ -300,8 +246,21 @@ const getSubstringTripId = (substring) => {
 }
 
 
+const checkValidDuration = (durationInput) => {
+  console.log(durationInput.value, "durationInput")
+  console.log(typeof(durationInput.value), "type of value")
+  
+  const parsedInput = parseInt(durationInput.value);
+  console.log("parsedInput", parsedInput)
+  console.log("final", typeof(parsedInput) )
+  if (!parsedInput) {
+    document.getElementById("invalid-duration-error-field").innerHTML = 'Please enter a valid number of days';
+    return false;
+  } else {return parseInt(durationInput.value)}
+}
+
 //TO DO: create a dynamic select bar that will populate all the destinations and then show only the options that match your search.***
-                                     ///// CREATE NEW TRIP POST OBJECT
+                          ///// CREATE NEW TRIP POST OBJECT
 function requestTrip(e) {
   e.preventDefault();
   clearTripRequestErrorField();
@@ -310,19 +269,12 @@ function requestTrip(e) {
   let destinationID; 
   const numTravelers = document.getElementById('number-of-travelers')
 
-  //check duration input
-  // if (isNaN(parseInt(durationInput))) {
-  //   document.getElementById("invalid-duration-error-field").innerHTML = 'Please enter a valid number';
-  //   return;
-  // }
+  const isValidDuration = checkValidDuration(durationInput);
+  
+  if (!isValidDuration) {
+    return;
+  }
 
-  // if (!checkValidDuration(durationInput)) {
-  //   return;
-  // } else {
-  //   durationInput = document.getElementById('duration');
-  // }
-
-          /// STEPS TO CHECK ID----------
   if (!checkValidSearch(destinationSearchBar.value)) {
     console.log("Invalid");
     return;
@@ -346,16 +298,13 @@ function requestTrip(e) {
   e.target.reset()
 }
 
-
-                   
-                                    ///// CREATE RESPONSE MESSAGE FOR USER ONCE 
-//This Function is called within the postUser function ...will instantiate trip, will, create a message for user// will be async
+             
+                ///// CREATE RESPONSE MESSAGE FOR USER ONCE TRIP IS REQUESTED
 const createTripRequestResponseForUser = (parsedData) => {
   const tripRequestError = document.getElementById("trip-request-error-field");
   tripRequestError.innerHTML = 'Your trip was successfully booked! Retrieving your estimated cost...';
 
   let estimatedTripCost = 0;
-
 
   Promise.resolve(fetchUpdatedData(parsedData.userID))
     .then(() => agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations)
@@ -367,7 +316,7 @@ const createTripRequestResponseForUser = (parsedData) => {
   })
 }
 
-                                  ///// POST NEW TRIP WITH COMPLETED POST OBJECT
+                         ///// POST NEW TRIP WITH COMPLETED POST OBJECT
 function postNewTrip(tripRequest) {
   Promise.resolve(postData('trips', tripRequest)).then(res => {
     return checkForErrors(res);
@@ -379,61 +328,17 @@ function postNewTrip(tripRequest) {
 
                               /////CHECK FOR ERRORS
 function checkForErrors(res) {
-  // if (!res.ok || res.status === 404) 
-  
-  //A TEMPORARY WORKAROUND
-  //this is saying if this is already an object, and not actually a response, because res.okay wont work for a parsed Object
-  // if(!res.status){return}
- 
-
   if (!res.ok) {
     console.log(res)
     console.log("ERROR")
-    // console.log("I am in here with a 404 error", res.status)
-    // {message: "No traveler found with an id of NaN"}
+
     throw new Error();
   } else {
-    // console.log("here is just the new trip", res);
-    
-  return res.json();
-  //"Trip with id 203 successfully posted"
+    return res.json();
   }
-  
 }
 
-//                               ///// DISPLAY ERROR MESSAGE    
-// //TO DO: user ternary operator.
-// //TO DO: put this in dom updates file.
-// function displayErrorMessage(err, scenario) {
-//   const tripRequestError = document.getElementById("trip-request-error-field");
-//   const userLoginError = document.getElementById("user-login-error-field");
-  
 
-//   let message;
-
-//   if (scenario === "postNewTrip") {
- 
-//       message = "Please fill out all input fields";
-//       tripRequestError.innerHTML = `${message}`;
-   
-//   }
-//   if (scenario === "userLoginAuthenticationFailure") {
-    
-//       message = "Invalid user credentials";
-//       userLoginError.innerHTML = `${message}`;
-    
-//   }
-
-//   if (scenario === "fetchUser") {
-
-//     message = "Invalid login. Please make sure both input fields are filled out";
-//       userLoginError.innerHTML = `${message}`;
-//       document.getElementById("password").value = null;
-//   }
-
-
-
-// }
 
 
 /////////////MISC FUNCTIONS
@@ -444,7 +349,6 @@ function checkForErrors(res) {
 function displayDestinationsData(destinations) { 
   renderDestinations(destinations);
 }
-
 
 const formatDate = (dateToFormat) => {
   const dividedDate = dateToFormat.split("-");
