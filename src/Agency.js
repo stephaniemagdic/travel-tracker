@@ -28,6 +28,7 @@ class Agency {
 
 
   // getTripsByUser(usersId, searchType = null, todayDate, searchYear = null) {
+    //PENDING TRIPS WILL ONLY SHOW FUTURE PENDING TRIPS. 
   getTripsByUser(usersId, todayDate, searchType, searchYear = null) {
     let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === 'approved');
 
