@@ -49,7 +49,6 @@ describe('Agency', function() {
   });
 
   // id, date, search type.. optional.
- 
   it('should return a users past trips', () => {
     expect(agency.getTripsByUser(51, todayDate, 'past')).to.deep.equal(pastTrips);
   });
@@ -85,6 +84,7 @@ describe('Agency', function() {
     expect(agency.getTripsByUser(51, todayDate, null, 2021)[2].date).to.equal('2021/10/16');
   });
 
+//need to change to include approved future trips in cost.
   it('should return yearly expenses for a single user', () => {
     expect(agency.getUserYearlyExpenses(51, 2021, todayDate)).to.equal(4158);
   });
