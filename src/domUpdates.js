@@ -48,7 +48,6 @@ function createCard(destination, img, alt) {
   `
 }
 
-
 export function setBookingCalendar(todayDate) {
   let calendar = document.getElementById('start');
   let min = todayDate.split("/").join("-");
@@ -65,6 +64,8 @@ export function clearTripRequestErrorField() {
 
 }
 
+
+//TO DO: SHORTEN FUNCTION.
 export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTrips, agency) {
   const pastTripsContainer = document.getElementById('past-trips');
   const presentTripsContainer = document.getElementById('present-trips');
@@ -122,8 +123,7 @@ export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTri
 
   //pending trips
 
-     if (pendingTrips.length) {
-
+   if (pendingTrips.length) {
     pendingTrips.forEach(trip => {
     pendingTripsContainer.innerHTML += `
       <div>
@@ -153,15 +153,14 @@ export const displayPage = (page) => {
   }
 }
 
-
 const hide = (what) => {
-  if (what === 'userDashboard'){
+  if (what === 'userDashboard') {
     document.getElementById("user-dashboard-page").classList.add('hidden')
   } 
 }
 
 const show = (what) => {
-  if (what === 'bookATrip'){
+  if (what === 'bookATrip') {
     document.getElementById("book-a-trip").classList.remove('hidden')
   }
   
