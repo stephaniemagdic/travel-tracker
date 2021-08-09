@@ -140,7 +140,11 @@ export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTri
 }
 
 export const renderYearlyExpenses = (yearlyExpensesTotal, year) => {
-  document.getElementById('yearly-spending').innerHTML += 
+  const yearlyExpenses = document.getElementById('yearly-spending');
+
+  yearlyExpenses.innerHTML = '';
+  
+  yearlyExpenses.innerHTML += 
   `
   <p>You spent $${yearlyExpensesTotal} in ${year}</p>
   `
