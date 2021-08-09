@@ -61,6 +61,7 @@ export function setBookingCalendar(todayDate) {
 
 export function clearTripRequestErrorField() {
   document.getElementById('trip-request-error-field').innerHTML = ''
+  document.getElementById("invalid-destination-error-field").innerHTML = '';
 
 }
 
@@ -155,17 +156,73 @@ export const displayPage = (page) => {
     hide('userDashboard')
     show('bookATrip')
   }
+  if (page === 'userDashboard') {
+    hide('loginPage');
+    show('userDashboard');
+    show('nav');
+  }
+  //from the booking page.
+  if (page === 'trips') {
+    //hide booking form
+    //show user dashboard
+    show('userDashboard')
+    hide('bookATrip')
+  }
 }
 
 const hide = (what) => {
   if (what === 'userDashboard') {
     document.getElementById("user-dashboard-page").classList.add('hidden')
   } 
+  if (what === 'loginPage') {
+    document.getElementById("login-page").classList.add('hidden')
+  }
+  if (what === 'bookATrip') {
+    document.getElementById("book-a-trip").classList.add('hidden')
+  }
 }
 
 const show = (what) => {
   if (what === 'bookATrip') {
     document.getElementById("book-a-trip").classList.remove('hidden')
   }
-  
+  if (what === 'userDashboard') {
+    document.getElementById("user-dashboard-page").classList.remove('hidden')
+  }
+  if (what === 'nav') {
+    document.getElementById('nav').classList.remove('hidden')
+  }
 }
+
+ ///// DISPLAY ERROR MESSAGE    
+//TO DO: user ternary operator.
+//TO DO: put this in dom updates file.
+export const displayErrorMessage = (err, scenario) => {
+  const tripRequestError = document.getElementById("trip-request-error-field");
+  const userLoginError = document.getElementById("user-login-error-field");
+  
+
+  let message;
+
+  if (scenario === "postNewTrip") {
+ 
+      message = "Please fill out all input fields";
+      tripRequestError.innerHTML = `${message}`;
+   
+  }
+  if (scenario === "userLoginAuthenticationFailure") {
+    
+      message = "Invalid user credentials";
+      userLoginError.innerHTML = `${message}`;
+    
+  }
+
+  if (scenario === "fetchUser") {
+
+    message = "Invalid login. Please make sure both input fields are filled out";
+      userLoginError.innerHTML = `${message}`;
+      document.getElementById("password").value = null;
+  }
+
+}
+

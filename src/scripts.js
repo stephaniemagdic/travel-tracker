@@ -37,6 +37,14 @@ glideSlides.addEventListener('click', (e) => {
 })
 
 const destinationSearchBar = document.getElementById('destination-search');
+const displayTripsButton = document.getElementById('display-trips-button');
+
+
+displayTripsButton.addEventListener('click', () => {
+  displayPage('trips')
+})
+
+
 
 //BUG-FIX: HERE when you enter an empty string
 // destinationSearchBar.addEventListener('keyup', function(e) {
