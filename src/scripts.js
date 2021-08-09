@@ -5,7 +5,7 @@ import './css/base.scss';
 import './images/turing-logo.png'
 import Agency from './Agency';
 // import Trip from './Trip';
-import { postData } from './apiCalls.js'
+import { postData, fetchData } from './apiCalls.js'
 import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips, renderYearlyExpenses, displayPage } from './domUpdates'
 import dayjs from 'dayjs';
 
@@ -21,18 +21,19 @@ let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
 
 ///////////////////////////FETCH USER --- USER LOGIN///////////////////////////
 ///TEMPORARY USER OBJECT TO TEST POST:
-fetchUserData()
 
-//put in fetch file**
-function fetchUserData() {
- fetchData('travelers/10').then(data => {
-   console.log("here is user data");
-   currentUser = data;
-   console.log(currentUser)
- }) 
-}
 
-let currentUser;
+//THIS IS JUST A TEST... DELETE ALL.
+// fetchUserData()
+// function fetchUserData() {
+//  fetchData('travelers/2').then(data => {
+//    console.log("here is user data test of fetch data function", data);
+//    currentUser = data;
+//    console.log("here is the currentUser-->", currentUser)
+//  }) 
+// }
+// let currentUser;
+//// DELETE ABOVE
 
 //////////////EVENT LISTENERS////////////////////////////////////
 // window.addEventListener('load', displayLoginPage());
@@ -67,24 +68,49 @@ bookATripButton.addEventListener('click', () => {
 
 
 ////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
-//TO TEST FOR ACCESSIBILITY FUNCTION IS MOVING HERE OUT OF VALIDATE USER FOR NOW:
-fetchUserDashboardDataByUserId(46)
-//// REMOVE ABOVE..for testing purposes only
 
+const fetchUser = (username) => {
+  fetchData(username).then((res) => {
+    console.log(res.status)
+    
+    return checkForErrors(res);
+    console.log(res, "in fetchUserFunction!!!.")
+  }).then((data) => console.log("do something with user data". data))
+  .catch(err => displayErrorMessage(err, "userLoginAuthenticationFailure"))
+
+}
+
+
+const checkUserLoginInputs = () => {
+    const usernameInput = document.getElementById('username');
+  
+
+    const username = usernameInput.value
+    const userID = parseInt(username.slice(8))
+    
+    // console.log("test-here is our user", userID)
+  
+    fetchUser(`travelers/${userID}`)
+  
+}
+
+//STEPS: the footer needs to be hidden before login.**
 const validateUser = (e) => {
   e.preventDefault()
   //logic to check user data and fetch at single user will go here.
   const usernameInput = document.getElementById('username')
 
+  checkUserLoginInputs();
+
   // make a fetch request for the username input...
   // console.log(username.value)
-  console.log( usernameInput.value)
+  // console.log( usernameInput.value)
  
-
-   // comment back in after accessibility test.
-  // fetchUserDashboardDataByUserId(10)
+  fetchUserDashboardDataByUserId(46)
   //unhide the user dashboard...and hide the login page.
 }
+
+
 
 
 function fetchUserDashboardDataByUserId(userID) {
@@ -102,12 +128,12 @@ function generateAgency(dataSets) {
   return agency;
 }
 
-function fetchData(type) {
-  return fetch(`http://localhost:3001/api/v1/${type}`)
-    .then(response => response.json())
-    .then(data => data)
-    .catch(err => console.log(`ERROR with ${type}: ${err}`))
-}
+// function fetchData(endpoint) {
+//   return fetch(`http://localhost:3001/api/v1/${endpoint}`)
+//     .then(response => response.json())
+//     .then(data => data)
+//     .catch(err => console.log(`ERROR with ${type}: ${err}`))
+// }
 
 
 //////////////// DISPLAY USER DASHBOARD FUNCTION/////////////
@@ -297,9 +323,12 @@ function postNewTrip(tripRequest) {
                               /////CHECK FOR ERRORS
 function checkForErrors(res) {
   // if (status === 404) {
-
+console.log(res, "outside")
   // }
-  if (!res.ok) {
+  if (!res.ok || res.status === 404) {
+    console.log(res)
+    console.log("I am in here with a 404 error", res.status)
+    // {message: "No traveler found with an id of NaN"}
     throw new Error();
   } else {
     // console.log("here is just the new trip", res);
@@ -317,19 +346,20 @@ function displayErrorMessage(err, scenario) {
   const tripRequestError = document.getElementById("trip-request-error-field");
   const userLoginError = document.getElementById("user-login-error-field");
   
+  console.log(err, "ERRROR")
   let message;
 
   if (scenario === "postNewTrip") {
-    if (err.status === 422) {
+    // if (err.status === 422) {
       message = "Please fill out all input fields";
       tripRequestError.innerHTML = `${message}`;
-    }
+    // }
   }
   if (scenario === "userLoginAuthenticationFailure") {
-    if (err.status === 404) {
+    
       message = "Invalid user credentials";
       userLoginError.innerHTML = `${message}`;
-    }
+    
   }
 
 }
