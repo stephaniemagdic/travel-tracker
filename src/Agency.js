@@ -1,6 +1,6 @@
 import Trip from './Trip.js';
 import Destination from './Destination.js';
-import Traveler from './Traveler.js';
+// import Traveler from './Traveler.js';
 
 class Agency {
   constructor(tripData, destinationData) {
@@ -31,7 +31,7 @@ class Agency {
 
   // getTripsByUser(usersId, searchType = null, todayDate, searchYear = null) {
   getTripsByUser(usersId, todayDate, searchType, searchYear = null) {
-    let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId &&trip.status === 'approved');
+    let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === 'approved');
 
     if (searchYear) {
       return usersApprovedTrips
@@ -51,7 +51,7 @@ class Agency {
         .filter(trip => trip.date > todayDate)
     } else if (searchType === 'pending') {
       return this.trips
-        .filter(trip => trip.userID === usersId &&trip.status === 'pending' && trip.date > todayDate)
+        .filter(trip => trip.userID === usersId && trip.status === 'pending' && trip.date > todayDate)
         .sort((tripA, tripB) => tripA.date - tripB.date);
     }
    
