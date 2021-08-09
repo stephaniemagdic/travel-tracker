@@ -21,6 +21,15 @@ class Trip {
   }
 
 
+  // WRITE TEST FOR THIS
+  //have to write a test for this... this is pending. so have to put logic of pending elsewhere for previous function in order to combing.
+  calculateNewTripCost(destinationData) {
+    const agentFee = (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) * .10;
+
+    return (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) + agentFee;
+  }
+
+
   // THIS IS FORM VALIDATION, not class prop validation.
   // SAD PATH: validate date test? Does this make sense to put on this class or outside
   // Check against 0 travelers
