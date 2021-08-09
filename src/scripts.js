@@ -19,7 +19,6 @@ let agency;
 let defaultDate = new Date();
 let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
 
-
 ///////////////////////////FETCH USER --- USER LOGIN///////////////////////////
 ///TEMPORARY USER OBJECT TO TEST POST:
 fetchUserData()
@@ -31,7 +30,6 @@ function fetchUserData() {
    currentUser = data;
    console.log(currentUser)
  }) 
- 
 }
 
 let currentUser;
@@ -61,43 +59,44 @@ const destinationSearchBar = document.getElementById('destination-search');
 // })
 
 const bookATripButton = document.getElementById('book-a-trip-button');
-console.log(bookATripButton)
 
 bookATripButton.addEventListener('click', () => {
-  console.log("here inside button")
   displayPage('bookATrip')
 })
-
-
+//add an event listener on home button.
 
 
 ////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
+//TO TEST FOR ACCESSIBILITY FUNCTION IS MOVING HERE OUT OF VALIDATE USER FOR NOW:
+fetchUserDashboardDataByUserId(46)
+//// REMOVE ABOVE..for testing purposes only
 
 const validateUser = (e) => {
-  //logic to check user data and fetch at single user will go here.
-  console.log(e)
   e.preventDefault()
-  console.log("here")
-  fetchUserDashboardDataByUserId(46)
+  //logic to check user data and fetch at single user will go here.
+  const usernameInput = document.getElementById('username')
+
+  // make a fetch request for the username input...
+  // console.log(username.value)
+  console.log( usernameInput.value)
+ 
+
+   // comment back in after accessibility test.
+  // fetchUserDashboardDataByUserId(10)
+  //unhide the user dashboard...and hide the login page.
 }
-//call this function after validate user function and then pass int the userID..
-// user ID WILL BE PASSED IN AS ARGUMENT EVENTUALLY HERE.
-// fetchUserDashboardDataByUserId(userID);
-//if users info is correct call this function.
+
+
 function fetchUserDashboardDataByUserId(userID) {
-  //this needs to be returned to be used in the promise chain wthin fetch call.. DO NOT DELETE.
+//Do not get rid of return.
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
-    .then((newAgency) => {
-      console.log("I am in fetch request", newAgency)
-      getUserTrips(newAgency, userID);
-    })
+    .then((newAgency) => getUserTrips(newAgency, userID))
 }
 
 function fetchAgencyData() {
   return Promise.all([fetchData('trips'), fetchData('destinations')]).then(values => values);
 }
 
-//add traveler data.
 function generateAgency(dataSets) {
   agency =  new Agency(dataSets[0].trips, dataSets[1].destinations);
   return agency;
@@ -110,53 +109,33 @@ function fetchData(type) {
     .catch(err => console.log(`ERROR with ${type}: ${err}`))
 }
 
-//today date needs to be set ... 
+
+//////////////// DISPLAY USER DASHBOARD FUNCTION/////////////
 function getUserTrips(newAgency, userID) {
-  //passing in the data which is the instance of agency 
-  // const agency = data; 
-  console.log("this should be an instance of agency-->", newAgency)
-  console.log('this should be 1', userID)
 
   agency = newAgency;
- 
-
-  console.log(agency.getTripsByUser(userID, "2021/08/05", 'past'))
-
-  // will use userID to fetch the correct trips..
-
-  // need to call the next function in TYpora document which is to pass these in to a display function which will call the render functions!
-  // the render functions will include display destinations data .. see below
-  
-  //make this global so you can see it with your filter.
 
   destinations = agency.destinations;
   
   //THIS ONLY NEEDS TO BE CALLED ON BOOK A TRIP PAGE, NOT IN HERE...
   displayDestinationsData(agency.destinations)
-  getUserTripDataToDisplay(userID)
 
-  return newAgency;
-}
+  // getUserTripDataToDisplay(userID)
 
-//REMOVE THIS FUNCITON--THIS WILL BE CALLED ON LOGIN>> JUST HERE TO TEST:
-
-//////////////// DISPLAY USER DASHBOARD FUNCTION/////////////
-function getUserTripDataToDisplay(userId) {
-  //display user trips
-  //CALL FUNCTIONS TO POPULATE TRIPP DATA AND EXPENSES 
-    //function here to get user trips and pass those arrays into render.
-
-   const pastTrips = agency.getTripsByUser(userId, todayDate, 'past'); 
-   const currentTrips = agency.getTripsByUser(userId, todayDate, 'current');
-   const futureTrips = agency.getTripsByUser(userId, todayDate, 'future');
-   const pendingTrips = agency.getTripsByUser(userId, todayDate,'pending');
-   const yearlyTrips = agency.getTripsByUser(userId, todayDate, null, todayDate.split('/')[0]);
+   const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
+   const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
+   const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
+   const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
+  //  const yearlyTrips = agency.getTripsByUser(userID, todayDate, null, todayDate.split('/')[0]);
    //yearly expenses only include past that have been approved and paid for.
-   const yearlyExpenses = agency.getUserYearlyExpenses(userId, parseInt(todayDate.split('/')[0]), todayDate)
+   const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
 
    
    displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
+
+   return newAgency;
 }
+
 
 function displayUserTripData(past, current, future, pending, yearlyExpenses) {
   const year = todayDate.split('/')[0]
@@ -168,19 +147,16 @@ function displayUserTripData(past, current, future, pending, yearlyExpenses) {
 //////////////LOAD PAGE FUNCTION//////////////////////
 setBookingCalendar(todayDate);
 
-////////// GRAB THE FORM INPUT /////////////////////////
 
 
 ///////FILTER DESTINATIONS//////////////
-// BUG in filter destination.
-// filter function may not be as helpful with courosel.
+                           // To Do: BUG in filter destination.
+                     // filter function may not be as helpful with courosel.
 const createFilteredList = (e) => {
-
   // const searchedDestination = e.target.value.toLowerCase();
   //TRIM FIXED the checking just a bunch of empty spaces and freezing things.
   const searchedDestination = e.target.value.trim().toLowerCase();
 
-   console.log("my input value typed here", searchedDestination)
 
   let filteredDestinations = destinations.filter((destination) => {
     return (
@@ -189,22 +165,21 @@ const createFilteredList = (e) => {
       destination.location.toLowerCase().includes(searchedDestination)  
     )
   });
- 
-  console.log("filteredDestinations",filteredDestinations)
-  if (filteredDestinations){
+
+  if (filteredDestinations) {
    displayDestinationsData(filteredDestinations)
   }
 
 }
 
-///////BOOK A TRIP SUBMIT BUTTON /////////////////////
-///// SERACH BAR/////
-function checkForReset(e) {
-    if (!e.target.value) {
-    // e.target.reset();
-    displayDestinationsData(destinations);
-  }
-}
+
+                                   ///// SEARCH BAR/////
+// function checkForReset (e) {
+//     if (!e.target.value) {
+//     // e.target.reset();
+//     displayDestinationsData(destinations);
+//   }
+// }
 
 function populateSearchBar(e) {
   console.log(e.target)
@@ -212,22 +187,25 @@ function populateSearchBar(e) {
    destinationSearchBar.value = destinationChosen.location
 }
 
-//////////BOOK A BRIP FORM
+
+///POST A NEW TRIP FUNCTIONS ---------------------------------------------------------------
+                             //////////BOOK A BRIP FORM////////////////
 
 document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
   requestTrip(e)
 });
-
+                                ///// ERROR HANDLING
   
+//TO DO: SHORTEN FUNCTION.
 function checkValidSearch(substring) {
   let newSubstring = substring.trim().toLowerCase().toString()
   //if nothing in the field.
-  if(!newSubstring){
+  if (!newSubstring) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
     return;
   }
 
-    if(newSubstring.length < 3){
+    if (newSubstring.length < 3) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
     return;
   }
@@ -238,7 +216,7 @@ function checkValidSearch(substring) {
     return destination.location.toLowerCase().includes(newSubstring)
   })
 
-  if(!isValid) {
+  if (!isValid) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination'
   }
   return isValid;
@@ -251,21 +229,19 @@ const getSubstringTripId = (substring) => {
   return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
 }
 
-////////////////////////
-//create a dynamic select bar that will populate all the destinations and then show only the options that match your search.***
- 
-function requestTrip(e) {
-    e.preventDefault();
-    clearTripRequestErrorField();
 
+//TO DO: create a dynamic select bar that will populate all the destinations and then show only the options that match your search.***
+                                     ///// CREATE NEW TRIP POST OBJECT
+function requestTrip(e) {
+  e.preventDefault();
+  clearTripRequestErrorField();
   const startDate = document.getElementById('start');
   const durationInput = document.getElementById('duration');
   let destinationID; 
   const numTravelers = document.getElementById('number-of-travelers')
 
- /// STEPS TO CHECK ID----------
- 
-  if(!checkValidSearch(destinationSearchBar.value)) {
+          /// STEPS TO CHECK ID----------
+  if (!checkValidSearch(destinationSearchBar.value)) {
     console.log("Invalid");
     return;
   } else {
@@ -288,22 +264,9 @@ function requestTrip(e) {
   e.target.reset()
 }
 
-const formatDate = (dateToFormat) => {
-  const dividedDate = dateToFormat.split("-");
-  const month = dividedDate[1];
-  const day = dividedDate[2];
-  const year = dividedDate[0];
-  const rearrangedDate = [year, month, day];
-  return rearrangedDate.join("/");
-}
 
-
-//good place to clear error message fields?
-function displayDestinationsData(destinations) { 
-  renderDestinations(destinations);
-}
-
-
+                   
+                                    ///// CREATE RESPONSE MESSAGE FOR USER ONCE 
 //This Function is called within the postUser function ...will instantiate trip, will, create a message for user// will be async
 const createTripRequestResponseForUser = (parsedData) => {
   const tripRequestError = document.getElementById("trip-request-error-field");
@@ -321,6 +284,7 @@ const createTripRequestResponseForUser = (parsedData) => {
   })
 }
 
+                                  ///// POST NEW TRIP WITH COMPLETED POST OBJECT
 function postNewTrip(tripRequest) {
   Promise.resolve(postData('trips', tripRequest)).then(res => {
     return checkForErrors(res);
@@ -328,15 +292,13 @@ function postNewTrip(tripRequest) {
     createTripRequestResponseForUser(parsedData.newTrip)
   } )
   .catch(err => displayErrorMessage(err, "postNewTrip"))
-};
+}
 
-
+                              /////CHECK FOR ERRORS
 function checkForErrors(res) {
-  console.log(res);
   // if (status === 404) {
 
   // }
-
   if (!res.ok) {
     throw new Error();
   } else {
@@ -348,9 +310,9 @@ function checkForErrors(res) {
   
 }
 
-
-//user ternary operator.
-//put this in dom updates file.
+                              ///// DISPLAY ERROR MESSAGE    
+//TO DO: user ternary operator.
+//TO DO: put this in dom updates file.
 function displayErrorMessage(err, scenario) {
   const tripRequestError = document.getElementById("trip-request-error-field");
   const userLoginError = document.getElementById("user-login-error-field");
@@ -373,3 +335,21 @@ function displayErrorMessage(err, scenario) {
 }
 
 
+/////////////MISC FUNCTIONS
+
+
+                       //DISPLAY DESTINATIONS
+//good place to clear error message fields?
+function displayDestinationsData(destinations) { 
+  renderDestinations(destinations);
+}
+
+
+const formatDate = (dateToFormat) => {
+  const dividedDate = dateToFormat.split("-");
+  const month = dividedDate[1];
+  const day = dividedDate[2];
+  const year = dividedDate[0];
+  const rearrangedDate = [year, month, day];
+  return rearrangedDate.join("/");
+}
