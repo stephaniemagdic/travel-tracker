@@ -19,7 +19,7 @@ export const renderDestinations = (destinations) => {
     //check breakpoint pixels.
     breakpoints: {
       1024: {
-        perView: 1
+        perView: 3
       },
       600: {
         perView: 1
@@ -87,7 +87,7 @@ export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTri
   if (pastTrips.length) {
     pastTrips.forEach(trip => {
       pastTripsContainer.innerHTML += `
-        <div>
+        <div class="trip">
         <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
         <p>${trip.date}</p>
         </div>
@@ -101,7 +101,7 @@ export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTri
     console.log(currentTrips, "currentTrips")
        currentTrips.forEach(trip => {
     presentTripsContainer.innerHTML += `
-      <div>
+      <div class="trip">
       <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
       <p>${trip.date}</p>
       </div>
@@ -116,7 +116,7 @@ export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTri
      console.log("herre instead", futureTrips)
     futureTrips.forEach(trip => {
     futureTripsContainer.innerHTML += `
-      <div>
+      <div class="trip">
       <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
       <p>${trip.date}</p>
       </div>
@@ -133,7 +133,7 @@ export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTri
    if (pendingTrips.length) {
     pendingTrips.forEach(trip => {
     pendingTripsContainer.innerHTML += `
-      <div>
+      <div class="trip">
       <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
       <p>${trip.date}</p>
       </div>
