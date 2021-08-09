@@ -1,52 +1,42 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
 import './css/base.scss';
 import './images/turing-logo.png'
 import Agency from './Agency';
 import Traveler from './Traveler'
-// import Trip from './Trip';
 import { postData, fetchData } from './apiCalls.js'
-import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips, renderYearlyExpenses, displayPage, displayErrorMessage } from './domUpdates'
+import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips, renderYearlyExpenses, displayPage, displayErrorMessage, formatDate } from './domUpdates'
 import dayjs from 'dayjs';
 
-
-
-//temporarily a global variable (get userTrips and destination search bar needs it.)
+/* ------------------------GLOBAL VARIABLES ----------------------------------*/
 let destinations;
 let agency;
-
 let defaultDate = new Date();
 let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
-//current user is set in the fetch user function;
 let currentUser;
 
-///////////////////////////FETCH USER --- USER LOGIN///////////////////////////
-
-
-//////////////EVENT LISTENERS////////////////////////////////////
-// window.addEventListener('load', displayLoginPage());
+/* -------------------------EVENT LISTENERS ----------------------------------*/
+const destinationSearchBar = document.getElementById('destination-search');
+const displayTripsButton = document.getElementById('display-trips-button');
+const bookATripButton = document.getElementById('book-a-trip-button');
 
 document.getElementById('user-login-submit').addEventListener('click', (e) => {
-  console.log("here in event listener")
   validateUser(e);
-})
+});
 
 glideSlides.addEventListener('click', (e) => {
   populateSearchBar(e);
-})
-
-const destinationSearchBar = document.getElementById('destination-search');
-const displayTripsButton = document.getElementById('display-trips-button');
-
+});
 
 displayTripsButton.addEventListener('click', () => {
-  displayPage('trips')
-})
+  displayPage('trips');
+});
+
+bookATripButton.addEventListener('click', () => {
+  displayPage('bookATrip');
+  displayDestinationsData(agency.destinations);
+});
 
 
-
-//BUG-FIX: HERE when you enter an empty string
+//TO DO: BUG-FIX: HERE when you enter an empty string
 // destinationSearchBar.addEventListener('keyup', function(e) {
 //   createFilteredList(e);
 // });
@@ -56,23 +46,14 @@ displayTripsButton.addEventListener('click', () => {
 //   checkForReset(e)
 // })
 
-const bookATripButton = document.getElementById('book-a-trip-button');
 
-bookATripButton.addEventListener('click', () => {
-  displayPage('bookATrip');
-  displayDestinationsData(agency.destinations);
-  
-})
-//add an event listener on home button.
+//TO DO: add an event listener on home button.
 
-
-////////// FETCH REQUEST AND PAGE DISPLAY PAGE FUNCTION ///////////////
-
+/* -----------------USER LOGIN/FETCH DATA FUNCTIONS --------------------------*/
 const fetchUser = (username) => {
-let user;
+  let user;
   
   return fetchData(username).then((res) => {
-    console.log("here is our res",)
     if (res == 'Error: 404') {
       throw new Error(404);
     }
@@ -83,15 +64,13 @@ let user;
     }
   }).then(data => {
     fetchUserDashboardDataByUserId(data.id);
+    //dont need both of these variables.
     currentUser = data;  
     user = data; 
-     return user;   
-  }).then((user) => user)
-  .catch(err => {
-
-    displayErrorMessage(err, "fetchUser")
+    return user;   
   })
-
+  .then((user) => user)
+  .catch(err => displayErrorMessage(err, "fetchUser"));
 }
 
 
@@ -103,14 +82,12 @@ const checkUserLoginInputs = () => {
   if (document.getElementById('password').value.toString().trimEnd() === "travel") {
     return fetchUser(`travelers/${userID}`).then((isValidUser) => isValidUser);
   } else {
-    document.getElementById("user-login-error-field").innerHTML = 'Please enter valid credentials.'
+    document.getElementById("user-login-error-field").innerHTML = 'Please enter valid credentials'
   }
   
   usernameInput.value = null;
   document.getElementById('password').value = null;
-  
 }
-
 
 const validateUser = (e) => {
   e.preventDefault();
@@ -123,9 +100,9 @@ const validateUser = (e) => {
   } else {
     return;
   }
-
 }
 
+//TO DO: seperate out these two following function.
 function fetchUserDashboardDataByUserId(userID) {
 //Do not get rid of return.
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
@@ -148,24 +125,21 @@ function generateAgency(dataSets) {
   return agency;
 }
 
-
-//////////////// DISPLAY USER DASHBOARD FUNCTION/////////////
+/* -----------------DISPLAY USER DASHBOARD FUNCTION --------------------------*/
 function getUserTrips(newAgency, userID) {
   agency = newAgency;
   destinations = agency.destinations;
+  const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
+  const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
+  const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
+  const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
+  //yearly expenses only include past that have been approved and paid for.
+  const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
 
-   const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
-   const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
-   const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
-   const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
-   //yearly expenses only include past that have been approved and paid for.
-   const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
+  displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
 
-   displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
-
-   return newAgency;
+  return newAgency;
 }
-
 
 function displayUserTripData(past, current, future, pending, yearlyExpenses) {
   const year = todayDate.split('/')[0]
@@ -224,7 +198,7 @@ document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
                                 ///// ERROR HANDLING
   
 //TO DO: SHORTEN FUNCTION.
-function checkValidSearch(substring) {
+function checkValidDestinationSearch(substring) {
   let isValid;
   let newSubstring = substring.trim().toLowerCase().toString().split(",")[0]
   //if nothing in the field.
@@ -246,25 +220,20 @@ function checkValidSearch(substring) {
   return isValid;
 }
 
-
 const getSubstringTripId = (substring) => {
   let newSubstring = substring.trim().toLowerCase();
 
   return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
 }
 
-
 const checkValidDuration = (durationInput) => {
-  console.log(durationInput.value, "durationInput")
-  console.log(typeof(durationInput.value), "type of value")
-  
   const parsedInput = parseInt(durationInput.value);
-  console.log("parsedInput", parsedInput)
-  console.log("final", typeof(parsedInput) )
   if (!parsedInput) {
-    document.getElementById("invalid-duration-error-field").innerHTML = 'Please enter a valid number of days';
+    document.getElementById("invalid-duration-error-field").innerHTML = `Please enter a # of days you'd like to book your trip`;
     return false;
-  } else {return parseInt(durationInput.value)}
+  } else {
+    return parseInt(durationInput.value)
+    }
 }
 
 //TO DO: create a dynamic select bar that will populate all the destinations and then show only the options that match your search.***
@@ -276,19 +245,16 @@ function requestTrip(e) {
   const durationInput = document.getElementById('duration');
   let destinationID; 
   const numTravelers = document.getElementById('number-of-travelers')
-
   const isValidDuration = checkValidDuration(durationInput);
   
   if (!isValidDuration) {
     return;
   }
 
-  if (!checkValidSearch(destinationSearchBar.value)) {
-    console.log("Invalid");
+  if (!checkValidDestinationSearch(destinationSearchBar.value)) {
     return;
   } else {
     destinationID = getSubstringTripId(destinationSearchBar.value);
-    console.log("valid")
   }
 
   const tripRequest = {
@@ -318,13 +284,11 @@ const createTripRequestResponseForUser = (parsedData) => {
     .then(() => agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations)
   ).then(totalCost => {
     estimatedTripCost = totalCost;
-    console.log(estimatedTripCost, 'estimatedTripCost')
   }).then(()=> {
     tripRequestError.innerHTML = `Your estimated trip cost is $${estimatedTripCost}`
   })
 }
 
-                         ///// POST NEW TRIP WITH COMPLETED POST OBJECT
 function postNewTrip(tripRequest) {
   Promise.resolve(postData('trips', tripRequest)).then(res => {
     return checkForErrors(res);
@@ -334,12 +298,11 @@ function postNewTrip(tripRequest) {
   .catch(err => displayErrorMessage(err, "postNewTrip"))
 }
 
-                              /////CHECK FOR ERRORS
+                     
 function checkForErrors(res) {
   if (!res.ok) {
     console.log(res)
     console.log("ERROR")
-
     throw new Error();
   } else {
     return res.json();
@@ -347,22 +310,10 @@ function checkForErrors(res) {
 }
 
 
-
-
 /////////////MISC FUNCTIONS
 
-
                        //DISPLAY DESTINATIONS
-//good place to clear error message fields?
 function displayDestinationsData(destinations) { 
   renderDestinations(destinations);
 }
 
-const formatDate = (dateToFormat) => {
-  const dividedDate = dateToFormat.split("-");
-  const month = dividedDate[1];
-  const day = dividedDate[2];
-  const year = dividedDate[0];
-  const rearrangedDate = [year, month, day];
-  return rearrangedDate.join("/");
-}

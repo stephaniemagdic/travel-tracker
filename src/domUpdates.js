@@ -1,6 +1,12 @@
 import Glide from '@glidejs/glide'
 export const glideSlides = document.getElementById('glide-slides');
 
+import dayjs from 'dayjs';
+let defaultDate = new Date();
+let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
+
+console.log(todayDate, "from domUpdates FILE")
+
 
 export const renderDestinations = (destinations) => {
   // console.log(destinations, "destinations inside of render destinations")
@@ -63,7 +69,6 @@ export function clearTripRequestErrorField() {
   document.getElementById('trip-request-error-field').innerHTML = ''
   document.getElementById("invalid-destination-error-field").innerHTML = '';
   document.getElementById("invalid-duration-error-field").innerHTML = '';
-
 }
 
 
@@ -220,10 +225,18 @@ export const displayErrorMessage = (err, scenario) => {
 
   if (scenario === "fetchUser") {
 
-    message = "Invalid login. Please make sure both input fields are filled out";
+    message = "Invalid login- Please make sure both input fields are filled out";
       userLoginError.innerHTML = `${message}`;
       document.getElementById("password").value = null;
   }
 
 }
 
+export const formatDate = (dateToFormat) => {
+  const dividedDate = dateToFormat.split("-");
+  const month = dividedDate[1];
+  const day = dividedDate[2];
+  const year = dividedDate[0];
+  const rearrangedDate = [year, month, day];
+  return rearrangedDate.join("/");
+}
