@@ -1,6 +1,6 @@
 import Trip from './Trip.js';
 import Destination from './Destination.js';
-import Traveler from './Traveler.js';
+// import Traveler from './Traveler.js';
 
 class Agency {
   constructor(tripData, destinationData) {
@@ -15,14 +15,22 @@ class Agency {
 
   //why is this method needed? // in order to grab after we create an instance for fetch after we store in a global variable we want to use the trip id to get trip by id to display the data the cost of the trip*
   getTripById(id) {
-    return this.trips.find(trip => trip.id === id);
+    return this.trips.find(trip => trip.id === parseInt(id));
   }
 
+  // findDestination()
+  //MAKE THIS A METHOD? //yu would have to make agency global...
+  // getDestinationIdByName(name) {
+  //   return this.destinations.find(destination => {
+  //     destination.location.includes(name);
+  //   }).id;
+  // }
 
 
   // getTripsByUser(usersId, searchType = null, todayDate, searchYear = null) {
+    //PENDING TRIPS WILL ONLY SHOW FUTURE PENDING TRIPS. 
   getTripsByUser(usersId, todayDate, searchType, searchYear = null) {
-    let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId &&trip.status === 'approved');
+    let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === 'approved');
 
     if (searchYear) {
       return usersApprovedTrips
@@ -42,7 +50,7 @@ class Agency {
         .filter(trip => trip.date > todayDate)
     } else if (searchType === 'pending') {
       return this.trips
-        .filter(trip => trip.userID === usersId &&trip.status === 'pending' && trip.date > todayDate)
+        .filter(trip => trip.userID === usersId && trip.status === 'pending' && trip.date > todayDate)
         .sort((tripA, tripB) => tripA.date - tripB.date);
     }
    
@@ -52,15 +60,26 @@ class Agency {
 
  
   getUserYearlyExpenses(userID, searchYear, todayDate) {
-    //we dont need a date here so make optional in previous function.
+  //we dont need a date here so make optional in previous function.
 
+  // this will only bring past trips... 
     return this.getTripsByUser(userID, todayDate, 'past', searchYear)
       .reduce((totalCost, trip) => {
         totalCost += trip.calculateTotalTripCost(this.destinations);
         return totalCost;
       }, 0)
 
+    //if we want to include future also. 
+    // we want future also.
+    // .getTripsByUser(userID, todayDate, 'future')
   }
+
+  ///new test needed for this one
+  //get destination by name by ID
+  getDestinationLocationByID(id) {
+    return this.destinations.find(destination => destination.id === id).location;
+  }
+  
 }
 
 
