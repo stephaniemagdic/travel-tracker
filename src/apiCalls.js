@@ -8,14 +8,15 @@ export const postData = (type, dataObject) => {
   })
 }
 
-//fetch catch block doesnt catch 404 errors??**
 export const fetchData = (endpoint) => {
   return fetch(`http://localhost:3001/api/v1/${endpoint}`)
     .then(response => {
+      console.log("in fetchDATA function", response)
       if (response.status === 404){
-        throw new Error(404)
+        throw Error();
+        return;
       };
-      response.json()
+      return response.json()
     })
     .then(data => data)
     .catch(err => {
