@@ -1,4 +1,5 @@
 @use 'normalize.css' as *;
+@use '_variables.scss' as *;
 //you could download , upload and import if you wanted.
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
 
@@ -6,11 +7,54 @@
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
 
 /* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-;
+// $primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+// ;
+
+// body {
+//   background: $primary-background;
+// }
+
+/* *---- Layout Containers ---- */ 
+.container, main, .header-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+//HEADER
+
+/* -----------------HEADER----------------- */
+header, .nav-footer {
+  background-color: $razzmic-berry;
+  height: 150px;
+  display: flex;
+  flex-direction: columns;
+  justify-content: space-between;
+  align-content: flex-end;
+ }
+
+ .nav-button {
+   height: 40px;
+   width: 100px;
+   margin: 20px;
+ }
+
+ .nav-footer {
+   justify-content: center;
+   align-items: center;
+   padding: 20px;
+   height: 75px;
+ }
+
 
 body {
-  background: $primary-background;
+  background-color: $primary-background-color;
+  font-family: $primary-font-family;
 }
 
 .hidden {
@@ -20,16 +64,117 @@ body {
 
 /// destination card container and cards
 
-// .destination-container {
-//   height: 100vh;
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   padding: 15px;
-// }
 
 img {
- height: 100px;
- width: 100px;
+ height: 250px;
+ width: 220px;
+ border-radius: 6px;
+}
+
+
+//SASS EXAMPLE NESTING
+// .print-only {
+//   display: none;
+
+//   @media print { display: block; }
+// }
+
+///DESTINATION CARDS
+
+
+//
+
+h1 {
+  font-weight: Extra-bold 800;
+  font-style: italic;
+}
+h2 {
+  margin: 6px;
+  font-weight: Semi-bold 600;
+}
+
+p {
+  margin: 5px;
+}
+
+.trip-container, .yearly-expenses {
+  border: .1px solid black;
+  border-radius: 2px;
+  height: 25vh;
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  background-color: $white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+   
+  @media screen and (min-width: 450px) {
+    flex-direction: row;
+   }
+}
+
+@media screen and (min-width: 450px) {
+  .hide-for-desktop {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 425px) {
+  .hide-for-mobile {
+    display: none;
+  }
+}
+
+
+.past-trips, .present-trips, .future-trips, .pending-trips {
+  display: flex;
+  @media screen and (min-width: 450px) {
+    flex: 1
+    
+   }
+  
+}
+
+.trip {
+  background-color: $pale-silver;
+  margin: 6px;
+}
+
+//destinations
+
+
+
+.destination-container {
+  // height: 200em;
+  width: 100%;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  padding: 15px;
+}
+
+fieldset {
+  display: flex;
+  justify-content: center;
+}
+
+.book-a-trip-submit {
+  display: block;
+}
+
+.input-container {
+  padding: 6px;
+}
+
+.inputs-container {
+
+}
+
+label {
+  display: block;
+}
+
+.destinations-title {
+  font-style: italic;
 }
