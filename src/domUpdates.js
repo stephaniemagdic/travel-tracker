@@ -62,6 +62,7 @@ export function setBookingCalendar(todayDate) {
 export function clearTripRequestErrorField() {
   document.getElementById('trip-request-error-field').innerHTML = ''
   document.getElementById("invalid-destination-error-field").innerHTML = '';
+  document.getElementById("invalid-duration-error-field").innerHTML = '';
 
 }
 
