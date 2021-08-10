@@ -9,7 +9,7 @@ console.log(todayDate, "from domUpdates FILE")
 
 
 export const renderDestinations = (destinations) => {
-  // console.log(destinations, "destinations inside of render destinations")
+ 
   glideSlides.innerHTML = '';
 
     const config = {
@@ -17,7 +17,7 @@ export const renderDestinations = (destinations) => {
     startAt: 0,
     perView: 4,
     focusAt: "center",
-    //check breakpoint pixels.
+ 
     breakpoints: {
       1024: {
         perView: 3
@@ -37,12 +37,12 @@ export const renderDestinations = (destinations) => {
         ${createCard(destination.location, destination.image, destination.alt)}
       </li>
     `
+
+   
   })
-  // if (destinations.length > 2){
-    glide.mount();
-  // } else {
-  //   createDestinationCardsWithoutGlide(destinations)
-  // }
+
+  glide.mount();
+
 
   
 };
@@ -83,10 +83,11 @@ export function setBookingCalendar(todayDate) {
   calendar.setAttribute('max', (max.toString()));
 }
 
-export function clearTripRequestErrorField() {
+export function clearTripRequestMessageFields() {
   document.getElementById('trip-request-error-field').innerHTML = ''
   document.getElementById("invalid-destination-error-field").innerHTML = '';
   document.getElementById("invalid-duration-error-field").innerHTML = '';
+  document.getElementById("estimated-trip-price").innerHTML = '';
 }
 
 
@@ -183,7 +184,7 @@ export const displayPage = (page) => {
   if (page === 'userDashboard') {
     hide('loginPage');
     show('userDashboard');
-    show('nav');
+    show('nav');    
   }
   //from the booking page.
   if (page === 'trips') {
