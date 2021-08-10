@@ -18,10 +18,6 @@ class Agency {
   getTripsByUser(usersId, todayDate, searchType, searchYear = null) {
     let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === 'approved');
 
-    // if (searchYear) {
-    //   return usersApprovedTrips
-    //     .filter(trip => parseInt(trip.date.split('/')[0]) === parseInt(searchYear)) 
-    // }
     if (searchType === 'past') {
       console.log(usersApprovedTrips, "userApprovedTrips");
       usersApprovedTrips = usersApprovedTrips
@@ -49,27 +45,17 @@ class Agency {
 
       return usersApprovedTrips
         .filter(trip => parseInt(trip.date.split('/')[0]) === parseInt(searchYear)) 
-  
   }
 
   getUserYearlyExpenses(userID, searchYear, todayDate) {
-    // console.log("this should be past trips", this.getTripsByUser(userID, todayDate, 'past'))
-    //although this says past... we are actually searching for all...
-
-    
-    
-    // return this.getTripsByUser(userID, todayDate, 'past', searchYear)
     return this.getUserTripsByYear(userID, todayDate, searchYear)
       .reduce((totalCost, trip) => {
-        
         totalCost += trip.calculateTotalTripCost(this.destinations);
         console.log(trip, totalCost)
         return totalCost;
       }, 0)
   }
 
-  ///new test needed for this one
-  //get destination by name by ID
   getDestinationLocationByID(id) {
     return this.destinations.find(destination => destination.id === id).location;
   }
