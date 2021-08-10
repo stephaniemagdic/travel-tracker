@@ -62,9 +62,10 @@
      <section class="book-a-trip-page hidden" id="book-a-trip">
       <div>
         <form id="book-a-trip-form">
+          <h2>Book A Trip</h2>
           <fieldset>
             <div class="inputs-container">
-              <legend>Book A Trip</legend>
+              <!-- <legend>Book A Trip</legend> -->
                 <div class="input-container">
                   <label for="start">Start date</label>
                   <input type="date" id="start" name="trip-start"
@@ -74,16 +75,17 @@
                 <div class="input-container">
                   <label for="duration">Duration</label>
                   <input type="text" name="duration" id="duration" placeholder="number of days" required>
-                  <p id="invalid-duration-error-field" class="error"><p>
+                  <!-- <p id="invalid-duration-error-field" class="error"><p> -->
                 </div>
                 <div class="input-container">
                   <label for="duration">Destination City</label>
                   <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="search by city" required>
-                  <p id="invalid-destination-error-field" class="error"></p>
+                  <!-- <p id="invalid-destination-error-field" class="error"></p> -->
                 </div>
                 <div class="input-container">
+                  <label for="number-of-travlers"># of Travelers</label>
                   <select name="number-of-travlers" id="number-of-travelers" aria-label="select for number of travels" required>
-                    <option value="">number of travelers</option>
+                    <option value="">Select # of Travelers</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="4">4</option>
@@ -95,12 +97,15 @@
                     <option value="10">10</option>
                     <option value="11">11</option>
                     <option value="12">12</option>
+                  </select>
                 </div> 
             </div> 
-            <input type="submit" class="book-a-trip-submit"> 
+            <input type="submit" class="book-a-trip-submit" src="./images/plane.png"> 
           </fieldset>
+          <p id="invalid-destination-error-field" class="error"></p>
           <p id="trip-request-error-field" class="error"></p>
           <p id="estimated-trip-price"></p>
+          <p id="invalid-duration-error-field" class="error"><p></p>
         </form>
       </div>
       <section class="destination-container" id="destinations-container">
