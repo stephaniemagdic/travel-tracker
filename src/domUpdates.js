@@ -16,6 +16,7 @@ export const renderDestinations = (destinations) => {
     type: 'carousel',
     startAt: 0,
     perView: 4,
+    focusAt: "center",
     //check breakpoint pixels.
     breakpoints: {
       1024: {
@@ -29,8 +30,6 @@ export const renderDestinations = (destinations) => {
 
   let glide = new Glide('.glide', config)
   
-  // glideSlides.innerHTML = ''; //moved this up.
-
   destinations.forEach(destination => {
 
     glideSlides.innerHTML += `
@@ -39,9 +38,28 @@ export const renderDestinations = (destinations) => {
       </li>
     `
   })
-  glide.mount();
+  // if (destinations.length > 2){
+    glide.mount();
+  // } else {
+  //   createDestinationCardsWithoutGlide(destinations)
+  // }
+
   
 };
+
+// const createDestinationCardsWithoutGlide = (destinations) => {
+//  const singleItemsContainter = document.getElementById("single-items");
+//   singleItemsContainter.innerHTML = '';
+//   destinations.forEach(destination => {
+
+//     singleItemsContainter.innerHTML += `
+//       <li class="glide__slide" id="${destination.id}">
+//         ${createCard(destination.location, destination.image, destination.alt)}
+//       </li>
+//     `
+//   })
+// }
+
 
 function createCard(destination, img, alt) {
   return `
@@ -201,36 +219,53 @@ const show = (what) => {
 }
 
  ///// DISPLAY ERROR MESSAGE    
-//TO DO: user ternary operator.
+//TO DO: USE SWITCH STATEMENT HERE.
 //TO DO: put this in dom updates file.
 export const displayErrorMessage = (err, scenario) => {
   const tripRequestError = document.getElementById("trip-request-error-field");
   const userLoginError = document.getElementById("user-login-error-field");
   
-
   let message;
 
-  if (scenario === "postNewTrip") {
- 
+  switch (scenario) {
+    case "postNewTrip":
       message = "Please fill out all input fields";
       tripRequestError.innerHTML = `${message}`;
-   
-  }
-  if (scenario === "userLoginAuthenticationFailure") {
-    
+      break;
+    case "userLoginAuthenticationFailure":
       message = "Invalid user credentials";
       userLoginError.innerHTML = `${message}`;
-    
-  }
-
-  if (scenario === "fetchUser") {
-
-    message = "Invalid login- Please make sure both input fields are filled out";
+      break;
+    case "fetchUser":
+      message = "Invalid login- Please make sure both input fields are filled out";
       userLoginError.innerHTML = `${message}`;
       document.getElementById("password").value = null;
+      break;
   }
-
 }
+
+
+  // let message;
+
+  // if (scenario === "postNewTrip") {
+ 
+  //     message = "Please fill out all input fields";
+  //     tripRequestError.innerHTML = `${message}`;
+   
+  // }
+  // if (scenario === "userLoginAuthenticationFailure") {
+    
+  //     message = "Invalid user credentials";
+  //     userLoginError.innerHTML = `${message}`;
+    
+  // }
+
+  // if (scenario === "fetchUser") {
+
+  //   message = "Invalid login- Please make sure both input fields are filled out";
+  //     userLoginError.innerHTML = `${message}`;
+  //     document.getElementById("password").value = null;
+  // }
 
 export const formatDate = (dateToFormat) => {
   const dividedDate = dateToFormat.split("-");
