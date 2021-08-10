@@ -70,27 +70,37 @@ describe('Agency', function() {
     expect(agency.getTripsByUser(51, todayDate,'pending')).to.deep.equal(pendingTrips);
   });
 
+//// param of past has to be used?? could put this in a new method if thats the case.
   it('should return all trips regardless of year by default', () => {
     expect(agency.getTripsByUser(51, todayDate, 'past')).to.deep.equal(pastTrips);
     expect(agency.getTripsByUser(51, todayDate, 'past')[0].date).to.equal('2021/08/04');
     expect(agency.getTripsByUser(51, todayDate, 'past')[1].date).to.equal('2020/01/26');
   });
 
+  // it('should return trips by year', () => {
+  //   expect(agency.getTripsByUser(51, todayDate, null, 2021)).to.deep.equal(tripsByYear);
+  //   expect(agency.getTripsByUser(51, todayDate, null, 2021)[0].date).to.equal(
+  //     '2021/08/05');
+  //   expect(agency.getTripsByUser(51, todayDate, null, 2021)[2].date).to.equal('2021/10/16');
+  // });
 
-  it('should return trips by year', () => {
-    expect(agency.getTripsByUser(51, todayDate, null, 2021)).to.deep.equal(tripsByYear);
-    expect(agency.getTripsByUser(51, todayDate, null, 2021)[0].date).to.equal(
+                              /// REFACTORED
+ it('should return trips by year REFACTORED', () => {
+    expect(agency.getUserTripsByYear(51, todayDate, 2021)).to.deep.equal(tripsByYear);
+    expect(agency.getUserTripsByYear(51, todayDate, 2021)[0].date).to.equal(
       '2021/08/05');
-    expect(agency.getTripsByUser(51, todayDate, null, 2021)[2].date).to.equal('2021/10/16');
+    expect(agency.getUserTripsByYear(51, todayDate, 2021)[2].date).to.equal('2021/10/16');
   });
 
+
+// in that year how much did they spend?... just that year. and if its in year 2021 we are including the approved trip in a yearly expense.
   it('should return yearly expenses for a single user', () => {
     expect(agency.getUserYearlyExpenses(51, 2021, todayDate)).to.equal(4158);
   });
 
 //FINISH TEST HERE.
   it('should return a destination location based on id', () => {
-      expect(agency.getDestinationLocationByID(51)).to.equal();
+      expect(agency.getDestinationLocationByID(51)).to.equal("Chicago, Illinois");
   });
 
 });

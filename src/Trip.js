@@ -11,12 +11,33 @@ class Trip {
   }
 
   calculateTotalTripCost(destinationData) {
-    const agentFee = (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) * .10
+
+
+    // const agentFee = (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) * .10
+
+
     if (this.status === "pending") {
       return 0;
     } else {
-      return (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) + agentFee;
+      // return (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) + agentFee;
+   
+
+
+    ///NEW
+
+    
+    const destinationNeeded = destinationData.find(destination => destination.id === this.destinationID)
+
+    const tripCostBeforeAgentFee = parseInt(destinationNeeded.getDestinationLodgingCost(this.duration) + destinationNeeded.getDestinationFlightCostPerPerson(this.travelers));
+
+    const agentFee = parseInt(tripCostBeforeAgentFee * .10);
+
+    const totalTripCost = parseInt(tripCostBeforeAgentFee  + agentFee);
+
+    return totalTripCost;
+
     }
+
   }
 
 

@@ -136,10 +136,15 @@ function generateAgency(dataSets) {
 function getUserTrips(newAgency, userID) {
   agency = newAgency;
   destinations = agency.destinations;
+  console.log("todayDate", todayDate)
+
   const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
+  console.log("pastTrips", pastTrips)
   const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
+  console.log("CURRENT TRIPS...")
   const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
   const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
+  console.log("SEARCH YEAR", parseInt(todayDate.split('/')[0]));
   const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
 
   displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)

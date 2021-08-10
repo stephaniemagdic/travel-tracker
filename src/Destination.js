@@ -8,8 +8,16 @@ class Destination {
     this.alt = destination.alt;
   }
 
-  calculateDestinationCost() {
-    return this.estLodgingCostPerDay + this.estFlightCostPerPerson;
+  // calculateDestinationCost() {
+  //   return this.estLodgingCostPerDay + this.estFlightCostPerPerson;
+  // }
+
+  getDestinationLodgingCost(numDays) {
+    return parseInt(this.estLodgingCostPerDay * numDays);
+  }
+
+  getDestinationFlightCostPerPerson(numTravelers) {
+    return parseInt(this.estFlightCostPerPerson * numTravelers);
   }
 
 }
