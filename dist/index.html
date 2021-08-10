@@ -73,7 +73,7 @@
                 </div>
                 <div class="input-container">
                   <label for="duration">Duration</label>
-                  <input type="text" name="duration" id="duration" placeholder="number of days" aria-label="Enter the duration of your trip" required>
+                  <input type="text" name="duration" id="duration" placeholder="number of days" required>
                   <p id="invalid-duration-error-field" class="error"><p>
                 </div>
                 <div class="input-container">
@@ -82,7 +82,7 @@
                   <p id="invalid-destination-error-field" class="error"></p>
                 </div>
                 <div class="input-container">
-                  <select name="number-of-travlers" id="number-of-travelers" required>
+                  <select name="number-of-travlers" id="number-of-travelers" aria-label="select for number of travels" required>
                     <option value="">number of travelers</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -104,22 +104,13 @@
         </form>
       </div>
       <section class="destination-container" id="destinations-container">
+        <div class="test"</div>
         <h2 class="destinations-title">Available Destinations</h2>
         <div class="glide">
           <div id="single-items"></div>
           <div data-glide-el="track" class="glide__track">
             <ul class="glide__slides" id="glide-slides">
               <li class="glide__slide"></li>
-              <!-- just a test below -->
-                <article class="destination-card">
-                <!-- card top -->
-                  <!-- <div class="card-top card-img-1 mobile-card-img-size">
-                    <div class="destination-name-container">
-                      <img src="https://images.unsplash.com/photo-1489171084589-9b5031ebcf9b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80" alt="" >
-                      <p class="destination-name-label">HERE IS THE DESTINATION</p>
-                    </div>
-                  </div> -->
-                <!-- just a test above -->
               </li>
             </ul>
           </div>
@@ -146,12 +137,10 @@
         </button>
         <button class="nav-button">
           Home
-          <img src="./images/travelling.png" alt="person with suitcase icon" class="button-img">
+          <!-- <img src="./images/travelling.png" alt="person with suitcase icon" class="button-img"> -->
         </button>
     </nav>
   </footer>
-  
-  <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
 
 </body>
