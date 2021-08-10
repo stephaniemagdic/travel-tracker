@@ -5,6 +5,8 @@ import Traveler from './Traveler'
 import { postData, fetchData } from './apiCalls.js'
 import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips, renderYearlyExpenses, displayPage, displayErrorMessage, formatDate } from './domUpdates'
 import dayjs from 'dayjs';
+import './images/road-map.png';
+import './images/travel-luggage.png';
 
 /* ------------------------GLOBAL VARIABLES ----------------------------------*/
 let destinations;
@@ -33,51 +35,52 @@ displayTripsButton.addEventListener('click', () => {
 bookATripButton.addEventListener('click', () => {
   displayPage('bookATrip');
   displayDestinationsData(agency.destinations);
+  setBookingCalendar(todayDate);
 });
 
 
-//TO DO: BUG-FIX: HERE when you enter an empty string
-// destinationSearchBar.addEventListener('keyup', function(e) {
-//   createFilteredList(e);
-// });
+document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
+  requestTrip(e)
+});
 
-// should this be a click event instead?
-// destinationSearchBar.addEventListener('click', function(e) {
-//   checkForReset(e)
-// })
-
-
-//TO DO: add an event listener on home button.
 
 /* -----------------USER LOGIN/FETCH DATA FUNCTIONS --------------------------*/
+const checkForErrors = (res) => {
+  if (!res.ok || res.message === "No traveler found with an id of NaN") {
+    throw new Error(`${res}`);
+  } else {
+    return res.json();
+  }
+}
+
 const fetchUser = (username) => {
   let user;
   
   return fetchData(username).then((res) => {
-    if (res == 'Error: 404') {
-      throw new Error(404);
-    }
+    // if (res == 'Error: 404') {
+    //   throw new Error(404);
+    // }
     if (res.id) {
       return res;
     } else {
       checkForErrors(res)
     }
   }).then(data => {
-    fetchUserDashboardDataByUserId(data.id);
+    fetchUserDashboardData(data.id);
     //dont need both of these variables.
     currentUser = data;  
-    user = data; 
-    return user;   
+    // user = data; 
+    // return user;   
+    //new below  
+    return data;
   })
   .then((user) => user)
   .catch(err => displayErrorMessage(err, "fetchUser"));
 }
 
-
 const checkUserLoginInputs = () => {
   const usernameInput = document.getElementById('username');
-  const username = usernameInput.value
-  const userID = parseInt(username.slice(8))
+  const userID = parseInt(usernameInput.value.slice(8))
 
   if (document.getElementById('password').value.toString().trimEnd() === "travel") {
     return fetchUser(`travelers/${userID}`).then((isValidUser) => isValidUser);
@@ -85,6 +88,7 @@ const checkUserLoginInputs = () => {
     document.getElementById("user-login-error-field").innerHTML = 'Please enter valid credentials'
   }
   
+  //TO DO:put these in a clear input function
   usernameInput.value = null;
   document.getElementById('password').value = null;
 }
@@ -103,13 +107,15 @@ const validateUser = (e) => {
 }
 
 //TO DO: seperate out these two following function.
-function fetchUserDashboardDataByUserId(userID) {
+function fetchUserDashboardData(userID) {
 //Do not get rid of return.
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
     .then((newAgency) => getUserTrips(newAgency, userID)).then(() => displayPage("userDashboard"))
 }
 
+//**FIX 
 //this is needed so the fetchUserDashboardData when a new trip is posted wont show dashboard.
+//Is there a way to make the getUserTrips live somewhere else?* for SRP?------
 function fetchUpdatedData(userID) {
 //Do not get rid of return.
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
@@ -121,7 +127,8 @@ function fetchAgencyData() {
 }
 
 function generateAgency(dataSets) {
-  agency =  new Agency(dataSets[0].trips, dataSets[1].destinations);
+  agency = new Agency(dataSets[0].trips, dataSets[1].destinations);
+  //need to return out of here for...getUserTrips.
   return agency;
 }
 
@@ -133,7 +140,6 @@ function getUserTrips(newAgency, userID) {
   const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
   const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
   const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
-  //yearly expenses only include past that have been approved and paid for.
   const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
 
   displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
@@ -148,60 +154,13 @@ function displayUserTripData(past, current, future, pending, yearlyExpenses) {
 }
 
 
-//////////////LOAD PAGE FUNCTION//////////////////////
-setBookingCalendar(todayDate);
-
-
-///////FILTER DESTINATIONS//////////////
-                           // To Do: BUG in filter destination.
-                     // filter function may not be as helpful with courosel.
-const createFilteredList = (e) => {
-  // const searchedDestination = e.target.value.toLowerCase();
-  //TRIM FIXED the checking just a bunch of empty spaces and freezing things.
-  const searchedDestination = e.target.value.trim().toLowerCase();
-
-  let filteredDestinations = destinations.filter((destination) => {
-    return (
-      // //use substring instead//unless they can search by country as well.
-      // destination.location.toLowerCase().startsWith(searchedDestination)  
-      destination.location.toLowerCase().includes(searchedDestination)  
-    )
-  });
-
-  if (filteredDestinations) {
-   displayDestinationsData(filteredDestinations)
-  }
-
-}
-
-
-                           ///// SEARCH BAR/////
-// function checkForReset (e) {
-//     if (!e.target.value) {
-//     // e.target.reset();
-//     displayDestinationsData(destinations);
-//   }
-// }
-
-function populateSearchBar(e) {
-  console.log(e.target)
-  const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
-   destinationSearchBar.value = destinationChosen.location
-}
-
-///POST A NEW TRIP FUNCTIONS ---------------------------------------------------------------
-                             //////////BOOK A BRIP FORM////////////////
-
-document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
-  requestTrip(e)
-});
                                 ///// ERROR HANDLING
   
 //TO DO: SHORTEN FUNCTION.
-function checkValidDestinationSearch(substring) {
+const checkForDestinationSearchMatch = (substring) => {
   let isValid;
   let newSubstring = substring.trim().toLowerCase().toString().split(",")[0]
-  //if nothing in the field.
+
   if (!newSubstring) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
     return;
@@ -210,19 +169,17 @@ function checkValidDestinationSearch(substring) {
   if (agency.destinations.some(destination => {
       return (destination.location.toLowerCase().split(",")[0]) === newSubstring
     })) {
-      console.log("Found a match!")
       isValid = true;
     }
 
   if (!isValid) {
-    document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination'
+    document.getElementById("invalid-destination-error-field").innerHTML = 'Please select an available destination'
   }
   return isValid;
 }
 
 const getSubstringTripId = (substring) => {
   let newSubstring = substring.trim().toLowerCase();
-
   return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
 }
 
@@ -236,9 +193,8 @@ const checkValidDuration = (durationInput) => {
     }
 }
 
-//TO DO: create a dynamic select bar that will populate all the destinations and then show only the options that match your search.***
-                          ///// CREATE NEW TRIP POST OBJECT
-function requestTrip(e) {
+const requestTrip = (e) => {
+// function requestTrip(e){
   e.preventDefault();
   clearTripRequestErrorField();
   const startDate = document.getElementById('start');
@@ -251,7 +207,7 @@ function requestTrip(e) {
     return;
   }
 
-  if (!checkValidDestinationSearch(destinationSearchBar.value)) {
+  if (!checkForDestinationSearchMatch(destinationSearchBar.value)) {
     return;
   } else {
     destinationID = getSubstringTripId(destinationSearchBar.value);
@@ -272,24 +228,18 @@ function requestTrip(e) {
   e.target.reset()
 }
 
-             
-                ///// CREATE RESPONSE MESSAGE FOR USER ONCE TRIP IS REQUESTED
+//TO DO: change this to be a modal***
 const createTripRequestResponseForUser = (parsedData) => {
-  const tripRequestError = document.getElementById("trip-request-error-field");
-  tripRequestError.innerHTML = 'Your trip was successfully booked! Retrieving your estimated cost...';
-
   let estimatedTripCost = 0;
-
+  const tripRequestError = document.getElementById("trip-request-error-field");
+  // tripRequestError.innerHTML = 'Your trip was successfully booked! Retrieving your estimated cost...';
   Promise.resolve(fetchUpdatedData(parsedData.userID))
-    .then(() => agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations)
-  ).then(totalCost => {
-    estimatedTripCost = totalCost;
-  }).then(()=> {
-    tripRequestError.innerHTML = `Your estimated trip cost is $${estimatedTripCost}`
-  })
+    .then(() => agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations))
+    .then(totalCost => estimatedTripCost = totalCost)
+    .then(()=> tripRequestError.innerHTML = `Your estimated trip cost is $${estimatedTripCost}`)
 }
 
-function postNewTrip(tripRequest) {
+const postNewTrip = (tripRequest) => {
   Promise.resolve(postData('trips', tripRequest)).then(res => {
     return checkForErrors(res);
   }).then(parsedData => {
@@ -297,17 +247,7 @@ function postNewTrip(tripRequest) {
   } )
   .catch(err => displayErrorMessage(err, "postNewTrip"))
 }
-
-                     
-function checkForErrors(res) {
-  if (!res.ok) {
-    console.log(res)
-    console.log("ERROR")
-    throw new Error();
-  } else {
-    return res.json();
-  }
-}
+              
 
 
 /////////////MISC FUNCTIONS
@@ -317,3 +257,80 @@ function displayDestinationsData(destinations) {
   renderDestinations(destinations);
 }
 
+
+
+//FUNCTIONALITY TO FIX
+
+//TO DO: BUG-FIX: HERE when you enter an empty string
+destinationSearchBar.addEventListener('keyup', function(e) {
+  createFilteredList(e);
+});
+
+// should this be a click event instead?
+// destinationSearchBar.addEventListener('click', function(e) {
+//   checkForReset(e)
+// })
+
+
+//TO DO: add an event listener on home button.
+
+                           ///// SEARCH BAR/////
+// function checkForReset (e) {
+//     if (!e.target.value) {
+//     // e.target.reset();
+//     displayDestinationsData(destinations);
+//   }
+// }
+
+function populateSearchBar(e) {
+  console.log(e.target)
+  const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
+   destinationSearchBar.value = destinationChosen.location
+}
+
+
+///////FILTER DESTINATIONS//////////////
+                           // To Do: BUG in filter destination.
+                     // filter function may not be as helpful with courosel.
+const createFilteredList = (e) => {
+  // const searchedDestination = e.target.value.toLowerCase();
+  //TRIM FIXED the checking just a bunch of empty spaces and freezing things.
+  // if(typeof(e.target.value === "string") 
+
+  // if ((/^([a-z]{5,})$/.test(e.target.value))) {
+  //   return;
+  // }\
+
+  //to lower case or trim failing here?
+
+ //period is getting through here...
+  if(!(/[a-zA-Z]/).test(e.target.value)) {
+    return;
+  }
+
+  if (!e.target.value) {
+    return;
+  }
+  
+
+  // const searchedDestination = e.target.value.trim().toLowerCase();
+   const searchedDestination = e.target.value.trim().toLowerCase();
+
+
+  let filteredDestinations = destinations.filter((destination) => {
+    return (
+      // //use substring instead//unless they can search by country as well.
+      // destination.location.toLowerCase().startsWith(searchedDestination)  
+      destination.location.toLowerCase().includes(searchedDestination)  
+    )
+  });
+  
+  if (filteredDestinations === []) {
+    return;
+  }
+
+  if (filteredDestinations) {
+   displayDestinationsData(filteredDestinations)
+  }
+  
+}

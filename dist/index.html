@@ -4,16 +4,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;800&display=swap" rel="stylesheet">
   <title>Webpack Starter Kit</title>
 </head>
-<body>
-  <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
-  <header>
-    //HEADER CONTENT
-  </header>
+<header class="header-container">
+  <h1 class="welcome-traveler" id="welcome-traveler"></h1>
+</header>
+<body class="container">
+  <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
   <main>
     <section class="login-page" id='login-page'>
-     //LOGIN PAGE
       <fieldset>
         <legend>User Login</legend>
           <form class="user-login-form" id="user-login" aria-label="user-information">
@@ -21,12 +23,11 @@
             <input type="text" id="password" name="password" aria-label="password" placeholder="password">
             <!-- <input type="submit" id="user-login-submit"> -->
             <button id="user-login-submit">SUBMIT</button>
-            <p id="user-login-error-field"></p>
+            <p id="user-login-error-field" class="error"></p>
           </form>
       </fieldset>
     </section>
     <section class="user-dashboard-page hidden" id="user-dashboard-page">
-      //USER DASHBOARD
       <h1>Your Travel Data</h1>
       <article class="trip-container">
         <h2>Your Past Trips</h2>
@@ -52,43 +53,57 @@
           pending trips will go here
         </div>
       </article>
-      <h2>Your Yearly Expenses</h2>
-      <p class="yearly-trip-spending" id="yearly-spending">
-      </p>
+      <article class="yearly-expenses">
+        <h2>Your Yearly Expenses</h2>
+        <p class="yearly-trip-spending" id="yearly-spending">
+        </p>
+      </article>
      </section>
      <section class="book-a-trip-page hidden" id="book-a-trip">
       <div>
         <form id="book-a-trip-form">
           <fieldset>
-            <legend>Book A Trip</legend>
-              <input type="date" id="start" name="trip-start"
-                placeholder="dd-mm-yyyy" value=""
-                min="2014-08-07" max="2022-08-16" required>
-              <label for="start">Start date</label>
-              <input type="text" name="duration" id="duration" placeholder="number of days" aria-label="Enter the duration of your trip" required>
-              <label for="duration">Duration</label>
-              <p id="invalid-duration-error-field"><p>
-              <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="search by city" required>
-              <p id="invalid-destination-error-field"></p>
-              <select name="number-of-travlers" id="number-of-travelers" required>
-                <option value="">number of travelers</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <!-- <option value="">other/special request</option> -->
-              <input type="submit">
+            <div class="inputs-container">
+              <legend>Book A Trip</legend>
+                <div class="input-container">
+                  <label for="start">Start date</label>
+                  <input type="date" id="start" name="trip-start"
+                    placeholder="dd-mm-yyyy" value=""
+                    min="2014-08-07" max="2022-08-16" required>
+                </div>
+                <div class="input-container">
+                  <label for="duration">Duration</label>
+                  <input type="text" name="duration" id="duration" placeholder="number of days" aria-label="Enter the duration of your trip" required>
+                  <p id="invalid-duration-error-field" class="error"><p>
+                </div>
+                <div class="input-container">
+                  <label for="duration">Destination City</label>
+                  <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="search by city" required>
+                  <p id="invalid-destination-error-field" class="error"></p>
+                </div>
+                <div class="input-container">
+                  <select name="number-of-travlers" id="number-of-travelers" required>
+                    <option value="">number of travelers</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <!-- <option value="">other/special request</option> -->
+                </div>
+            </div>
+              <input type="submit" class="book-a-trip-submit">   
           </fieldset>
-          <p id="trip-request-error-field"></p>
+          <p id="trip-request-error-field" class="error"></p>
           <p id="estimated-trip-price"></p>
         </form>
       </div>
       <section class="destination-container" id="destinations-container">
-        here is where the courosel will go
+        <h2 class="destinations-title">Available Destinations</h2>
         <div class="glide">
+          <div id="single-items"></div>
           <div data-glide-el="track" class="glide__track">
             <ul class="glide__slides" id="glide-slides">
               <li class="glide__slide"></li>
@@ -119,16 +134,18 @@
       //AGENT DASHBOARD
      </section>
   <footer> 
-    <nav class="hidden" id="nav">
-      <button class="display-booking-screen-button" id="book-a-trip-button">
-        Book a Trip
-      </button>
-      <button class="display-trips-button" id="display-trips-button">
-        See My Travel Data
-      </button>
-      <button>
-        Home
-      </button>
+    <nav class="hidden nav-footer" id="nav">
+        <button class="display-booking-screen-button nav-button" id="book-a-trip-button">
+          Book a Trip
+          <img src="./images/travel-luggage.png" alt="suitcase icon" class="button-img">
+        </button>
+        <button class="display-trips-button nav-button" id="display-trips-button">
+          Travel Data
+          <img src="./images/road-map.png" alt="road map icon" class="button-img">
+        </button>
+        <button class="nav-button">
+          Home
+        </button>
     </nav>
   </footer>
   </main>
