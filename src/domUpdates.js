@@ -1,18 +1,10 @@
 import Glide from '@glidejs/glide'
 export const glideSlides = document.getElementById('glide-slides');
 
-import dayjs from 'dayjs';
-let defaultDate = new Date();
-let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
-
-console.log(todayDate, "from domUpdates FILE")
-
-
 export const renderDestinations = (destinations) => {
- 
   glideSlides.innerHTML = '';
 
-    const config = {
+  const config = {
     type: 'carousel',
     startAt: 0,
     perView: 4,
@@ -26,27 +18,22 @@ export const renderDestinations = (destinations) => {
         perView: 1
       }
     }
-}
+  }
 
   let glide = new Glide('.glide', config)
   
   destinations.forEach(destination => {
-
     glideSlides.innerHTML += `
       <li class="glide__slide" id="${destination.id}">
         ${createCard(destination.location, destination.image, destination.alt)}
       </li>
     `
-
-   
   })
 
   glide.mount();
-
-
-  
 };
 
+//SO IT ONLLY DISPLAYS ONE AT A TIME///
 // const createDestinationCardsWithoutGlide = (destinations) => {
 //  const singleItemsContainter = document.getElementById("single-items");
 //   singleItemsContainter.innerHTML = '';
@@ -90,8 +77,6 @@ export function clearTripRequestMessageFields() {
   document.getElementById("estimated-trip-price").innerHTML = '';
 }
 
-
-//TO DO: SHORTEN FUNCTION.
 export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTrips, agency) {
   const pastTripsContainer = document.getElementById('past-trips');
   const presentTripsContainer = document.getElementById('present-trips');
@@ -105,71 +90,52 @@ export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTri
  
   if (pastTrips.length) {
     pastTrips.forEach(trip => {
-      pastTripsContainer.innerHTML += `
-        <div class="trip">
-        <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
-        <p>${trip.date}</p>
-        </div>
-      `
+      pastTripsContainer.innerHTML += `${createTripHTML(trip, agency)}`
     })
   } else {
     pastTripsContainer.innerHTML += `<p> No current trips.</p>`
   }
 
   if (currentTrips.length) {
-    console.log(currentTrips, "currentTrips")
-       currentTrips.forEach(trip => {
-    presentTripsContainer.innerHTML += `
-      <div class="trip">
-      <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
-      <p>${trip.date}</p>
-      </div>
-    `
-     })
+    currentTrips.forEach(trip => {
+      presentTripsContainer.innerHTML += `${createTripHTML(trip, agency)}`
+    
+    })
 
   } else {
     presentTripsContainer.innerHTML += `<p> No present trips.</p>`
   }
- //future trips
-   if (futureTrips.length) {
-     console.log("herre instead", futureTrips)
-    futureTrips.forEach(trip => {
-    futureTripsContainer.innerHTML += `
-      <div class="trip">
-      <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
-      <p>${trip.date}</p>
-      </div>
-    `
-     })
 
+  if (futureTrips.length) {
+    futureTrips.forEach(trip => {
+      futureTripsContainer.innerHTML += 
+    `${createTripHTML(trip, agency)}`
+    })
   } else {
-    console.log("inside")
     futureTripsContainer.innerHTML += `<p> No future trips.</p>`
   }
 
-  //pending trips
-
-   if (pendingTrips.length) {
+  if (pendingTrips.length) {
     pendingTrips.forEach(trip => {
-    pendingTripsContainer.innerHTML += `
-      <div class="trip">
-      <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
-      <p>${trip.date}</p>
-      </div>
-    `
-     })
-
+      pendingTripsContainer.innerHTML += `${createTripHTML(trip, agency)}`
+    })
   } else {
     pendingTripsContainer.innerHTML += `<p> No pending trips.</p>`
   }
   
 }
 
+const createTripHTML = (trip, agency) => {
+  return (`<div class="trip">
+  <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
+  <p>${trip.date}</p>
+  </div>
+`)
+}
+
 export const renderYearlyExpenses = (yearlyExpensesTotal, year) => {
   const yearlyExpenses = document.getElementById('yearly-spending');
-
   yearlyExpenses.innerHTML = '';
-  
   yearlyExpenses.innerHTML += 
   `
   <p>You spent $${yearlyExpensesTotal} in ${year}</p>
@@ -186,10 +152,8 @@ export const displayPage = (page) => {
     show('userDashboard');
     show('nav');    
   }
-  //from the booking page.
+
   if (page === 'trips') {
-    //hide booking form
-    //show user dashboard
     show('userDashboard')
     hide('bookATrip')
   }
@@ -219,9 +183,6 @@ const show = (what) => {
   }
 }
 
- ///// DISPLAY ERROR MESSAGE    
-//TO DO: USE SWITCH STATEMENT HERE.
-//TO DO: put this in dom updates file.
 export const displayErrorMessage = (err, scenario) => {
   const tripRequestError = document.getElementById("trip-request-error-field");
   const userLoginError = document.getElementById("user-login-error-field");
@@ -229,44 +190,25 @@ export const displayErrorMessage = (err, scenario) => {
   let message;
 
   switch (scenario) {
-    case "postNewTrip":
-      message = "Please fill out all input fields";
-      tripRequestError.innerHTML = `${message}`;
-      break;
-    case "userLoginAuthenticationFailure":
-      message = "Invalid user credentials";
-      userLoginError.innerHTML = `${message}`;
-      break;
-    case "fetchUser":
-      message = "Invalid login- Please make sure both input fields are filled out";
-      userLoginError.innerHTML = `${message}`;
-      document.getElementById("password").value = null;
-      break;
+  case "postNewTrip":
+    message = "Please fill out all input fields";
+    tripRequestError.innerHTML = `${message}`;
+    break;
+  case "userLoginAuthenticationFailure":
+    message = "Invalid user credentials";
+    userLoginError.innerHTML = `${message}`;
+    break;
+  case "fetchUser":
+    message = "Invalid login- Please make sure both input fields are filled out";
+    userLoginError.innerHTML = `${message}`;
+    document.getElementById("password").value = null;
+    break;
+  case (!scenario):
+    tripRequestError.innerHTML = `${err}`
+    userLoginError.innerHTML = `${err}`
+  
   }
 }
-
-
-  // let message;
-
-  // if (scenario === "postNewTrip") {
- 
-  //     message = "Please fill out all input fields";
-  //     tripRequestError.innerHTML = `${message}`;
-   
-  // }
-  // if (scenario === "userLoginAuthenticationFailure") {
-    
-  //     message = "Invalid user credentials";
-  //     userLoginError.innerHTML = `${message}`;
-    
-  // }
-
-  // if (scenario === "fetchUser") {
-
-  //   message = "Invalid login- Please make sure both input fields are filled out";
-  //     userLoginError.innerHTML = `${message}`;
-  //     document.getElementById("password").value = null;
-  // }
 
 export const formatDate = (dateToFormat) => {
   const dividedDate = dateToFormat.split("-");
