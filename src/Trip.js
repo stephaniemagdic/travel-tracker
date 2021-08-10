@@ -28,18 +28,9 @@ class Trip {
 
     return (destinationData.find(destination => destination.id === this.destinationID).calculateDestinationCost() * this.travelers * this.duration) + agentFee;
   }
-
-
-  // THIS IS FORM VALIDATION, not class prop validation.
-  // SAD PATH: validate date test? Does this make sense to put on this class or outside
-  // Check against 0 travelers
-
-  //check date length... did you mean to put that you want to travel for a year?
-
 }
 
 export default Trip;
 
-//note you must get the trips arrays length (from fetch call) to assign a trip id.
 
 
