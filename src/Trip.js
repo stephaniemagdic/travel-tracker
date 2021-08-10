@@ -28,11 +28,16 @@ class Trip {
     
     const destinationNeeded = destinationData.find(destination => destination.id === this.destinationID)
 
-    const tripCostBeforeAgentFee = parseInt(destinationNeeded.getDestinationLodgingCost(this.duration) + destinationNeeded.getDestinationFlightCostPerPerson(this.travelers));
+
+    const tripCostBeforeAgentFee = (destinationNeeded.getDestinationLodgingCost(this.duration, this.travelers)) + destinationNeeded.getDestinationFlightCostPerPerson(this.travelers);
+
+    console.log(tripCostBeforeAgentFee, "tripCostBeforeAgentFee")
 
     const agentFee = parseInt(tripCostBeforeAgentFee * .10);
+    console.log(agentFee, "agentFee")
 
     const totalTripCost = parseInt(tripCostBeforeAgentFee  + agentFee);
+    console.log(totalTripCost, "totalTripCost")
 
     return totalTripCost;
 
