@@ -95,8 +95,42 @@ describe('Trip', function() {
   });
 
   it('should return the total trip cost', () => {
-    expect(trip.calculateTotalTripCost(destinationData)).to.equal(2772)
+    expect(trip.calculateTotalTripCost(destinationData)).to.equal(726)
   });
+
+  it('trips that are pending should return a cost of 0', () => {
+    const trip3 = new Trip({
+        "id": 209,
+        "userID": 53,
+        "destinationID": 51,
+        "travelers": 1,
+        "date": "2021/3/20",
+        "duration": 6,
+        "status": "pending",
+        "suggestedActivities": []
+      })
+      
+    expect(trip3.calculateTotalTripCost(destinationData)).to.equal(0)
+  });
+
+   it('should return the total of a new trip cost with a status of pending', () => {
+      const trip3 = new Trip({
+        "id": 209,
+        "userID": 53,
+        "destinationID": 51,
+        "travelers": 1,
+        "date": "2021/3/20",
+        "duration": 6,
+        "status": "pending",
+        "suggestedActivities": []
+      })
+
+    expect(trip3.calculateNewTripCost(destinationData)).to.equal(561)
+  });
+
+
+
+  
   
 
   //ADD TEST FOR PENDING TRIP... cost is 0...**
