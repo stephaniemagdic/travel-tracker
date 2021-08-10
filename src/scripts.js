@@ -24,10 +24,6 @@ document.getElementById('user-login-submit').addEventListener('click', (e) => {
   validateUser(e);
 });
 
-glideSlides.addEventListener('click', (e) => {
-  populateSearchBar(e);
-});
-
 displayTripsButton.addEventListener('click', () => {
   displayPage('trips');
   clearTripRequestMessageFields();
@@ -42,6 +38,10 @@ bookATripButton.addEventListener('click', () => {
 
 document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
   requestTrip(e)
+});
+
+glideSlides.addEventListener('click', (e) => {
+  populateSearchBar(e);
 });
 
 destinationSearchBar.addEventListener('keyup', function(e) {
@@ -61,9 +61,6 @@ const checkForErrors = (res) => {
 const fetchUser = (username) => {
 
   return fetchData(username).then((res) => {
-    // if (res == 'Error: 404') {
-    //   throw new Error(404);
-    // }
     if (res.id) {
       return res;
     } else {
@@ -78,12 +75,24 @@ const fetchUser = (username) => {
     .catch(err => displayErrorMessage(err, "fetchUser"));
 }
 
+const createNewTraveler = (travelerData) => {
+  currentUser = new Traveler(travelerData);
+  console.log("in new travleer funciton!")
+}
+
 const checkUserLoginInputs = () => {
   const usernameInput = document.getElementById('username');
-  const userID = parseInt(usernameInput.value.slice(8))
+  const userID = parseInt(usernameInput.value.slice(8));
 
   if (document.getElementById('password').value.toString().trimEnd() === "travel") {
-    return fetchUser(`travelers/${userID}`).then((isValidUser) => isValidUser);
+    return fetchUser(`travelers/${userID}`).then((isValidUser) => {
+      console.log("isVALIDE USER HERE", isValidUser)
+      currentUser = new Traveler(isValidUser)
+      console.log("LOOK NEW TRAVLER INSTANCE", currentUser)
+      createNewTraveler(isValidUser);
+      welcomeUser(isValidUser)
+      return isValidUser;
+    });
   } else {
     document.getElementById("user-login-error-field").innerHTML = 'Please enter valid credentials'
   }
@@ -95,10 +104,9 @@ const checkUserLoginInputs = () => {
 const welcomeUser = () => {
   console.log(document.getElementById("welcome-traveler"))
   document.getElementById("welcome-traveler").innerHTML = `
-  Welcome to Travel Tracker, ${currentUser.returnFirstName()}!
-`
+    Welcome back to Travel Tracker, ${currentUser.returnFirstName()}!
+    `
 }
-
 
 const validateUser = (e) => {
   e.preventDefault();
@@ -165,7 +173,6 @@ function displayUserTripData(past, current, future, pending, yearlyExpenses) {
   renderUserTrips(past, current, future, pending, agency);
   renderYearlyExpenses(yearlyExpenses, year);
 }
-
 
                              ///// ERROR HANDLING
   
@@ -266,19 +273,15 @@ const postNewTrip = (tripRequest) => {
 }
               
 
-
-/////////////MISC FUNCTIONS
-
-//DISPLAY DESTINATIONS
 function displayDestinationsData(destinations) { 
   renderDestinations(destinations);
 }
 
 
 
-              /// SEARCH BAR
+              /// SEARCH BAR FILTER
 
-function populateSearchBar(e) {
+const populateSearchBar = (e) => {
   console.log(e.target)
   const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
   destinationSearchBar.value = destinationChosen.location
