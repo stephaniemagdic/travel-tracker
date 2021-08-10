@@ -30,6 +30,7 @@ glideSlides.addEventListener('click', (e) => {
 
 displayTripsButton.addEventListener('click', () => {
   displayPage('trips');
+  clearTripRequestErrorField();
 });
 
 bookATripButton.addEventListener('click', () => {
@@ -183,8 +184,10 @@ const checkForDestinationSearchMatch = (substring) => {
   return isValid;
 }
 
-const getSubstringTripId = (substring) => {
+const getCityTripId = (substring) => {
   let newSubstring = substring.trim().toLowerCase();
+  // return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
+
   return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
 }
 
@@ -215,7 +218,7 @@ const requestTrip = (e) => {
   if (!checkForDestinationSearchMatch(destinationSearchBar.value)) {
     return;
   } else {
-    destinationID = getSubstringTripId(destinationSearchBar.value);
+    destinationID = getCityTripId(destinationSearchBar.value);
   }
 
   const tripRequest = {
@@ -237,6 +240,10 @@ const requestTrip = (e) => {
 const createTripRequestResponseForUser = (parsedData) => {
   let estimatedTripCost = 0;
   const tripRequestError = document.getElementById("trip-request-error-field");
+
+  ///  <p id="estimated-trip-price"></p>  ..grab by this item instead.
+
+
   // tripRequestError.innerHTML = 'Your trip was successfully booked! Retrieving your estimated cost...';
   Promise.resolve(fetchUpdatedData(parsedData.userID))
     .then(() => agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations))
