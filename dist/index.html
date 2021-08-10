@@ -13,7 +13,6 @@
   <h1 class="welcome-traveler" id="welcome-traveler"></h1>
 </header>
 <body class="container">
-  <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
   <main>
     <section class="login-page" id='login-page'>
       <fieldset>
@@ -21,38 +20,39 @@
           <form class="user-login-form" id="user-login" aria-label="user-information">
             <input type="text" id="username" name="username" aria-label="username" placeholder="username">
             <input type="text" id="password" name="password" aria-label="password" placeholder="password">
-            <!-- <input type="submit" id="user-login-submit"> -->
-            <button id="user-login-submit">SUBMIT</button>
+            <button id="user-login-submit">Submit</button>
             <p id="user-login-error-field" class="error"></p>
           </form>
       </fieldset>
     </section>
     <section class="user-dashboard-page hidden" id="user-dashboard-page">
       <h1>Your Travel Data</h1>
-      <article class="trip-container">
-        <h2>Your Past Trips</h2>
-        <div class="past-trip-container" id="past-trips"> 
-          <!-- past trips will go here -->
-        </div>
-      </article>
-      <article class="trip-container">
-        <h2>Your Present Trips</h2>
-        <div class="present-trip-container" id="present-trips"> 
-          <!-- present trips will go here -->
-        </div>
-      </article>
-      <article class="trip-container">
-        <h2>Your Future Trips</h2>
-        <div class="future-trip-container" id="future-trips"> 
-          <!-- future trips will go here -->
-        </div>
-      </article>
-      <article class="trip-container">
-        <h2>Your Pending Trips</h2>
-        <div class="pending-trip-container" id="pending-trips"> 
-          pending trips will go here
-        </div>
-      </article>
+      <div class="trip-container-wrapper">
+        <article class="trip-container">
+          <h2>Your Past Trips</h2>
+          <div class="past-trip-container" id="past-trips"> 
+            <!-- past trips will go here -->
+          </div>
+        </article>
+        <article class="trip-container">
+          <h2>Your Present Trips</h2>
+          <div class="present-trip-container" id="present-trips"> 
+            <!-- present trips will go here -->
+          </div>
+        </article>
+        <article class="trip-container">
+          <h2>Your Future Trips</h2>
+          <div class="future-trip-container" id="future-trips"> 
+            <!-- future trips will go here -->
+          </div>
+        </article>
+        <article class="trip-container">
+          <h2>Your Pending Trips</h2>
+          <div class="pending-trip-container" id="pending-trips"> 
+            pending trips will go here
+          </div>
+        </article>
+      </div>
       <article class="yearly-expenses">
         <h2>Your Yearly Expenses</h2>
         <p class="yearly-trip-spending" id="yearly-spending">
@@ -91,10 +91,13 @@
                     <option value="6">6</option>
                     <option value="7">7</option>
                     <option value="8">8</option>
-                    <!-- <option value="">other/special request</option> -->
-                </div>
-            </div>
-              <input type="submit" class="book-a-trip-submit">   
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </div> 
+            </div> 
+            <input type="submit" class="book-a-trip-submit"> 
           </fieldset>
           <p id="trip-request-error-field" class="error"></p>
           <p id="estimated-trip-price"></p>
@@ -110,17 +113,14 @@
               <!-- just a test below -->
                 <article class="destination-card">
                 <!-- card top -->
-                  <div class="card-top card-img-1 mobile-card-img-size">
+                  <!-- <div class="card-top card-img-1 mobile-card-img-size">
                     <div class="destination-name-container">
                       <img src="https://images.unsplash.com/photo-1489171084589-9b5031ebcf9b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80" alt="" >
                       <p class="destination-name-label">HERE IS THE DESTINATION</p>
                     </div>
-                  </div>
+                  </div> -->
                 <!-- just a test above -->
               </li>
-              <!-- <li class="glide__slide"></li>
-              <li class="glide__slide"></li>
-              <li class="glide__slide"></li> -->
             </ul>
           </div>
           <div class="glide__arrows" data-glide-el="controls">
@@ -133,6 +133,7 @@
      <section class="agent-dashboard-page hidden">
       //AGENT DASHBOARD
      </section>
+  </main>
   <footer> 
     <nav class="hidden nav-footer" id="nav">
         <button class="display-booking-screen-button nav-button" id="book-a-trip-button">
@@ -145,10 +146,10 @@
         </button>
         <button class="nav-button">
           Home
+          <img src="./images/person-profile-image.png" alt="user login icon" class="button-img">
         </button>
     </nav>
   </footer>
-  </main>
   
   <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
