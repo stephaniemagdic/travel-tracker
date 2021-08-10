@@ -10,6 +10,7 @@
   <title>Webpack Starter Kit</title>
 </head>
 <header class="header-container">
+  <h1 class="welcome-traveler" id="welcome-traveler"></h1>
 </header>
 <body class="container">
   <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
@@ -22,7 +23,7 @@
             <input type="text" id="password" name="password" aria-label="password" placeholder="password">
             <!-- <input type="submit" id="user-login-submit"> -->
             <button id="user-login-submit">SUBMIT</button>
-            <p id="user-login-error-field"></p>
+            <p id="user-login-error-field" class="error"></p>
           </form>
       </fieldset>
     </section>
@@ -73,12 +74,12 @@
                 <div class="input-container">
                   <label for="duration">Duration</label>
                   <input type="text" name="duration" id="duration" placeholder="number of days" aria-label="Enter the duration of your trip" required>
-                  <p id="invalid-duration-error-field"><p>
+                  <p id="invalid-duration-error-field" class="error"><p>
                 </div>
                 <div class="input-container">
                   <label for="duration">Destination City</label>
                   <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="search by city" required>
-                  <p id="invalid-destination-error-field"></p>
+                  <p id="invalid-destination-error-field" class="error"></p>
                 </div>
                 <div class="input-container">
                   <select name="number-of-travlers" id="number-of-travelers" required>
@@ -95,13 +96,14 @@
             </div>
               <input type="submit" class="book-a-trip-submit">   
           </fieldset>
-          <p id="trip-request-error-field"></p>
+          <p id="trip-request-error-field" class="error"></p>
           <p id="estimated-trip-price"></p>
         </form>
       </div>
       <section class="destination-container" id="destinations-container">
         <h2 class="destinations-title">Available Destinations</h2>
         <div class="glide">
+          <div id="single-items"></div>
           <div data-glide-el="track" class="glide__track">
             <ul class="glide__slides" id="glide-slides">
               <li class="glide__slide"></li>
@@ -135,9 +137,11 @@
     <nav class="hidden nav-footer" id="nav">
         <button class="display-booking-screen-button nav-button" id="book-a-trip-button">
           Book a Trip
+          <img src="./images/travel-luggage.png" alt="suitcase icon" class="button-img">
         </button>
         <button class="display-trips-button nav-button" id="display-trips-button">
-          See My Travel Data
+          Travel Data
+          <img src="./images/road-map.png" alt="road map icon" class="button-img">
         </button>
         <button class="nav-button">
           Home
