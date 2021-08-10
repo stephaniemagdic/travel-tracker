@@ -41,6 +41,10 @@ header, .nav-footer {
   flex-direction: columns;
   justify-content: space-between;
   align-content: flex-end;
+  align-content: flex-end;
+    @media screen and (max-width: 425px) {
+      height: 110px;
+    }
  }
 
  .nav-button {
@@ -70,6 +74,14 @@ header, .nav-footer {
 h1 {
   font-weight: Extra-bold 800;
   font-style: italic;
+}
+
+.welcome-traveler {
+  margin: 60px;
+    @media screen and (max-width: 450px) {
+      margin: 20px;
+      font-weight: 2em;
+    } 
 }
 
 h2 {
@@ -139,6 +151,10 @@ fieldset {
   display: flex;
   justify-content: center;
   border: 0;
+  background-color: $secondary-accent-background-color;
+  // @media screen and (min-width: 450px) {
+  //   flex-direction: row;
+  // }
 }
 
 label {
@@ -150,6 +166,7 @@ legend {
   margin: 0 auto;
   font-size: 1.5em;
   font-weight: bold;
+  display: block;
 }
 
 
@@ -177,6 +194,9 @@ legend {
   display: block;
   margin: 0 auto;
   margin-top: 10px;
+  height: 30px;
+  margin: 3px;
+  margin-top: 23px;
 }
 
 .input-container {
@@ -187,6 +207,10 @@ legend {
   width: 60vw;
   display: flex;
   align-items: center;
+    // @media screen and (min-width: 450px) {
+    //     flex-direction: row;
+    //   }
+
 }
 
 .destinations-title {
