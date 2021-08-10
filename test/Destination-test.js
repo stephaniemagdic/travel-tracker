@@ -1,10 +1,14 @@
 import chai from 'chai';
 const expect = chai.expect;
 import Destination from '../src/Destination.js'
+import Trip from '../src/Trip.js'
+
 
 describe('Destination', function() {
 
   let destination;
+  let trip;
+  let trip2;
 
   before(() => {
     destination = new Destination({
@@ -14,6 +18,28 @@ describe('Destination', function() {
       "estimatedFlightCostPerPerson": 150,
       "image": "https://i.ibb.co/LPVszn3/dylan-lapierre-Rfeqh-K9-Bd-VI-unsplash.jpg",
       "alt": "overview of city buildings and a lakeshore"
+    })
+
+    trip = new Trip( {
+      "id": 203,
+      "userID": 51,
+      "destinationID": 51,
+      "travelers": 1,
+      "date": "2021/08/05",
+      "duration": 6,
+      "status": "approved",
+      "suggestedActivities": []
+    })
+
+     trip2 = new Trip( {
+      "id": 203,
+      "userID": 51,
+      "destinationID": 51,
+      "travelers": 7,
+      "date": "2021/08/05",
+      "duration": 6,
+      "status": "approved",
+      "suggestedActivities": []
     })
   });
 
@@ -53,8 +79,17 @@ describe('Destination', function() {
     expect(destination.alt).to.equal("overview of city buildings and a lakeshore");
   });
 
-  it('should return the total destination cost', () => {
-    expect(destination.calculateDestinationCost()).to.equal(210);
+  it('should return the lodging cost', () => {
+    expect(destination.getDestinationLodgingCost(2, 6)).to.equal(120);
+    expect(destination.getDestinationLodgingCost(trip.duration, trip.travelers)).to.equal(360);
+    expect(destination.getDestinationLodgingCost(2, 7)).to.equal(240);
+    expect(destination.getDestinationLodgingCost(trip2.duration, trip2.travelers)).to.equal(720);
+  });
+
+
+  it('should return the flight cost', () => {
+    expect(destination.getDestinationFlightCostPerPerson(trip.travelers)).to.equal(150);
+    expect(destination.getDestinationFlightCostPerPerson(trip2.travelers)).to.equal(1050);
   });
   
 
