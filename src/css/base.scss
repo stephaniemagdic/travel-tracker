@@ -1,19 +1,24 @@
 @use 'normalize.css' as *;
 @use '_variables.scss' as *;
-//you could download , upload and import if you wanted.
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
-
-// Optional Theme Stylesheet
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
 
-/* This is an example of using Sass, otherwise plain CSS works too*/
-// $primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-// ;
+body {
+  background-color: $primary-background-color;
+  font-family: $primary-font-family;
+}
 
-// body {
-//   background: $primary-background;
-// }
+img {
+  height: 250px;
+  width: 220px;
+  border-radius: 6px;
+ }
 
+ .button-img {
+   height: 30px;
+   width: 30px;
+ }
+ 
 /* *---- Layout Containers ---- */ 
 .container, main, .header-container {
   width: 90%;
@@ -26,11 +31,9 @@
   justify-content: space-between;
 }
 
-//HEADER
-
 /* -----------------HEADER----------------- */
 header, .nav-footer {
-  background-color: $razzmic-berry;
+  background-color: $accent-background-color;
   height: 150px;
   display: flex;
   flex-direction: columns;
@@ -39,10 +42,21 @@ header, .nav-footer {
  }
 
  .nav-button {
-   height: 40px;
-   width: 100px;
+   height: 80px;
+   width: 110px;
    margin: 20px;
+   font-size: 1em;
+    @media screen and (max-width: 425px) {
+      height: 80px;
+      margin: 6px;
+    }
  }
+
+ @media screen and (max-width: 425px) {
+  .hide-for-mobile {
+    display: none;
+  }
+}
 
  .nav-footer {
    justify-content: center;
@@ -51,43 +65,11 @@ header, .nav-footer {
    height: 75px;
  }
 
-
-body {
-  background-color: $primary-background-color;
-  font-family: $primary-font-family;
-}
-
-.hidden {
-  display: none;
-}
-
-
-/// destination card container and cards
-
-
-img {
- height: 250px;
- width: 220px;
- border-radius: 6px;
-}
-
-
-//SASS EXAMPLE NESTING
-// .print-only {
-//   display: none;
-
-//   @media print { display: block; }
-// }
-
-///DESTINATION CARDS
-
-
-//
-
 h1 {
   font-weight: Extra-bold 800;
   font-style: italic;
 }
+
 h2 {
   margin: 6px;
   font-weight: Semi-bold 600;
@@ -95,8 +77,10 @@ h2 {
 
 p {
   margin: 5px;
+  font-size: 20px;
 }
 
+            //TRIPS
 .trip-container, .yearly-expenses {
   border: .1px solid black;
   border-radius: 2px;
@@ -107,23 +91,10 @@ p {
   background-color: $white;
   margin-top: 10px;
   margin-bottom: 10px;
-   
   @media screen and (min-width: 450px) {
     flex-direction: row;
+    flex-wrap: wrap;
    }
-}
-
-@media screen and (min-width: 450px) {
-  .hide-for-desktop {
-    display: none;
-  }
-}
-
-
-@media screen and (max-width: 425px) {
-  .hide-for-mobile {
-    display: none;
-  }
 }
 
 
@@ -131,9 +102,7 @@ p {
   display: flex;
   @media screen and (min-width: 450px) {
     flex: 1
-    
    }
-  
 }
 
 .trip {
@@ -141,22 +110,19 @@ p {
   margin: 6px;
 }
 
-//destinations
-
-
-
-.destination-container {
-  // height: 200em;
-  width: 100%;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  padding: 15px;
-}
-
+                   //BOOK A TRIP FORM
 fieldset {
   display: flex;
   justify-content: center;
+}
+label {
+  display: block;
+}
+
+              // DESTINATIONS CONTAINER
+.destination-container {
+  width: 100%;
+  padding: 15px;
 }
 
 .book-a-trip-submit {
@@ -167,14 +133,47 @@ fieldset {
   padding: 6px;
 }
 
-.inputs-container {
+// .inputs-container {
 
-}
-
-label {
-  display: block;
-}
+// }
+    
 
 .destinations-title {
   font-style: italic;
 }
+
+
+                    // ERROR HANDLING AND SPECIAL STYLING 
+
+.error {
+  font-size: 14px;
+  color: $accent-background-color;
+
+}
+
+.hidden {
+  display: none;
+}
+
+
+// @media screen and (min-width: 450px) {
+//   .hide-for-desktop {
+//     display: none;
+//   }
+// }
+
+// @media screen and (max-width: 425px) {
+//   .hide-for-mobile {
+//     display: none;
+//   }
+// }
+
+
+//SASS EXAMPLE NESTING
+// .print-only {
+//   display: none;
+
+//   @media print { display: block; }
+// }
+
+
