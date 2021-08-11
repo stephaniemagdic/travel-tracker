@@ -1,12 +1,16 @@
 import Glide from '@glidejs/glide'
 export const glideSlides = document.getElementById('glide-slides');
 
-const createCard = (destination, img, alt) => {
+const createCard = (destination, img, alt, flight, lodging) => {
   return `
         <div class="card-top card-img-1 mobile-card-img-size">
           <div class="destination-name-container">
             <img src="${img}" alt="${alt}" >
             <p class="destination-name-label">${destination}</p>
+            <p class="card-label">Flight Cost<p>
+            <p>${flight}</p>
+            <p class="card-label">Lodging Cost<p>
+            <p>${lodging}<p>
           </div>
         </div>
   `
@@ -36,7 +40,7 @@ export const renderDestinations = (destinations) => {
   destinations.forEach(destination => {
     glideSlides.innerHTML += `
       <li class="glide__slide" id="${destination.id}">
-        ${createCard(destination.location, destination.image, destination.alt)}
+        ${createCard(destination.location, destination.image, destination.alt, destination.estFlightCostPerPerson, destination.estLodgingCostPerDay)}
       </li>
     `
   })
@@ -113,9 +117,10 @@ export const renderUserTrips = (pastTrips, currentTrips, futureTrips, pendingTri
 
 const createTripHTML = (trip, agency) => {
   return (`<div class="trip">
+  <p class="trip-label">Location</p>
   <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
+  <p class="trip-label">Date</p>
   <p>${trip.date}</p>
-  </div>
 `)
 }
 
@@ -185,7 +190,7 @@ export const displayErrorMessage = (err, scenario) => {
     userLoginError.innerHTML = `${message}`;
     break;
   case "fetchUser":
-    message = "Invalid login- Please make sure both input fields are filled out";
+    message = "Invalid login- Please try again.";
     userLoginError.innerHTML = `${message}`;
     document.getElementById("password").value = null;
     break;
@@ -194,7 +199,7 @@ export const displayErrorMessage = (err, scenario) => {
     document.getElementById("user-login-error-field").innerHTML = `${message}`;
     break;
   case "invalidCredentials":
-    message = 'Please enter valid credentials'
+    message = 'Invalid login- Please try again.'
     document.getElementById("user-login-error-field").innerHTML = `${message}`;
     break;
   case (!scenario):
