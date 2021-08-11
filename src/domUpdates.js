@@ -1,6 +1,17 @@
 import Glide from '@glidejs/glide'
 export const glideSlides = document.getElementById('glide-slides');
 
+const createCard = (destination, img, alt) => {
+  return `
+        <div class="card-top card-img-1 mobile-card-img-size">
+          <div class="destination-name-container">
+            <img src="${img}" alt="${alt}" >
+            <p class="destination-name-label">${destination}</p>
+          </div>
+        </div>
+  `
+}
+
 export const renderDestinations = (destinations) => {
   glideSlides.innerHTML = '';
 
@@ -15,7 +26,7 @@ export const renderDestinations = (destinations) => {
         perView: 3
       },
       600: {
-        perView: 1
+        perView: 1t st
       }
     }
   }
@@ -33,18 +44,8 @@ export const renderDestinations = (destinations) => {
   glide.mount();
 };
 
-function createCard(destination, img, alt) {
-  return `
-        <div class="card-top card-img-1 mobile-card-img-size">
-          <div class="destination-name-container">
-            <img src="${img}" alt="${alt}" >
-            <p class="destination-name-label">${destination}</p>
-          </div>
-        </div>
-  `
-}
 
-export function setBookingCalendar(todayDate) {
+export const setBookingCalendar = (todayDate) => {
   let calendar = document.getElementById('start');
   let min = todayDate.split("/").join("-");
   let splitDate = todayDate.split('/');
@@ -55,14 +56,14 @@ export function setBookingCalendar(todayDate) {
   calendar.setAttribute('max', (max.toString()));
 }
 
-export function clearTripRequestMessageFields() {
+export const clearTripRequestMessageFields = () => {
   document.getElementById('trip-request-error-field').innerHTML = ''
   document.getElementById("invalid-destination-error-field").innerHTML = '';
   document.getElementById("invalid-duration-error-field").innerHTML = '';
   document.getElementById("estimated-trip-price").innerHTML = '';
 }
 
-export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTrips, agency) {
+export const renderUserTrips = (pastTrips, currentTrips, futureTrips, pendingTrips, agency) => {
   const pastTripsContainer = document.getElementById('past-trips');
   const presentTripsContainer = document.getElementById('present-trips');
   const futureTripsContainer = document.getElementById('future-trips');
@@ -192,6 +193,10 @@ export const displayErrorMessage = (err, scenario) => {
     message = "Please enter a valid username"
     document.getElementById("user-login-error-field").innerHTML = `${message}`;
     break;
+  case "invalidCredentials":
+    message = 'Please enter valid credentials'
+    document.getElementById("user-login-error-field").innerHTML = `${message}`;
+    break;
   case (!scenario):
     tripRequestError.innerHTML = `${err}`
     userLoginError.innerHTML = `${err}`
@@ -205,4 +210,11 @@ export const formatDate = (dateToFormat) => {
   const year = dividedDate[0];
   const rearrangedDate = [year, month, day];
   return rearrangedDate.join("/");
+}
+
+export const welcomeUser = (currentUser) => {
+  document.getElementById("welcome-traveler").innerHTML = `
+  Welcome Back to Travel Tracker, ${currentUser.returnFirstName()}!
+  `
+  document.getElementById("header-container").classList.remove("hidden")
 }

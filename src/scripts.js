@@ -3,10 +3,12 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 import Traveler from './Traveler'
 import { postData, fetchData } from './apiCalls.js'
-import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestMessageFields, renderUserTrips, renderYearlyExpenses, displayPage, displayErrorMessage, formatDate } from './domUpdates'
+import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestMessageFields, renderUserTrips, renderYearlyExpenses, displayPage, displayErrorMessage, formatDate, welcomeUser } from './domUpdates'
 import dayjs from 'dayjs';
 import './images/road-map.png';
 import './images/travel-luggage.png';
+import './images/plane.png';
+import './images/travelling.png'
 
 /* ------------------------GLOBAL VARIABLES ----------------------------------*/
 let destinations;
@@ -86,36 +88,29 @@ const checkUserLoginInputs = () => {
   
   if (document.getElementById('password').value.toString().trimEnd() === "travel") {
     return fetchUser(`travelers/${userID}`).then((isValidUser) => {
-      currentUser = new Traveler(isValidUser)
-      createNewTraveler(isValidUser);
-      welcomeUser(isValidUser)
       return isValidUser;
     });
   } else {
-    document.getElementById("user-login-error-field").innerHTML = 'Please enter valid credentials'
+    displayErrorMessage(null, 'invalidCredentials')
   }
-  
   usernameInput.value = null;
   document.getElementById('password').value = null;
 }
 
-const welcomeUser = () => {
-  document.getElementById("welcome-traveler").innerHTML = `
-    Welcome back to Travel Tracker, ${currentUser.returnFirstName()}!
-    `
+const activateUser = (userData) => {
+  currentUser = new Traveler(userData)
+  createNewTraveler(userData);
+  console.log("userData", userData)
+  welcomeUser(currentUser);
+  displayPage("userDashboard");
 }
 
 const validateUser = (e) => {
   e.preventDefault();
   document.getElementById("user-login-error-field").innerHTML = ''
-  const isValid = checkUserLoginInputs();
-
-  if (isValid && currentUser) {
-    welcomeUser();
-    displayPage("userDashboard");
-  } else {
-    return;
-  }
+  Promise.resolve(checkUserLoginInputs()).then((validUser) => activateUser(validUser)).catch(() => {
+    return
+  })
 }
 
 function fetchUserDashboardData(userID) {
@@ -138,43 +133,39 @@ function generateAgency(dataSets) {
 }
 
 /* -----------------DISPLAY USER DASHBOARD FUNCTION --------------------------*/
-function getUserTrips(newAgency, userID) {
+const displayUserTripData = (past, current, future, pending, yearlyExpenses) => {
+  const year = todayDate.split('/')[0]
+  renderUserTrips(past, current, future, pending, agency);
+  renderYearlyExpenses(yearlyExpenses, year);
+}  
+
+const getUserTrips = (newAgency, userID) => {
   agency = newAgency;
   destinations = agency.destinations;
-
   const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
   const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
   const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
   const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
-  const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
-
-  displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
+  const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate);
+  displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses);
 
   return newAgency;
-}
-
-function displayUserTripData(past, current, future, pending, yearlyExpenses) {
-  const year = todayDate.split('/')[0]
-  renderUserTrips(past, current, future, pending, agency);
-  renderYearlyExpenses(yearlyExpenses, year);
 }
 
                              ///// ERROR HANDLING
 const checkForDestinationSearchMatch = (substring) => {
   let isValid;
-  let newSubstring = substring.trim().toLowerCase().toString().split(",")[0]
+  let newSubstring = substring.trim().toLowerCase().toString().split(",")[0];
 
   if (!newSubstring) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
     return;
   }
-
   if (agency.destinations.some(destination => {
     return (destination.location.toLowerCase().split(",")[0]) === newSubstring
   })) {
     isValid = true;
   }
-
   if (!isValid) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select an available destination'
   }
@@ -183,7 +174,6 @@ const checkForDestinationSearchMatch = (substring) => {
 
 const getCityTripId = (substring) => {
   let newSubstring = substring.trim().toLowerCase();
-
   return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
 }
 
@@ -205,17 +195,14 @@ const requestTrip = (e) => {
   let destinationID; 
   const numTravelers = document.getElementById('number-of-travelers')
   const isValidDuration = checkValidDuration(durationInput);
-  
   if (!isValidDuration) {
     return;
   }
-
   if (!checkForDestinationSearchMatch(destinationSearchBar.value)) {
     return;
   } else {
     destinationID = getCityTripId(destinationSearchBar.value);
   }
-
   const tripRequest = {
     id: parseInt((agency.returnTotalNumTrips() + 1)),
     userID: currentUser.id,
@@ -226,22 +213,18 @@ const requestTrip = (e) => {
     status: 'pending',
     suggestedActivities: [],
   }
-  
   postNewTrip(tripRequest);
   e.target.reset()
 }
 
 const createTripRequestResponseForUser = (parsedData) => {
   let estimatedTripCost = 0;
-
   const totalTripCostField = document.getElementById("estimated-trip-price")
-
   totalTripCostField.innerHTML = 'Your trip was successfully booked! Retrieving your estimated cost...';
-
   Promise.resolve(fetchUpdatedData(parsedData.userID))
     .then(() => agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations))
     .then(totalCost => estimatedTripCost = totalCost)
-    .then(()=> totalTripCostField.innerHTML = `Trip Request Processed! Your estimated trip cost to ${agency.getDestinationLocationByID(parsedData.destinationID)} is $${estimatedTripCost}`)
+    .then(()=> totalTripCostField.innerHTML = `Trip Request Processed! Your estimated trip cost to ${agency.getDestinationLocationByID(parsedData.destinationID)} is $${estimatedTripCost}.`)
 }
 
 const postNewTrip = (tripRequest) => {
@@ -253,7 +236,7 @@ const postNewTrip = (tripRequest) => {
     .catch(err => displayErrorMessage(err, "postNewTrip"))
 }
               
-function displayDestinationsData(destinations) { 
+const displayDestinationsData = (destinations) => { 
   renderDestinations(destinations);
 }
 
@@ -267,29 +250,24 @@ const createFilteredList = (e) => {
   if (e.target.value.includes(" ")) {
     return;
   }
-
   if (!(/[a-zA-Z]/).test(e.target.value)) {
     return;
   }
-
   if (!e.target.value) {
     return;
   }
 
   const searchedDestination = e.target.value.toLowerCase();
-
   let filteredDestinations = destinations.filter((destination) => {
     return (
       destination.location.split(",")[0].toLowerCase().includes(searchedDestination)  
     )
   });
-  
   if (filteredDestinations.length === 0) {
     return
   } else {
     displayDestinationsData(filteredDestinations)
-  }
-  
+  } 
 }
 
 const resetDestinations = (e) => {

@@ -19,6 +19,17 @@ img {
  .button-img {
    height: 30px;
    width: 30px;
+   margin: 3px;
+ }
+
+ .plane {
+  display: block;
+  margin: 0 auto;;
+}
+
+ .submit-img {
+   height: 10px;
+   width: 10px;
  }
  
 /* *---- Layout Containers ---- */ 
@@ -31,6 +42,11 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.plane-logo {
+  height: 30px;
+  width: 20px;
 }
 
 /* -----------------HEADER----------------- */
@@ -85,7 +101,7 @@ h1 {
 }
 
 h2 {
-  margin: 6px;
+  margin: 20px;
   font-weight: Semi-bold 600;
 }
 
@@ -152,7 +168,34 @@ fieldset {
   justify-content: center;
   border: 0;
   background-color: $secondary-accent-background-color;
+}
 
+.user-login-fieldset {
+  background-color: transparent;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  @media screen and (min-width: 450px) {
+    margin-top: 50px;
+   }
+}
+
+.user-login-form button {
+  display: block;
+}
+
+.user-login-form input {
+  width: 240px;
+}
+
+.user-login-form {
+  display: flex;
+  justify-content: center;
+  align-items: space-between;
+  flex-direction: column;
+  padding: 12px;
 }
 
 label {
@@ -170,7 +213,7 @@ legend {
 
 .destination-name-container {
   img {
-    opacity: .9;
+    opacity: .8;
 
     &:hover {
       opacity: .6;
@@ -220,5 +263,8 @@ legend {
   display: none;
 }
 
+.glide__arrow {
+
+}
 
 

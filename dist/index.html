@@ -9,20 +9,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;800&display=swap" rel="stylesheet">
   <title>Webpack Starter Kit</title>
 </head>
-<header class="header-container">
+<header class="header-container hidden" id="header-container">
+  <!-- <img src="./images/plane.png" alt="plane icon" class="plane-logo"> -->
   <h1 class="welcome-traveler" id="welcome-traveler"></h1>
 </header>
 <body class="container">
   <main>
     <section class="login-page" id='login-page'>
-      <fieldset>
+      <fieldset class="user-login-fieldset">
         <legend>User Login</legend>
           <form class="user-login-form" id="user-login" aria-label="user-information">
             <input type="text" id="username" name="username" aria-label="username" placeholder="username">
             <input type="password" id="password" name="password" aria-label="password" placeholder="password">
-            <button id="user-login-submit">Submit</button>
-            <p id="user-login-error-field" class="error"></p>
+            <button role="button" id="user-login-submit"><img class="submit-img" src="./images/plane.png" alt="plane icon"></button>
           </form>
+          <p id="user-login-error-field" class="error"></p>
       </fieldset>
     </section>
     <section class="user-dashboard-page hidden" id="user-dashboard-page">
@@ -78,7 +79,7 @@
                   <!-- <p id="invalid-duration-error-field" class="error"><p> -->
                 </div>
                 <div class="input-container">
-                  <label for="duration">Destination City</label>
+                  <label for="destination-search">Destination City</label>
                   <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="search by city" required>
                   <!-- <p id="invalid-destination-error-field" class="error"></p> -->
                 </div>
@@ -140,10 +141,10 @@
           Travel Data
           <img src="./images/road-map.png" alt="road map icon" class="button-img">
         </button>
-        <!-- <button class="nav-button">
+        <button class="nav-button">
           Home
-          <!-- <img src="./images/travelling.png" alt="person with suitcase icon" class="button-img"> -->
-        <!-- </button> --> 
+          <img src="./images/travelling.png" alt="person with suitcase icon" class="button-img plane">
+         </button> 
     </nav>
   </footer>
   <script src="bundle.js"></script>
