@@ -95,16 +95,16 @@ Note: You must run both your local server and the fitlit application at the same
 ![Img](https://i.ibb.co/C14BVs1/Screen-Shot-2021-08-11-at-9-17-52-AM.png)
 
 ### Project Challenges 
- * Learning how to use new packages in a short amount of time always has its challenges, but teaches me how to research smarter.
+ * Learning how to use new packages in a short amount of time always has its challenges, but teaches me how to research wiser.
  * Using thorough error handling and post requests for the 'first' time in a large project like this was challenging and enlightenting. Many aha moments.
  
 ### Project Wins
  * Thoroughly accounted for edge cases so bad data could not be posted and the app would work as intended in all cases of user and server error.
- * The search filter is a feature that is user friendly feature for searching through destinations. Not only can you click on and populate the search field, but you can also search by city to display only cities of interest.
+ * The search filter is a user friendly feature for searching through destinations. Not only can you click on and populate the search field, but you can also search by city to display only cities of interest.
 
 ### Future Iterations
   * I would love to include a modal before the user accepts a trip.
   * With more time, I would love to apply more styling to more accurately depict a real application.
-  * I would love to include a put request so users can not duplicate trips on the same date and I would love to implement a delete request by an agent to approve/deny pending trips.
+  * I would love to include a put request so users are not able to request trips on the same date and I would love to implement a delete request by an agent to approve/deny pending trips.
   
 
