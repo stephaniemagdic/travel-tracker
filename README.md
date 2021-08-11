@@ -90,9 +90,9 @@ Note: You must run both your local server and the fitlit application at the same
 #### [Responsive Design Gif: Click to View](https://ibb.co/w73KjsK) 
 
 #### Desktop View: 
-![Img](https://i.ibb.co/6BLr2Qk/Screen-Shot-2021-08-11-at-1-15-00-AM.png)
+![Img](https://i.ibb.co/ctcSr7y/Screen-Shot-2021-08-11-at-9-02-54-AM.png)
 #### Mobile View:
-![Img](https://i.ibb.co/fQ5MXT7/Screen-Shot-2021-08-11-at-1-15-41-AM.png)
+![Img](https://i.ibb.co/C14BVs1/Screen-Shot-2021-08-11-at-9-17-52-AM.png)
 
 ### Project Challenges 
  * Learning how to use new packages in a short amount of time always has its challenges, but teaches me how to research smarter.
