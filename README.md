@@ -85,15 +85,13 @@ Note: You must run both your local server and the fitlit application at the same
   * Once you submit a request, navigate back to your travel data to see your pending trip!
 
 
-### Snapshot Examples of Responsive Design
+### Snapshot Examples of Responsive Design & Feature Highlights
  ###### Please run the application to view the entire dashboard.
 
-#### ![Populate the search bar feature-Mobile](https://i.ibb.co/3zDdhZ2/populate-Search.gif)
-#### ![Use the filter search feature](https://i.ibb.co/Nxp5t1J/search-filter.gif)
+#### ![Populate the search bar feature-Mobile - click to view](https://i.ibb.co/3zDdhZ2/populate-Search.gif)
+#### ![Use the filter search feature- click to view](https://i.ibb.co/Nxp5t1J/search-filter.gif)
 #### ![Mock User Authentication](https://i.ibb.co/NS4jg0T/login.gif)
 
-#### Responsive Design:
-![Img](https://i.ibb.co/C14BVs1/Screen-Shot-2021-08-11-at-9-17-52-AM.png)
 
 ### Project Challenges 
  * Learning how to use new packages in a short amount of time always has its challenges, but teaches me how to research wiser.
