@@ -26,7 +26,7 @@ export const renderDestinations = (destinations) => {
         perView: 3
       },
       600: {
-        perView: 1
+        perView: 1t st
       }
     }
   }
@@ -193,6 +193,10 @@ export const displayErrorMessage = (err, scenario) => {
     message = "Please enter a valid username"
     document.getElementById("user-login-error-field").innerHTML = `${message}`;
     break;
+  case "invalidCredentials":
+    message = 'Please enter valid credentials'
+    document.getElementById("user-login-error-field").innerHTML = `${message}`;
+    break;
   case (!scenario):
     tripRequestError.innerHTML = `${err}`
     userLoginError.innerHTML = `${err}`
@@ -206,4 +210,11 @@ export const formatDate = (dateToFormat) => {
   const year = dividedDate[0];
   const rearrangedDate = [year, month, day];
   return rearrangedDate.join("/");
+}
+
+export const welcomeUser = (currentUser) => {
+  document.getElementById("welcome-traveler").innerHTML = `
+  Welcome Back to Travel Tracker, ${currentUser.returnFirstName()}!
+  `
+  document.getElementById("header-container").classList.remove("hidden")
 }
