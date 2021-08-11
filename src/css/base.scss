@@ -152,7 +152,30 @@ fieldset {
   justify-content: center;
   border: 0;
   background-color: $secondary-accent-background-color;
+}
 
+.user-login-fieldset {
+  background-color: transparent;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  @media screen and (min-width: 450px) {
+    margin-top: 50px;
+   }
+}
+
+.user-login-form button {
+  display: block;
+}
+
+.user-login-form {
+  display: flex;
+  justify-content: center;
+  align-items: space-between;
+  flex-direction: column;
+  padding: 12px;
 }
 
 label {

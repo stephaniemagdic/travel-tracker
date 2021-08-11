@@ -88,7 +88,7 @@ const checkUserLoginInputs = () => {
     return fetchUser(`travelers/${userID}`).then((isValidUser) => {
       currentUser = new Traveler(isValidUser)
       createNewTraveler(isValidUser);
-      welcomeUser(isValidUser)
+      welcomeUser(isValidUser);
       return isValidUser;
     });
   } else {
@@ -101,8 +101,9 @@ const checkUserLoginInputs = () => {
 
 const welcomeUser = () => {
   document.getElementById("welcome-traveler").innerHTML = `
-    Welcome back to Travel Tracker, ${currentUser.returnFirstName()}!
+    Welcome Back to Travel Tracker, ${currentUser.returnFirstName()}!
     `
+  document.getElementById("header-container").classList.remove("hidden")
 }
 
 const validateUser = (e) => {
@@ -241,7 +242,7 @@ const createTripRequestResponseForUser = (parsedData) => {
   Promise.resolve(fetchUpdatedData(parsedData.userID))
     .then(() => agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations))
     .then(totalCost => estimatedTripCost = totalCost)
-    .then(()=> totalTripCostField.innerHTML = `Trip Request Processed! Your estimated trip cost to ${agency.getDestinationLocationByID(parsedData.destinationID)} is $${estimatedTripCost}`)
+    .then(()=> totalTripCostField.innerHTML = `Trip Request Processed! Your estimated trip cost to ${agency.getDestinationLocationByID(parsedData.destinationID)} is $${estimatedTripCost}.`)
 }
 
 const postNewTrip = (tripRequest) => {

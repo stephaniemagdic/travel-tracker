@@ -9,13 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;800&display=swap" rel="stylesheet">
   <title>Webpack Starter Kit</title>
 </head>
-<header class="header-container">
+<header class="header-container hidden" id="header-container">
   <h1 class="welcome-traveler" id="welcome-traveler"></h1>
 </header>
 <body class="container">
   <main>
     <section class="login-page" id='login-page'>
-      <fieldset>
+      <fieldset class="user-login-fieldset">
         <legend>User Login</legend>
           <form class="user-login-form" id="user-login" aria-label="user-information">
             <input type="text" id="username" name="username" aria-label="username" placeholder="username">
@@ -78,7 +78,7 @@
                   <!-- <p id="invalid-duration-error-field" class="error"><p> -->
                 </div>
                 <div class="input-container">
-                  <label for="duration">Destination City</label>
+                  <label for="destination-search">Destination City</label>
                   <input type="search" id="destination-search" name="destination-search" aria-label="Search for destination by city" placeholder="search by city" required>
                   <!-- <p id="invalid-destination-error-field" class="error"></p> -->
                 </div>
