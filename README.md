@@ -95,20 +95,15 @@ Note: You must run both your local server and the fitlit application at the same
 ![Img](https://i.ibb.co/fQ5MXT7/Screen-Shot-2021-08-11-at-1-15-41-AM.png)
 
 ### Project Challenges 
- * 
+ * Learning how to use new packages in a short amount of time always has its challenges, but teaches me how to research smarter.
+ * Using thorough error handling and post requests for the 'first' time in a large project like this was challenging and enlightenting. Many aha moments.
  
 ### Project Wins
- * 
+ * Througoughly accounted for edge cases so bad data could not be posted and the app would work as intended in all cases of user and server error.
+ * The search filter is a feature that is user friendly feature for searching through destinations. Not only can you click on and populate the search field, but you can also search by city to display only cities of interest.
 
 ### Future Iterations
   * I would love to include a modal before the user accepts a trip.
-  * 
+  * With more time, I would love to apply more styling to more accurately depict a real application.
+  * I would love to include a put request so users can not duplicate trips on the same date and I would love to implement a delete request by an agent to approve/deny pending trips.
 
-(NOTE TO SELF)
-## Deploying to GitHub Pages
-
-_If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
-
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
