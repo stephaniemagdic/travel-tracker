@@ -53,7 +53,7 @@ destinationSearchBar.addEventListener('mouseout', function(e) {
   resetDestinations(e);
 });
 
-/* -----------------USER LOGIN/FETCH DATA FUNCTIONS --------------------------*/
+/* -----------------FETCH API ERROR HANDLING --------------------------*/
 const checkForErrors = (res) => {
   if (!res.ok || res.message === "No traveler found with an id of NaN") {
     throw new Error(`${res}`);
@@ -62,6 +62,7 @@ const checkForErrors = (res) => {
   }
 }
 
+/* -----------USER LOGIN & DASHBOARD/FETCH DATA FUNCTIONS -----------------*/
 const fetchUser = (username) => {
   return fetchData(username).then((res) => {
     if (res.id) {
@@ -151,7 +152,7 @@ const getUserTrips = (newAgency, userID) => {
   return newAgency;
 }
 
-                             ///// ERROR HANDLING
+/* -----------FORM ERROR HANDLING & TRIP POST REQUEST -----------------------*/
 const checkForDestinationSearchMatch = (substring) => {
   let isValid;
   let newSubstring = substring.trim().toLowerCase().toString().split(",")[0];
@@ -231,7 +232,7 @@ const postNewTrip = (tripRequest) => {
     return checkForErrors(res);
   }).then(parsedData => {
     createTripRequestResponseForUser(parsedData.newTrip)
-  } )
+  })
     .catch(err => displayErrorMessage(err, "postNewTrip"))
 }
               
@@ -239,7 +240,8 @@ const displayDestinationsData = (destinations) => {
   renderDestinations(destinations);
 }
 
-              /// SEARCH BAR FILTER
+
+/* -----------------SEARCH BAR FILTER --------------------------*/
 const populateSearchBar = (e) => {
   const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
   destinationSearchBar.value = destinationChosen.location
