@@ -1,8 +1,14 @@
 @use 'normalize.css' as *;
 @use '_variables.scss' as *;
+@use '_userDashboard.scss' as *;
+@use '_userLogin.scss' as *;
+@use '_bookings.scss' as *;
+
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.theme";
 
+
+//SHARED ELEMENT STYLING AND CONTAINER STYLING
 body {
   background-color: $primary-background-color;
   font-family: $primary-font-family;
@@ -118,59 +124,59 @@ p {
   font-size: $error-notification-font-size
 }
 
-            //TRIPS AND TRIPS CONTAINER
-.trip-container, .yearly-expenses {
-  border-radius: 2px;
-  height: 25vh;
-  display: flex;
-  overflow: auto;
-  flex-direction: column;
-  background-color: $white;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 1px solid black;
-  @media screen and (min-width: 450px) {
-    width: 40vw;
-    height: 30vh;
-    margin: 20px;
-   }
-}
+//             //TRIPS AND TRIPS CONTAINER
+// .trip-container, .yearly-expenses {
+//   border-radius: 2px;
+//   height: 25vh;
+//   display: flex;
+//   overflow: auto;
+//   flex-direction: column;
+//   background-color: $white;
+//   margin-top: 10px;
+//   margin-bottom: 10px;
+//   border: 1px solid black;
+//   @media screen and (min-width: 450px) {
+//     width: 40vw;
+//     height: 30vh;
+//     margin: 20px;
+//    }
+// }
 
 
-.yearly-expenses {
-  @media screen and (min-width: 450px) {
-    width: 80vw;
-    height: 15vh;
-    margin-left: 40px;
-   }
-}
+// .yearly-expenses {
+//   @media screen and (min-width: 450px) {
+//     width: 80vw;
+//     height: 15vh;
+//     margin-left: 40px;
+//    }
+// }
 
-.trip-container-wrapper {
-  @media screen and (min-width: 450px) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-   }
-}
+// .trip-container-wrapper {
+//   @media screen and (min-width: 450px) {
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: wrap;
+//    }
+// }
 
-.past-trips, .present-trips, .future-trips, .pending-trips {
-  display: flex;
-  @media screen and (min-width: 450px) {
-    flex: 1;
-   }
-}
+// .past-trips, .present-trips, .future-trips, .pending-trips {
+//   display: flex;
+//   @media screen and (min-width: 450px) {
+//     flex: 1;
+//    }
+// }
 
-.trip {
-  background-color: $pale-silver;
-  margin: 6px;
-}
+// .trip {
+//   background-color: $pale-silver;
+//   margin: 6px;
+// }
 
-.trip-label {
-  font-weight: bold;
-}
+// .trip-label {
+//   font-weight: bold;
+// }
 
-                   //BOOK A TRIP FORM
-
+            
+/// FORM
 fieldset {
   display: flex;
   justify-content: center;
@@ -178,33 +184,33 @@ fieldset {
   background-color: $secondary-accent-background-color;
 }
 
-.user-login-fieldset {
-  background-color: transparent;
-  margin-top: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  @media screen and (min-width: 450px) {
-    margin-top: 50px;
-   }
-}
+// .user-login-fieldset {
+//   background-color: transparent;
+//   margin-top: 100px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+//   @media screen and (min-width: 450px) {
+//     margin-top: 50px;
+//    }
+// }
 
-.user-login-form button {
-  display: block;
-}
+// .user-login-form button {
+//   display: block;
+// }
 
-.user-login-form input {
-  width: 240px;
-}
+// .user-login-form input {
+//   width: 240px;
+// }
 
-.user-login-form {
-  display: flex;
-  justify-content: center;
-  align-items: space-between;
-  flex-direction: column;
-  padding: 12px;
-}
+// .user-login-form {
+//   display: flex;
+//   justify-content: center;
+//   align-items: space-between;
+//   flex-direction: column;
+//   padding: 12px;
+// }
 
 label {
   display: block;
@@ -218,15 +224,15 @@ legend {
   display: block;
 }
 
-.destination-name-container {
-  img {
-    opacity: .8;
+// .destination-name-container {
+//   img {
+//     opacity: .8;
 
-    &:hover {
-      opacity: .6;
-    }
-  }
-}
+//     &:hover {
+//       opacity: .6;
+//     }
+//   }
+// }
 
 
 
@@ -234,61 +240,61 @@ legend {
   width: 50vw;
 }
 
-              // DESTINATIONS CONTAINER
-.destination-container {
-  width: 100%;
-  padding: 15px;
-}
+//               // DESTINATIONS CONTAINER
+// .destination-container {
+//   width: 100%;
+//   padding: 15px;
+// }
 
-.book-a-trip-submit {
-  display: block;
-  margin: 0 auto;
-  margin-top: 10px;
-  height: 30px;
-  margin: 3px;
-  margin-top: 23px;
-}
+// .book-a-trip-submit {
+//   display: block;
+//   margin: 0 auto;
+//   margin-top: 10px;
+//   height: 30px;
+//   margin: 3px;
+//   margin-top: 23px;
+// }
 
-.input-container {
-  padding: 6px;
-}
+// .input-container {
+//   padding: 6px;
+// }
 
-.inputs-container {
-  width: 60vw;
-  display: flex;
-  align-items: center;
-    @media screen and (max-width: 450px) {
-        flex-direction: column;
-        flex-wrap: wrap;
-      }
-}
+// .inputs-container {
+//   width: 60vw;
+//   display: flex;
+//   align-items: center;
+//     @media screen and (max-width: 450px) {
+//         flex-direction: column;
+//         flex-wrap: wrap;
+//       }
+// }
 
-.destinations-title {
-  font-style: italic;
-}
+// .destinations-title {
+//   font-style: italic;
+// }
 
 .hidden {
   display: none;
 }
 
-.card-top {
-  display: flex;
-  justify-content: center;
-  font-size: $error-notification-font-size;
-  background-color: $secondary-accent-background-color;
-  max-width: 314px;
-  min-width: 314px;
-  border-radius: 3px;
-  @media screen and (max-width: 425px) {
-    width: 300px;
-    max-width: 300px;
-  }
-}
+// .card-top {
+//   display: flex;
+//   justify-content: center;
+//   font-size: $error-notification-font-size;
+//   background-color: $secondary-accent-background-color;
+//   max-width: 314px;
+//   min-width: 314px;
+//   border-radius: 3px;
+//   @media screen and (max-width: 425px) {
+//     width: 300px;
+//     max-width: 300px;
+//   }
+// }
 
-.glide__arrow {
-  color: black;
-  background-color: white;
-}
+// .glide__arrow {
+//   color: black;
+//   background-color: white;
+// }
 
 
 

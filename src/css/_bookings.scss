@@ -1,0 +1,62 @@
+@use '_variables.scss' as *;
+
+.destination-name-container {
+  img {
+    opacity: .8;
+
+    &:hover {
+      opacity: .6;
+    }
+  }
+}
+  
+  .destination-container {
+  width: 100%;
+  padding: 15px;
+}
+
+.book-a-trip-submit {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  height: 30px;
+  margin: 3px;
+  margin-top: 23px;
+}
+
+.input-container {
+  padding: 6px;
+}
+
+.inputs-container {
+  width: 60vw;
+  display: flex;
+  align-items: center;
+    @media screen and (max-width: 450px) {
+        flex-direction: column;
+        flex-wrap: wrap;
+      }
+}
+
+.destinations-title {
+  font-style: italic;
+}
+
+.card-top {
+  display: flex;
+  justify-content: center;
+  font-size: $error-notification-font-size;
+  background-color: $secondary-accent-background-color;
+  max-width: 314px;
+  min-width: 314px;
+  border-radius: 3px;
+  @media screen and (max-width: 425px) {
+    width: 300px;
+    max-width: 300px;
+  }
+}
+
+.glide__arrow {
+  color: black;
+  background-color: white;
+}
