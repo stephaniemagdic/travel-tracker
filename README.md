@@ -6,14 +6,14 @@
 
 ## Project Description
 
-Run our application and spin up a local server to fetch mock user data to xxx! 
+Run the application and spin up a local server to walk through a mock login, fetch mock user data and make travel plans! 
 
 This project:
   - implements the fetch API to access data from a local server.
   - uses the Fetch API to make network requests to API endpoints in order to retrieve data.
-  - xx
-  - xx
-  - xx
+  - uses the Fetch API to post new data to the server
+  - uses a robust test suite that accounts for user error 
+  - implements error handling for edge cases while loggging in and booking a trip
  
 ### Built-By:
 
@@ -38,8 +38,9 @@ This project:
 * src directory
   * ES6 class files
     * Class Structure Example:
-      * classHERE: xxx 
-      * classHERE: xxx 
+      * agency.js: xxx 
+      * trip.js: xxx 
+      * destination.js: xxx 
   * scripts.js: holds the application logic, including fetching data from our local server and manipulating the dom.
 * test directory
 * README.md
@@ -63,18 +64,22 @@ Note: You must run both your local server and the fitlit application at the same
 ### How to Navigate the application:  
   
 * **Login Page:**  
-  * 
+  * From the login page, use the following credentials to fly into the site.
+    * Username: traveler50 (or any other number between 1 and 50) 
+    * Password: travel
 
 * **Travel Data:**  
-  * 
+  * See all past, current, future, pending trips, and total yearly expenses
+    * Note: pending and unnaproved trips are not included in the past trips or yearly expenses.
 
 * **Book a Trip:** 
-  * 
+  * Use the bookings form to choose a starting date, number of days you'd like to book your trip for, the number of travelers and the location.
+  * Trips are calculated by the estimated lodging cost (usually holds about 6), otherwise doubled, and the total airtravel cost. Remember this will be added to the total for every flyer! 
+  * You can search for using the search input which will filter through all 50 destinations.
+  * You can also click on a destination to populate the input.
 
 * **See Pending Trips!:**  
-  * 
-
-* **Repeat: Refresh the page to see a new user's wellness data!:**  
+  * Once you submit a request, navigate back to your travel data to see your pending trip!
 
 
 ### Snapshot Examples of Responsive Design
@@ -95,7 +100,7 @@ Note: You must run both your local server and the fitlit application at the same
  * 
 
 ### Future Iterations
-  * 
+  * I would love to include a modal before the user accepts a trip.
   * 
 
 (NOTE TO SELF)
