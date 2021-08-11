@@ -106,4 +106,5 @@ Note: You must run both your local server and the fitlit application at the same
   * I would love to include a modal before the user accepts a trip.
   * With more time, I would love to apply more styling to more accurately depict a real application.
   * I would love to include a put request so users can not duplicate trips on the same date and I would love to implement a delete request by an agent to approve/deny pending trips.
+  
 
