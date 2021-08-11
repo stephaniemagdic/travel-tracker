@@ -88,8 +88,7 @@ Note: You must run both your local server and the fitlit application at the same
 ### Snapshot Examples of Responsive Design
  ###### Please run the application to view the entire dashboard.
 
-#### [Populate the search bar feature-Mobile]()
-#### [Responsive to Desktop](https://i.ibb.co/3zDdhZ2/populate-Search.gif)
+#### [Populate the search bar feature-Mobile](https://i.ibb.co/3zDdhZ2/populate-Search.gif)
 #### [Use the filter search feature](https://i.ibb.co/Nxp5t1J/search-filter.gif)
 
 #### [Desktop View](https://ibb.co/J2RwsMc): 
