@@ -8,9 +8,9 @@ const createCard = (destination, img, alt, flight, lodging) => {
             <img src="${img}" alt="${alt}" >
             <p class="destination-name-label">${destination}</p>
             <p class="card-label">Flight Cost<p>
-            <p>${flight}</p>
+            <p>$${flight}</p>
             <p class="card-label">Lodging Cost<p>
-            <p>${lodging}<p>
+            <p>$${lodging}<p>
           </div>
         </div>
   `
