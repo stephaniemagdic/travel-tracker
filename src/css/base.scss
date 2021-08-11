@@ -99,7 +99,7 @@ p {
   font-size: $error-notification-font-size
 }
 
-            //TRIPS
+            //TRIPS AND TRIPS CONTAINER
 .trip-container, .yearly-expenses {
   border: .1px solid black;
   border-radius: 2px;
@@ -152,9 +152,7 @@ fieldset {
   justify-content: center;
   border: 0;
   background-color: $secondary-accent-background-color;
-  // @media screen and (min-width: 450px) {
-  //   flex-direction: row;
-  // }
+
 }
 
 label {
@@ -170,17 +168,18 @@ legend {
 }
 
 
-.destination-name-container{
+.destination-name-container {
   img {
     opacity: .9;
 
     &:hover {
       opacity: .6;
     }
-    // &:cursor {
-
-    // }
   }
+}
+
+.double-container {
+  width: 50vw;
 }
 
 
@@ -207,36 +206,19 @@ legend {
   width: 60vw;
   display: flex;
   align-items: center;
-    // @media screen and (min-width: 450px) {
-    //     flex-direction: row;
-    //   }
-
+    @media screen and (max-width: 450px) {
+        flex-direction: column;
+        flex-wrap: wrap;
+      }
 }
 
 .destinations-title {
   font-style: italic;
 }
 
-
-
-
-
 .hidden {
   display: none;
 }
-
-
-// @media screen and (min-width: 450px) {
-//   .hide-for-desktop {
-//     display: none;
-//   }
-// }
-
-// @media screen and (max-width: 425px) {
-//   .hide-for-mobile {
-//     display: none;
-//   }
-// }
 
 
 
