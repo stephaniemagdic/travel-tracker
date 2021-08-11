@@ -120,7 +120,6 @@ p {
 
             //TRIPS AND TRIPS CONTAINER
 .trip-container, .yearly-expenses {
-  border: .1px solid black;
   border-radius: 2px;
   height: 25vh;
   display: flex;
@@ -272,6 +271,7 @@ legend {
   font-size: $error-notification-font-size;
   background-color: $secondary-accent-background-color;
   max-width: 314px;
+  min-width: 314px;
   border-radius: 3px;
   @media screen and (max-width: 425px) {
     width: 300px;
