@@ -1,12 +1,16 @@
 import Glide from '@glidejs/glide'
 export const glideSlides = document.getElementById('glide-slides');
 
-const createCard = (destination, img, alt) => {
+const createCard = (destination, img, alt, flight, lodging) => {
   return `
         <div class="card-top card-img-1 mobile-card-img-size">
           <div class="destination-name-container">
             <img src="${img}" alt="${alt}" >
             <p class="destination-name-label">${destination}</p>
+            <p class="card-label">Flight Cost<p>
+            <p>${flight}</p>
+            <p class="card-label">Lodging Cost<p>
+            <p>${lodging}<p>
           </div>
         </div>
   `
@@ -36,7 +40,7 @@ export const renderDestinations = (destinations) => {
   destinations.forEach(destination => {
     glideSlides.innerHTML += `
       <li class="glide__slide" id="${destination.id}">
-        ${createCard(destination.location, destination.image, destination.alt)}
+        ${createCard(destination.location, destination.image, destination.alt, destination.estFlightCostPerPerson, destination.estLodgingCostPerDay)}
       </li>
     `
   })
