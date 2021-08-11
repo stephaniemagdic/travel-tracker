@@ -398,6 +398,11 @@ export const destinationData = [
   }
 ];
 
+
 export const agency = new Agency(tripData, destinationData);
 
+export const yearlyExpensesForUser51 = tripsByYear.reduce((totalCost, trip) => {
+  totalCost += (trip.calculateTotalTripCost(agency.destinations));
+  return totalCost;
+}, 0)
 
