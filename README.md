@@ -99,7 +99,7 @@ Note: You must run both your local server and the fitlit application at the same
  * Using thorough error handling and post requests for the 'first' time in a large project like this was challenging and enlightenting. Many aha moments.
  
 ### Project Wins
- * Througoughly accounted for edge cases so bad data could not be posted and the app would work as intended in all cases of user and server error.
+ * Thoroughly accounted for edge cases so bad data could not be posted and the app would work as intended in all cases of user and server error.
  * The search filter is a feature that is user friendly feature for searching through destinations. Not only can you click on and populate the search field, but you can also search by city to display only cities of interest.
 
 ### Future Iterations
