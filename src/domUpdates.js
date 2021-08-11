@@ -5,10 +5,10 @@ export const renderDestinations = (destinations) => {
   glideSlides.innerHTML = '';
 
   const config = {
-    type: 'carousel',
     startAt: 0,
     perView: 4,
     focusAt: "center",
+    type: 'slider',
  
     breakpoints: {
       1024: {
@@ -32,21 +32,6 @@ export const renderDestinations = (destinations) => {
 
   glide.mount();
 };
-
-//SO IT ONLLY DISPLAYS ONE AT A TIME///
-// const createDestinationCardsWithoutGlide = (destinations) => {
-//  const singleItemsContainter = document.getElementById("single-items");
-//   singleItemsContainter.innerHTML = '';
-//   destinations.forEach(destination => {
-
-//     singleItemsContainter.innerHTML += `
-//       <li class="glide__slide" id="${destination.id}">
-//         ${createCard(destination.location, destination.image, destination.alt)}
-//       </li>
-//     `
-//   })
-// }
-
 
 function createCard(destination, img, alt) {
   return `
@@ -203,10 +188,13 @@ export const displayErrorMessage = (err, scenario) => {
     userLoginError.innerHTML = `${message}`;
     document.getElementById("password").value = null;
     break;
+  case "invalidUsername":
+    message = "Please enter a valid username"
+    document.getElementById("user-login-error-field").innerHTML = `${message}`;
+    break;
   case (!scenario):
     tripRequestError.innerHTML = `${err}`
     userLoginError.innerHTML = `${err}`
-  
   }
 }
 

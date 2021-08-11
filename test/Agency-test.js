@@ -47,8 +47,7 @@ describe('Agency', function() {
   it('should return a trip by id', () => {
     expect(agency.getTripById(203)).to.equal(agency.trips[0]);
   });
-
-  // id, date, search type.. optional.
+  
   it('should return a users past trips', () => {
     expect(agency.getTripsByUser(51, todayDate, 'past')).to.deep.equal(pastTrips);
   });

@@ -35,7 +35,6 @@ bookATripButton.addEventListener('click', () => {
   setBookingCalendar(todayDate);
 });
 
-
 document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
   requestTrip(e)
 });
@@ -48,6 +47,9 @@ destinationSearchBar.addEventListener('keyup', function(e) {
   createFilteredList(e);
 });
 
+destinationSearchBar.addEventListener('mouseout', function(e) {
+  resetDestinations(e);
+});
 
 /* -----------------USER LOGIN/FETCH DATA FUNCTIONS --------------------------*/
 const checkForErrors = (res) => {
@@ -59,7 +61,6 @@ const checkForErrors = (res) => {
 }
 
 const fetchUser = (username) => {
-
   return fetchData(username).then((res) => {
     if (res.id) {
       return res;
@@ -77,18 +78,15 @@ const fetchUser = (username) => {
 
 const createNewTraveler = (travelerData) => {
   currentUser = new Traveler(travelerData);
-  console.log("in new travleer funciton!")
 }
 
 const checkUserLoginInputs = () => {
   const usernameInput = document.getElementById('username');
   const userID = parseInt(usernameInput.value.slice(8));
-
+  
   if (document.getElementById('password').value.toString().trimEnd() === "travel") {
     return fetchUser(`travelers/${userID}`).then((isValidUser) => {
-      console.log("isVALIDE USER HERE", isValidUser)
       currentUser = new Traveler(isValidUser)
-      console.log("LOOK NEW TRAVLER INSTANCE", currentUser)
       createNewTraveler(isValidUser);
       welcomeUser(isValidUser)
       return isValidUser;
@@ -102,7 +100,6 @@ const checkUserLoginInputs = () => {
 }
 
 const welcomeUser = () => {
-  console.log(document.getElementById("welcome-traveler"))
   document.getElementById("welcome-traveler").innerHTML = `
     Welcome back to Travel Tracker, ${currentUser.returnFirstName()}!
     `
@@ -121,19 +118,12 @@ const validateUser = (e) => {
   }
 }
 
-//TO DO: seperate out these two following function.
 function fetchUserDashboardData(userID) {
-//Do not get rid of return.
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
     .then((newAgency) => getUserTrips(newAgency, userID)).then(() => displayPage("userDashboard"))
-
 }
 
-//**FIX 
-//this is needed so the fetchUserDashboardData when a new trip is posted wont show dashboard.
-//Is there a way to make the getUserTrips live somewhere else?* for SRP?------
 function fetchUpdatedData(userID) {
-//Do not get rid of return.
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
     .then((newAgency) => getUserTrips(newAgency, userID))
 }
@@ -144,7 +134,6 @@ function fetchAgencyData() {
 
 function generateAgency(dataSets) {
   agency = new Agency(dataSets[0].trips, dataSets[1].destinations);
-  //need to return out of here for...getUserTrips.
   return agency;
 }
 
@@ -152,15 +141,11 @@ function generateAgency(dataSets) {
 function getUserTrips(newAgency, userID) {
   agency = newAgency;
   destinations = agency.destinations;
-  console.log("todayDate", todayDate)
 
   const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
-  console.log("pastTrips", pastTrips)
   const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
-  console.log("CURRENT TRIPS...")
   const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
   const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
-  console.log("SEARCH YEAR", parseInt(todayDate.split('/')[0]));
   const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
 
   displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
@@ -175,8 +160,6 @@ function displayUserTripData(past, current, future, pending, yearlyExpenses) {
 }
 
                              ///// ERROR HANDLING
-  
-
 const checkForDestinationSearchMatch = (substring) => {
   let isValid;
   let newSubstring = substring.trim().toLowerCase().toString().split(",")[0]
@@ -248,7 +231,6 @@ const requestTrip = (e) => {
   e.target.reset()
 }
 
-//TO DO: change this to be a modal***
 const createTripRequestResponseForUser = (parsedData) => {
   let estimatedTripCost = 0;
 
@@ -266,27 +248,20 @@ const postNewTrip = (tripRequest) => {
   Promise.resolve(postData('trips', tripRequest)).then(res => {
     return checkForErrors(res);
   }).then(parsedData => {
-    console.log(parsedData)
     createTripRequestResponseForUser(parsedData.newTrip)
   } )
     .catch(err => displayErrorMessage(err, "postNewTrip"))
 }
               
-
 function displayDestinationsData(destinations) { 
   renderDestinations(destinations);
 }
 
-
-
               /// SEARCH BAR FILTER
-
 const populateSearchBar = (e) => {
-  console.log(e.target)
   const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
   destinationSearchBar.value = destinationChosen.location
 }
-
 
 const createFilteredList = (e) => {
   if (e.target.value.includes(" ")) {
@@ -315,4 +290,10 @@ const createFilteredList = (e) => {
     displayDestinationsData(filteredDestinations)
   }
   
+}
+
+const resetDestinations = (e) => {
+  if (!e.target.value) {
+    displayDestinationsData(destinations)
+  }
 }

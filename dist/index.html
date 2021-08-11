@@ -19,7 +19,7 @@
         <legend>User Login</legend>
           <form class="user-login-form" id="user-login" aria-label="user-information">
             <input type="text" id="username" name="username" aria-label="username" placeholder="username">
-            <input type="text" id="password" name="password" aria-label="password" placeholder="password">
+            <input type="password" id="password" name="password" aria-label="password" placeholder="password">
             <button id="user-login-submit">Submit</button>
             <p id="user-login-error-field" class="error"></p>
           </form>
@@ -99,8 +99,9 @@
                     <option value="12">12</option>
                   </select>
                 </div> 
+                <input type="submit" class="book-a-trip-submit"> 
             </div> 
-            <input type="submit" class="book-a-trip-submit" src="./images/plane.png"> 
+            <!-- <input type="submit" class="book-a-trip-submit">  -->
           </fieldset>
           <p id="invalid-destination-error-field" class="error"></p>
           <p id="trip-request-error-field" class="error"></p>
@@ -111,8 +112,7 @@
       <section class="destination-container" id="destinations-container">
         <div class="test"</div>
         <h2 class="destinations-title">Available Destinations</h2>
-        <div class="glide">
-          <div id="single-items"></div>
+        <div class="glide" id="glide-container">
           <div data-glide-el="track" class="glide__track">
             <ul class="glide__slides" id="glide-slides">
               <li class="glide__slide"></li>
@@ -140,10 +140,10 @@
           Travel Data
           <img src="./images/road-map.png" alt="road map icon" class="button-img">
         </button>
-        <button class="nav-button">
+        <!-- <button class="nav-button">
           Home
           <!-- <img src="./images/travelling.png" alt="person with suitcase icon" class="button-img"> -->
-        </button>
+        <!-- </button> --> 
     </nav>
   </footer>
   <script src="bundle.js"></script>

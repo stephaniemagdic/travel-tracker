@@ -3,8 +3,6 @@ const expect = chai.expect;
 import Trip from '../src/Trip.js'
 import Destination from '../src/Destination.js'
 
-
-//PUT TEST DATA IN A SEPERATE FILE*** 
 describe('Trip', function() {
   let trip;
   let destinationData;
@@ -127,13 +125,4 @@ describe('Trip', function() {
 
     expect(trip3.calculateNewTripCost(destinationData)).to.equal(561)
   });
-
-
-
-  
-  
-
-  //ADD TEST FOR PENDING TRIP... cost is 0...**
-
-
 });
