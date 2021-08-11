@@ -24,10 +24,13 @@ This project:
 * JavaScript (ECMAScript 2009)
 * HTML5
 * CSS
+* Express
+* Node
 * NPM packages/dependencies: 
   * [glide.js](https://glidejs.com/)
   * [day.js](https://www.npmjs.com/package/dayjs)
   * [Webpack](https://www.npmjs.com/package/webpack): a helpful developer tool (npm package we install as a dev dependency)
+  * ESLint
 * Mocha test framework and Chai TDD assertion library
 
 ### Architecture
