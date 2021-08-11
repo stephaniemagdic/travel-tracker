@@ -19,7 +19,6 @@ class Agency {
     let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === 'approved');
 
     if (searchType === 'past') {
-      console.log(usersApprovedTrips, "userApprovedTrips");
       usersApprovedTrips = usersApprovedTrips
         .filter(trip => trip.date < todayDate)
     } else if (searchType === 'current') {
@@ -51,7 +50,6 @@ class Agency {
     return this.getUserTripsByYear(userID, todayDate, searchYear)
       .reduce((totalCost, trip) => {
         totalCost += trip.calculateTotalTripCost(this.destinations);
-        console.log(trip, totalCost)
         return totalCost;
       }, 0)
   }
