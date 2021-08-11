@@ -1,0 +1,53 @@
+@use '_variables.scss' as *;  
+
+
+.trip-container, .yearly-expenses {
+border-radius: 2px;
+height: 25vh;
+display: flex;
+overflow: auto;
+flex-direction: column;
+background-color: $white;
+margin-top: 10px;
+margin-bottom: 10px;
+border: 1px solid black;
+@media screen and (min-width: 450px) {
+  width: 40vw;
+  height: 30vh;
+  margin: 20px;
+  }
+}
+
+
+.yearly-expenses {
+  @media screen and (min-width: 450px) {
+    width: 80vw;
+    height: 15vh;
+    margin-left: 40px;
+    }
+}
+
+
+.trip-container-wrapper {
+  @media screen and (min-width: 450px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+   }
+}
+
+.past-trips, .present-trips, .future-trips, .pending-trips {
+  display: flex;
+  @media screen and (min-width: 450px) {
+    flex: 1;
+   }
+}
+
+.trip {
+  background-color: $pale-silver;
+  margin: 6px;
+}
+
+.trip-label {
+  font-weight: bold;
+}
