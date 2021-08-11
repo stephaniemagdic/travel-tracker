@@ -7,6 +7,8 @@ import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestMe
 import dayjs from 'dayjs';
 import './images/road-map.png';
 import './images/travel-luggage.png';
+import './images/plane.png';
+import './images/travelling.png'
 
 /* ------------------------GLOBAL VARIABLES ----------------------------------*/
 let destinations;

@@ -1,6 +1,17 @@
 import Glide from '@glidejs/glide'
 export const glideSlides = document.getElementById('glide-slides');
 
+const createCard = (destination, img, alt) => {
+  return `
+        <div class="card-top card-img-1 mobile-card-img-size">
+          <div class="destination-name-container">
+            <img src="${img}" alt="${alt}" >
+            <p class="destination-name-label">${destination}</p>
+          </div>
+        </div>
+  `
+}
+
 export const renderDestinations = (destinations) => {
   glideSlides.innerHTML = '';
 
@@ -33,18 +44,8 @@ export const renderDestinations = (destinations) => {
   glide.mount();
 };
 
-function createCard(destination, img, alt) {
-  return `
-        <div class="card-top card-img-1 mobile-card-img-size">
-          <div class="destination-name-container">
-            <img src="${img}" alt="${alt}" >
-            <p class="destination-name-label">${destination}</p>
-          </div>
-        </div>
-  `
-}
 
-export function setBookingCalendar(todayDate) {
+export const setBookingCalendar = (todayDate) => {
   let calendar = document.getElementById('start');
   let min = todayDate.split("/").join("-");
   let splitDate = todayDate.split('/');
@@ -55,14 +56,14 @@ export function setBookingCalendar(todayDate) {
   calendar.setAttribute('max', (max.toString()));
 }
 
-export function clearTripRequestMessageFields() {
+export const clearTripRequestMessageFields = () => {
   document.getElementById('trip-request-error-field').innerHTML = ''
   document.getElementById("invalid-destination-error-field").innerHTML = '';
   document.getElementById("invalid-duration-error-field").innerHTML = '';
   document.getElementById("estimated-trip-price").innerHTML = '';
 }
 
-export function renderUserTrips(pastTrips, currentTrips, futureTrips, pendingTrips, agency) {
+export const renderUserTrips = (pastTrips, currentTrips, futureTrips, pendingTrips, agency) => {
   const pastTripsContainer = document.getElementById('past-trips');
   const presentTripsContainer = document.getElementById('present-trips');
   const futureTripsContainer = document.getElementById('future-trips');

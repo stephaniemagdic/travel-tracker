@@ -19,6 +19,17 @@ img {
  .button-img {
    height: 30px;
    width: 30px;
+   margin: 3px;
+ }
+
+ .plane {
+  display: block;
+  margin: 0 auto;;
+}
+
+ .submit-img {
+   height: 10px;
+   width: 10px;
  }
  
 /* *---- Layout Containers ---- */ 
@@ -31,6 +42,11 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.plane-logo {
+  height: 30px;
+  width: 20px;
 }
 
 /* -----------------HEADER----------------- */
@@ -170,6 +186,10 @@ fieldset {
   display: block;
 }
 
+.user-login-form input {
+  width: 240px;
+}
+
 .user-login-form {
   display: flex;
   justify-content: center;
@@ -193,7 +213,7 @@ legend {
 
 .destination-name-container {
   img {
-    opacity: .9;
+    opacity: .8;
 
     &:hover {
       opacity: .6;
@@ -243,5 +263,8 @@ legend {
   display: none;
 }
 
+.glide__arrow {
+
+}
 
 
