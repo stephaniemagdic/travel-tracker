@@ -179,7 +179,7 @@ const getCityTripId = (substring) => {
 const checkValidDuration = (durationInput) => {
   const parsedInput = parseInt(durationInput.value);
   if (!parsedInput) {
-    document.getElementById("invalid-duration-error-field").innerHTML = `Please enter a # of days you'd like to book your trip`;
+    document.getElementById("invalid-duration-error-field").innerHTML = `Please enter a number of days you'd like to book your trip`;
     return false;
   } else {
     return parseInt(durationInput.value)
