@@ -78,8 +78,8 @@ Note: You must run both your local server and the fitlit application at the same
 * **Book a Trip:** 
   * Use the bookings form to choose a starting date, number of days you'd like to book your trip for, the number of travelers and the location.
   * Trips are calculated by the estimated lodging cost (usually holds about 6), otherwise doubled, and the total airtravel cost. Remember this will be added to the total for every flyer! 
-  * You can search for using the search input which will filter through all 50 destinations.
-  * You can also click on a destination to populate the input.
+  * You can search for destinations using the search input which will `filter` through all 50 destinations and display only the destinations that match your input criteria!
+  * You can also click on a destination to populate the input so you can then use that destination in your trip request!
 
 * **See Pending Trips!:**  
   * Once you submit a request, navigate back to your travel data to see your pending trip!
