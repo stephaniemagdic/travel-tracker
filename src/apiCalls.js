@@ -11,11 +11,6 @@ export const postData = (type, dataObject) => {
 export const fetchData = (endpoint) => {
   return fetch(`http://localhost:3001/api/v1/${endpoint}`)
     .then(response => {
-      // console.log("in fetchDATA function", response)
-      // if (response.status === 404){
-      //   throw Error(404);
-      //   return;
-      // };
       return response.json()
     })
     .then(data => data)
