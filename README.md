@@ -1,104 +1,104 @@
-# Webpack Starter Kit
+# Travel Tracker
 
-# Initial Commit Test
-## [Travel Tracker Project Description](https://frontend.turing.edu/projects/travel-tracker.html)
+#### [Project Spec](https://frontend.turing.edu/projects/travel-tracker.html)
 
-## Clone This Repo
+##### Week 12 (Mod2) at Turing School of Software and Design
 
-That's right, _clone_ not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
+## Project Description
 
-1. Clone down this repo. Since you don't want to name your project "webpack-starter-kit", you can use an optional argument when you run `git clone` (you replace the `[...]` with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Remove the default remote: `git remote rm origin` (notice that `git remote -v` not gives you back nothing)
-1. Create a new repo on GitHub with the name of `[what you want to name the repo]` to be consistent with naming
-1. Copy the address that you would use to clone down this repo - something like `git@github.com:...`
-1. Add this remote to your cloned down repo: `git remote add origin [address you copied in the previous step]` - do not include the brackets
+Run our application and spin up a local server to fetch mock user data to xxx! 
 
-Now try to commit something and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
+This project:
+  - implements the fetch API to access data from a local server.
+  - uses the Fetch API to make network requests to API endpoints in order to retrieve data.
+  - xx
+  - xx
+  - xx
+ 
+### Built-By:
 
-## Setup
+* [Stephanie Magdic](https://github.com/stephaniemagdic)
 
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo. 
+### Technologies Used 
 
-Then install the library dependencies. Run:
+* JavaScript (ECMAScript 2009)
+* HTML5
+* CSS
+* NPM packages/dependencies: 
+  * [glide.js](https://glidejs.com/)
+  * [day.js](https://www.npmjs.com/package/dayjs)
+  * [Webpack](https://www.npmjs.com/package/webpack): a helpful developer tool (npm package we install as a dev dependency)
+* Mocha test framework and Chai TDD assertion library
 
-```bash
-npm install
-```
+### Architecture
 
-To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with some `h1` text, Turing logo image and a beautiful gradient background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
+* dist directory
+  * [bundle.js](https://www.simplethread.com/javascript-modules-and-code-bundling-explained/): our minified file that webpack creates for our browser!
+  * index.html 
+* src directory
+  * ES6 class files
+    * Class Structure Example:
+      * classHERE: xxx 
+      * classHERE: xxx 
+  * scripts.js: holds the application logic, including fetching data from our local server and manipulating the dom.
+* test directory
+* README.md
 
-## Where to Add Your Code
+## Instructions for running and viewing
 
-### JavaScript
+### Set-up:
 
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
+Note: You must run both your local server and the fitlit application at the same time to use this application.
 
-**Create all of your feature code files in the `src` directory.**
+#### Step 1: Run your local server.
+  * Go to the [fitlit-API]() and follow the instructions in the README.md to run your local server.
+  * Make sure that the server is running in your terminal by checking that you see the following message in your terminal. `Travel Tracker is now running on http://localhost:3001 !`
+#### Step 2: Run the travel tracker application/client.
+  * You can access the travel tracker by `cloning this repository`, navigating to and `opening up your terminal`, and running the command `npm start` in your cloned project directory. This will run the bundle.js file, which will compile and run the application.
+  * You should see the following message in your terminal: `running at http://localhost:8080/`
+  * Copy and paste this url link (`http://localhost:8080/`) in your browser to view the application. 
+  
+`Note`: Make sure to run `npm install` in your terminal after cloning the repository to install dependencies needed for the application to run!
 
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
+### How to Navigate the application:  
+  
+* **Login Page:**  
+  * 
 
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
+* **Travel Data:**  
+  * 
 
-### HTML
+* **Book a Trip:** 
+  * 
 
-Add the HTML you need in the `index.html` file in the `./dist` directory. There is some boilerplate HTML that exists from the start that you can modify.
+* **See Pending Trips!:**  
+  * 
 
-### CSS (SCSS/SASS)
+* **Repeat: Refresh the page to see a new user's wellness data!:**  
 
-This project is setup to use SCSS/Sass files by default instead of your regular CSS files. Add your SCSS files in the `src/css` directory. There is a `base.scss` file already there, but you can change this file and add multiple SCSS files in this directory.
 
-This might sound weird, but you need to `import` your SCSS files in the JavaScript entry file (`index.js`) for the styles to be applied to your HTML. The example `base.scss` file has already been imported in the JavaScript entry file as an example.
+### Snapshot Examples of Responsive Design
+ ###### Please run the application to view the entire dashboard.
+#### [Generate Random User on Page Load Gif: Click to View](.gif) 
+#### [Responsive Design Gif: Click to View](.gif) 
 
-### Images
+#### Desktop View: 
+![Img]()
+#### Mobile View:
+![Img]()
+![Img]()
 
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`index.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
+### Project Challenges 
+ * 
+ 
+### Project Wins
+ * 
 
-## How to View Your Code in Action
+### Future Iterations
+  * 
+  * 
 
-In the terminal, run:
-
-```bash
-npm start
-```
-
-You will see a bunch of lines output to your terminal. One of those lines will be something like:
-
-```bash
-Project is running at http://localhost:8080/
-```
-
-Go to `http://localhost:8080/` in your browser to view your code running in the browser.
-
----
-
-## Test Files Organization
-
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
-
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
-
-## Running Your Tests
-
-Run your test suite using the command:
-
-```bash
-npm test
-```
-
-The test results will output to the terminal.
-
----
-
-## Linting Your Code
-
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
-
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory. 
-
-## Webpack?
-
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
-
+(NOTE TO SELF)
 ## Deploying to GitHub Pages
 
 _If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
