@@ -3,7 +3,7 @@ import './images/turing-logo.png'
 import Agency from './Agency';
 import Traveler from './Traveler'
 import { postData, fetchData } from './apiCalls.js'
-import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestErrorField, renderUserTrips, renderYearlyExpenses, displayPage, displayErrorMessage, formatDate } from './domUpdates'
+import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestMessageFields, renderUserTrips, renderYearlyExpenses, displayPage, displayErrorMessage, formatDate } from './domUpdates'
 import dayjs from 'dayjs';
 import './images/road-map.png';
 import './images/travel-luggage.png';
@@ -24,12 +24,9 @@ document.getElementById('user-login-submit').addEventListener('click', (e) => {
   validateUser(e);
 });
 
-glideSlides.addEventListener('click', (e) => {
-  populateSearchBar(e);
-});
-
 displayTripsButton.addEventListener('click', () => {
   displayPage('trips');
+  clearTripRequestMessageFields();
 });
 
 bookATripButton.addEventListener('click', () => {
@@ -43,6 +40,14 @@ document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
   requestTrip(e)
 });
 
+glideSlides.addEventListener('click', (e) => {
+  populateSearchBar(e);
+});
+
+destinationSearchBar.addEventListener('keyup', function(e) {
+  createFilteredList(e);
+});
+
 
 /* -----------------USER LOGIN/FETCH DATA FUNCTIONS --------------------------*/
 const checkForErrors = (res) => {
@@ -54,12 +59,8 @@ const checkForErrors = (res) => {
 }
 
 const fetchUser = (username) => {
-  let user;
-  
+
   return fetchData(username).then((res) => {
-    // if (res == 'Error: 404') {
-    //   throw new Error(404);
-    // }
     if (res.id) {
       return res;
     } else {
@@ -67,40 +68,54 @@ const fetchUser = (username) => {
     }
   }).then(data => {
     fetchUserDashboardData(data.id);
-    //dont need both of these variables.
     currentUser = data;  
-    // user = data; 
-    // return user;   
-    //new below  
     return data;
   })
-  .then((user) => user)
-  .catch(err => displayErrorMessage(err, "fetchUser"));
+    .then((user) => user)
+    .catch(err => displayErrorMessage(err, "fetchUser"));
+}
+
+const createNewTraveler = (travelerData) => {
+  currentUser = new Traveler(travelerData);
+  console.log("in new travleer funciton!")
 }
 
 const checkUserLoginInputs = () => {
   const usernameInput = document.getElementById('username');
-  const userID = parseInt(usernameInput.value.slice(8))
+  const userID = parseInt(usernameInput.value.slice(8));
 
   if (document.getElementById('password').value.toString().trimEnd() === "travel") {
-    return fetchUser(`travelers/${userID}`).then((isValidUser) => isValidUser);
+    return fetchUser(`travelers/${userID}`).then((isValidUser) => {
+      console.log("isVALIDE USER HERE", isValidUser)
+      currentUser = new Traveler(isValidUser)
+      console.log("LOOK NEW TRAVLER INSTANCE", currentUser)
+      createNewTraveler(isValidUser);
+      welcomeUser(isValidUser)
+      return isValidUser;
+    });
   } else {
     document.getElementById("user-login-error-field").innerHTML = 'Please enter valid credentials'
   }
   
-  //TO DO:put these in a clear input function
   usernameInput.value = null;
   document.getElementById('password').value = null;
+}
+
+const welcomeUser = () => {
+  console.log(document.getElementById("welcome-traveler"))
+  document.getElementById("welcome-traveler").innerHTML = `
+    Welcome back to Travel Tracker, ${currentUser.returnFirstName()}!
+    `
 }
 
 const validateUser = (e) => {
   e.preventDefault();
   document.getElementById("user-login-error-field").innerHTML = ''
-  const usernameInput = document.getElementById('username')
   const isValid = checkUserLoginInputs();
 
   if (isValid && currentUser) {
-    displayPage("userDashboard")
+    welcomeUser();
+    displayPage("userDashboard");
   } else {
     return;
   }
@@ -111,6 +126,7 @@ function fetchUserDashboardData(userID) {
 //Do not get rid of return.
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
     .then((newAgency) => getUserTrips(newAgency, userID)).then(() => displayPage("userDashboard"))
+
 }
 
 //**FIX 
@@ -136,10 +152,15 @@ function generateAgency(dataSets) {
 function getUserTrips(newAgency, userID) {
   agency = newAgency;
   destinations = agency.destinations;
+  console.log("todayDate", todayDate)
+
   const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
+  console.log("pastTrips", pastTrips)
   const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
+  console.log("CURRENT TRIPS...")
   const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
   const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
+  console.log("SEARCH YEAR", parseInt(todayDate.split('/')[0]));
   const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate)
 
   displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses)
@@ -153,10 +174,9 @@ function displayUserTripData(past, current, future, pending, yearlyExpenses) {
   renderYearlyExpenses(yearlyExpenses, year);
 }
 
-
-                                ///// ERROR HANDLING
+                             ///// ERROR HANDLING
   
-//TO DO: SHORTEN FUNCTION.
+
 const checkForDestinationSearchMatch = (substring) => {
   let isValid;
   let newSubstring = substring.trim().toLowerCase().toString().split(",")[0]
@@ -167,10 +187,10 @@ const checkForDestinationSearchMatch = (substring) => {
   }
 
   if (agency.destinations.some(destination => {
-      return (destination.location.toLowerCase().split(",")[0]) === newSubstring
-    })) {
-      isValid = true;
-    }
+    return (destination.location.toLowerCase().split(",")[0]) === newSubstring
+  })) {
+    isValid = true;
+  }
 
   if (!isValid) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select an available destination'
@@ -178,8 +198,9 @@ const checkForDestinationSearchMatch = (substring) => {
   return isValid;
 }
 
-const getSubstringTripId = (substring) => {
+const getCityTripId = (substring) => {
   let newSubstring = substring.trim().toLowerCase();
+
   return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
 }
 
@@ -190,13 +211,12 @@ const checkValidDuration = (durationInput) => {
     return false;
   } else {
     return parseInt(durationInput.value)
-    }
+  }
 }
 
 const requestTrip = (e) => {
-// function requestTrip(e){
   e.preventDefault();
-  clearTripRequestErrorField();
+  clearTripRequestMessageFields();
   const startDate = document.getElementById('start');
   const durationInput = document.getElementById('duration');
   let destinationID; 
@@ -210,7 +230,7 @@ const requestTrip = (e) => {
   if (!checkForDestinationSearchMatch(destinationSearchBar.value)) {
     return;
   } else {
-    destinationID = getSubstringTripId(destinationSearchBar.value);
+    destinationID = getCityTripId(destinationSearchBar.value);
   }
 
   const tripRequest = {
@@ -231,106 +251,68 @@ const requestTrip = (e) => {
 //TO DO: change this to be a modal***
 const createTripRequestResponseForUser = (parsedData) => {
   let estimatedTripCost = 0;
-  const tripRequestError = document.getElementById("trip-request-error-field");
-  // tripRequestError.innerHTML = 'Your trip was successfully booked! Retrieving your estimated cost...';
+
+  const totalTripCostField = document.getElementById("estimated-trip-price")
+
+  totalTripCostField.innerHTML = 'Your trip was successfully booked! Retrieving your estimated cost...';
+
   Promise.resolve(fetchUpdatedData(parsedData.userID))
     .then(() => agency.getTripById(parsedData.id).calculateNewTripCost(agency.destinations))
     .then(totalCost => estimatedTripCost = totalCost)
-    .then(()=> tripRequestError.innerHTML = `Your estimated trip cost is $${estimatedTripCost}`)
+    .then(()=> totalTripCostField.innerHTML = `Trip Request Processed! Your estimated trip cost to ${agency.getDestinationLocationByID(parsedData.destinationID)} is $${estimatedTripCost}`)
 }
 
 const postNewTrip = (tripRequest) => {
   Promise.resolve(postData('trips', tripRequest)).then(res => {
     return checkForErrors(res);
   }).then(parsedData => {
+    console.log(parsedData)
     createTripRequestResponseForUser(parsedData.newTrip)
   } )
-  .catch(err => displayErrorMessage(err, "postNewTrip"))
+    .catch(err => displayErrorMessage(err, "postNewTrip"))
 }
               
 
-
-/////////////MISC FUNCTIONS
-
-                       //DISPLAY DESTINATIONS
 function displayDestinationsData(destinations) { 
   renderDestinations(destinations);
 }
 
 
 
-//FUNCTIONALITY TO FIX
+              /// SEARCH BAR FILTER
 
-//TO DO: BUG-FIX: HERE when you enter an empty string
-destinationSearchBar.addEventListener('keyup', function(e) {
-  createFilteredList(e);
-});
-
-// should this be a click event instead?
-// destinationSearchBar.addEventListener('click', function(e) {
-//   checkForReset(e)
-// })
-
-
-//TO DO: add an event listener on home button.
-
-                           ///// SEARCH BAR/////
-// function checkForReset (e) {
-//     if (!e.target.value) {
-//     // e.target.reset();
-//     displayDestinationsData(destinations);
-//   }
-// }
-
-function populateSearchBar(e) {
+const populateSearchBar = (e) => {
   console.log(e.target)
   const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
-   destinationSearchBar.value = destinationChosen.location
+  destinationSearchBar.value = destinationChosen.location
 }
 
 
-///////FILTER DESTINATIONS//////////////
-                           // To Do: BUG in filter destination.
-                     // filter function may not be as helpful with courosel.
 const createFilteredList = (e) => {
-  // const searchedDestination = e.target.value.toLowerCase();
-  //TRIM FIXED the checking just a bunch of empty spaces and freezing things.
-  // if(typeof(e.target.value === "string") 
+  if (e.target.value.includes(" ")) {
+    return;
+  }
 
-  // if ((/^([a-z]{5,})$/.test(e.target.value))) {
-  //   return;
-  // }\
-
-  //to lower case or trim failing here?
-
- //period is getting through here...
-  if(!(/[a-zA-Z]/).test(e.target.value)) {
+  if (!(/[a-zA-Z]/).test(e.target.value)) {
     return;
   }
 
   if (!e.target.value) {
     return;
   }
-  
 
-  // const searchedDestination = e.target.value.trim().toLowerCase();
-   const searchedDestination = e.target.value.trim().toLowerCase();
-
+  const searchedDestination = e.target.value.toLowerCase();
 
   let filteredDestinations = destinations.filter((destination) => {
     return (
-      // //use substring instead//unless they can search by country as well.
-      // destination.location.toLowerCase().startsWith(searchedDestination)  
-      destination.location.toLowerCase().includes(searchedDestination)  
+      destination.location.split(",")[0].toLowerCase().includes(searchedDestination)  
     )
   });
   
-  if (filteredDestinations === []) {
-    return;
-  }
-
-  if (filteredDestinations) {
-   displayDestinationsData(filteredDestinations)
+  if (filteredDestinations.length === 0) {
+    return
+  } else {
+    displayDestinationsData(filteredDestinations)
   }
   
 }

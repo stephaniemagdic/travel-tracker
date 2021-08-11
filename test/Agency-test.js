@@ -76,25 +76,19 @@ describe('Agency', function() {
     expect(agency.getTripsByUser(51, todayDate, 'past')[1].date).to.equal('2020/01/26');
   });
 
-
-  it('should return trips by year', () => {
-    expect(agency.getTripsByUser(51, todayDate, null, 2021)).to.deep.equal(tripsByYear);
-    expect(agency.getTripsByUser(51, todayDate, null, 2021)[0].date).to.equal(
+ it('should return trips by year REFACTORED', () => {
+    expect(agency.getUserTripsByYear(51, todayDate, 2021)).to.deep.equal(tripsByYear);
+    expect(agency.getUserTripsByYear(51, todayDate, 2021)[0].date).to.equal(
       '2021/08/05');
-    expect(agency.getTripsByUser(51, todayDate, null, 2021)[2].date).to.equal('2021/10/16');
+    expect(agency.getUserTripsByYear(51, todayDate, 2021)[2].date).to.equal('2021/10/16');
   });
 
   it('should return yearly expenses for a single user', () => {
-    expect(agency.getUserYearlyExpenses(51, 2021, todayDate)).to.equal(4158);
+    expect(agency.getUserYearlyExpenses(51, 2021, todayDate)).to.equal(1683);
   });
 
-//FINISH TEST HERE.
   it('should return a destination location based on id', () => {
-      expect(agency.getDestinationLocationByID(51)).to.equal();
+      expect(agency.getDestinationLocationByID(51)).to.equal("Chicago, Illinois");
   });
-
 });
 
-
- //ADD A TEST THAT THEY SHOULD COME OUT IN ORDER... all trips should come out sorted...
-    //include a test for null searchType

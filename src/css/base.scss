@@ -6,6 +6,8 @@
 body {
   background-color: $primary-background-color;
   font-family: $primary-font-family;
+  width: 100vw;
+  margin: 0;
 }
 
 img {
@@ -20,7 +22,7 @@ img {
  }
  
 /* *---- Layout Containers ---- */ 
-.container, main, .header-container {
+main {
   width: 90%;
   margin: 0 auto;
 }
@@ -39,6 +41,10 @@ header, .nav-footer {
   flex-direction: columns;
   justify-content: space-between;
   align-content: flex-end;
+  align-content: flex-end;
+    @media screen and (max-width: 425px) {
+      height: 110px;
+    }
  }
 
  .nav-button {
@@ -70,6 +76,14 @@ h1 {
   font-style: italic;
 }
 
+.welcome-traveler {
+  margin: 60px;
+    @media screen and (max-width: 450px) {
+      margin: 20px;
+      font-weight: 2em;
+    } 
+}
+
 h2 {
   margin: 6px;
   font-weight: Semi-bold 600;
@@ -77,7 +91,12 @@ h2 {
 
 p {
   margin: 5px;
-  font-size: 20px;
+  font-size: $main-content-font-size;
+}
+
+.error {
+  color: #59656f;
+  font-size: $error-notification-font-size
 }
 
             //TRIPS
@@ -92,16 +111,32 @@ p {
   margin-top: 10px;
   margin-bottom: 10px;
   @media screen and (min-width: 450px) {
+    width: 40vw;
+    height: 30vh;
+    margin: 20px;
+   }
+}
+
+.yearly-expenses {
+  @media screen and (min-width: 450px) {
+    width: 80vw;
+    height: 15vh;
+    margin-left: 40px;
+   }
+}
+
+.trip-container-wrapper {
+  @media screen and (min-width: 450px) {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
    }
 }
 
-
 .past-trips, .present-trips, .future-trips, .pending-trips {
   display: flex;
   @media screen and (min-width: 450px) {
-    flex: 1
+    flex: 1;
    }
 }
 
@@ -111,13 +146,43 @@ p {
 }
 
                    //BOOK A TRIP FORM
+
 fieldset {
   display: flex;
   justify-content: center;
+  border: 0;
+  background-color: $secondary-accent-background-color;
+  // @media screen and (min-width: 450px) {
+  //   flex-direction: row;
+  // }
 }
+
 label {
   display: block;
+  font-size: $main-content-font-size;
 }
+
+legend {
+  margin: 0 auto;
+  font-size: 1.5em;
+  font-weight: bold;
+  display: block;
+}
+
+
+.destination-name-container{
+  img {
+    opacity: .9;
+
+    &:hover {
+      opacity: .6;
+    }
+    // &:cursor {
+
+    // }
+  }
+}
+
 
               // DESTINATIONS CONTAINER
 .destination-container {
@@ -127,29 +192,34 @@ label {
 
 .book-a-trip-submit {
   display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  height: 30px;
+  margin: 3px;
+  margin-top: 23px;
 }
 
 .input-container {
   padding: 6px;
 }
 
-// .inputs-container {
+.inputs-container {
+  width: 60vw;
+  display: flex;
+  align-items: center;
+    // @media screen and (min-width: 450px) {
+    //     flex-direction: row;
+    //   }
 
-// }
-    
+}
 
 .destinations-title {
   font-style: italic;
 }
 
 
-                    // ERROR HANDLING AND SPECIAL STYLING 
 
-.error {
-  font-size: 14px;
-  color: $accent-background-color;
 
-}
 
 .hidden {
   display: none;
@@ -168,12 +238,5 @@ label {
 //   }
 // }
 
-
-//SASS EXAMPLE NESTING
-// .print-only {
-//   display: none;
-
-//   @media print { display: block; }
-// }
 
 
