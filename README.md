@@ -88,12 +88,11 @@ Note: You must run both your local server and the fitlit application at the same
 ### Snapshot Examples of Responsive Design
  ###### Please run the application to view the entire dashboard.
 
-#### [Populate the search bar feature-Mobile](https://i.ibb.co/3zDdhZ2/populate-Search.gif)
-#### [Use the filter search feature](https://i.ibb.co/Nxp5t1J/search-filter.gif)
+#### ![Populate the search bar feature-Mobile](https://i.ibb.co/3zDdhZ2/populate-Search.gif)
+#### ![Use the filter search feature](https://i.ibb.co/Nxp5t1J/search-filter.gif)
+#### ![Mock User Authentication](https://i.ibb.co/NS4jg0T/login.gif)
 
-#### [Desktop View](https://ibb.co/J2RwsMc): 
-![Img](https://i.ibb.co/ctcSr7y/Screen-Shot-2021-08-11-at-9-02-54-AM.png)
-#### Mobile View:
+#### Responsive Design:
 ![Img](https://i.ibb.co/C14BVs1/Screen-Shot-2021-08-11-at-9-17-52-AM.png)
 
 ### Project Challenges 
