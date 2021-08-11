@@ -100,7 +100,6 @@ const checkUserLoginInputs = () => {
 const activateUser = (userData) => {
   currentUser = new Traveler(userData)
   createNewTraveler(userData);
-  console.log("userData", userData)
   welcomeUser(currentUser);
   displayPage("userDashboard");
 }

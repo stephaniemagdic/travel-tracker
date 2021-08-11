@@ -117,9 +117,10 @@ export const renderUserTrips = (pastTrips, currentTrips, futureTrips, pendingTri
 
 const createTripHTML = (trip, agency) => {
   return (`<div class="trip">
+  <p class="trip-label">Location</p>
   <p>${agency.getDestinationLocationByID(trip.destinationID)}</p>
+  <p class="trip-label">Date</p>
   <p>${trip.date}</p>
-  </div>
 `)
 }
 
@@ -189,7 +190,7 @@ export const displayErrorMessage = (err, scenario) => {
     userLoginError.innerHTML = `${message}`;
     break;
   case "fetchUser":
-    message = "Invalid login- Please make sure both input fields are filled out";
+    message = "Invalid login- Please try again.";
     userLoginError.innerHTML = `${message}`;
     document.getElementById("password").value = null;
     break;
@@ -198,7 +199,7 @@ export const displayErrorMessage = (err, scenario) => {
     document.getElementById("user-login-error-field").innerHTML = `${message}`;
     break;
   case "invalidCredentials":
-    message = 'Please enter valid credentials'
+    message = 'Invalid login- Please try again.'
     document.getElementById("user-login-error-field").innerHTML = `${message}`;
     break;
   case (!scenario):
