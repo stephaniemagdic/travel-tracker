@@ -195,16 +195,20 @@ export const displayErrorMessage = (err, scenario) => {
     document.getElementById("password").value = null;
     break;
   case "invalidUsername":
-    message = "Please enter a valid username"
+    message = "Please enter a valid username";
     document.getElementById("user-login-error-field").innerHTML = `${message}`;
     break;
   case "invalidCredentials":
-    message = 'Invalid login- Please try again.'
+    message = 'Invalid login- Please try again.';
     document.getElementById("user-login-error-field").innerHTML = `${message}`;
     break;
+  case "fetchAgencyData":
+    tripRequestError.innerHTML = `We apologize! Something went wrong! ${err}. Try back later.`;
+    userLoginError.innerHTML = `We apologize! Something went wrong! ${err}. Try back later.`;
+    break;
   case (!scenario):
-    tripRequestError.innerHTML = `${err}`
-    userLoginError.innerHTML = `${err}`
+    tripRequestError.innerHTML = `${err}`;
+    userLoginError.innerHTML = `${err}`;
   }
 }
 

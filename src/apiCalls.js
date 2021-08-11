@@ -15,7 +15,6 @@ export const fetchData = (endpoint) => {
     })
     .then(data => data)
     .catch(err => {
-      console.log(`ERROR with ${endpoint}: ${err}`);
       return err;
     })
 }
