@@ -26,7 +26,7 @@ export const renderDestinations = (destinations) => {
         perView: 3
       },
       600: {
-        perView: 1t st
+        perView: 1
       }
     }
   }
