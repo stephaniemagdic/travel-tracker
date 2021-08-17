@@ -14,6 +14,7 @@ This project:
   - uses the Fetch API to post new data to the server
   - uses a robust test suite that accounts for user error 
   - implements error handling for edge cases while loggging in and booking a trip
+  - has an accessibility lighthouse score of 100%
  
 ### Built-By:
 
