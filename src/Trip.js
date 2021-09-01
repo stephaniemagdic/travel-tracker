@@ -14,15 +14,11 @@ class Trip {
     if (this.status === "pending") {
       return 0;
     } else {
-    
-    const destinationNeeded = destinationData.find(destination => destination.id === this.destinationID)
-
-    const tripCostBeforeAgentFee = (destinationNeeded.getDestinationLodgingCost(this.duration, this.travelers)) + destinationNeeded.getDestinationFlightCostPerPerson(this.travelers);
-
-    const agentFee = parseInt(tripCostBeforeAgentFee * .10);
-    const totalTripCost = parseInt(tripCostBeforeAgentFee  + agentFee);
- 
-    return totalTripCost;
+      const destinationNeeded = destinationData.find(destination => destination.id === this.destinationID)
+      const tripCostBeforeAgentFee = (destinationNeeded.getDestinationLodgingCost(this.duration, this.travelers)) + destinationNeeded.getDestinationFlightCostPerPerson(this.travelers);
+      const agentFee = parseInt(tripCostBeforeAgentFee * .10);
+      const totalTripCost = parseInt(tripCostBeforeAgentFee  + agentFee);
+      return totalTripCost;
     }
   }
 
