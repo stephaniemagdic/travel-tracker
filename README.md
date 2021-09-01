@@ -1,4 +1,5 @@
-# [Travel Tracker](https://stephaniemagdic.github.io/travel-tracker/) Click to view deployed site.
+# [Travel Tracker](https://stephaniemagdic.github.io/travel-tracker/) 
+  ####Click to view deployed site.
 
 #### [Project Spec](https://frontend.turing.edu/projects/travel-tracker.html)
 
