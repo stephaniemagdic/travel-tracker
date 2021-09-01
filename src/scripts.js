@@ -2,65 +2,58 @@ import './css/base.scss';
 import './images/turing-logo.png'
 import Agency from './Agency';
 import Traveler from './Traveler'
-import { postData, fetchData } from './apiCalls.js'
-import { renderDestinations, glideSlides, setBookingCalendar, clearTripRequestMessageFields, renderUserTrips, renderYearlyExpenses, displayPage, displayErrorMessage, formatDate, welcomeUser } from './domUpdates'
+import { postData, fetchData, checkForErrors } from './apiCalls.js'
+import { 
+  renderDestinations,
+  glideSlides,
+  setBookingCalendar,
+  clearTripRequestMessageFields,
+  renderUserTrips,
+  renderYearlyExpenses,
+  displayPage,
+  displayErrorMessage,
+  formatDate,
+  welcomeUser 
+} from './domUpdates'
 import dayjs from 'dayjs';
 import './images/road-map.png';
 import './images/travel-luggage.png';
 import './images/plane.png';
 import './images/travelling.png'
 
-/* ------------------------GLOBAL VARIABLES ----------------------------------*/
+/* -------------GLOBAL VARIABLES AND EVENT LISTENERS ------------------------*/
 let destinations;
 let agency;
 let defaultDate = new Date();
 let todayDate = dayjs(defaultDate).format('YYYY/MM/DD');
 let currentUser;
-
-/* -------------------------EVENT LISTENERS ----------------------------------*/
 const destinationSearchBar = document.getElementById('destination-search');
 const displayTripsButton = document.getElementById('display-trips-button');
 const bookATripButton = document.getElementById('book-a-trip-button');
-
 document.getElementById('user-login-submit').addEventListener('click', (e) => {
   validateUser(e);
 });
-
 displayTripsButton.addEventListener('click', () => {
   displayPage('trips');
   clearTripRequestMessageFields();
 });
-
 bookATripButton.addEventListener('click', () => {
   displayPage('bookATrip');
   displayDestinationsData(agency.destinations);
   setBookingCalendar(todayDate);
 });
-
 document.getElementById('book-a-trip-form').addEventListener('submit', (e) => {
   requestTrip(e)
 });
-
 glideSlides.addEventListener('click', (e) => {
   populateSearchBar(e);
 });
-
 destinationSearchBar.addEventListener('keyup', function(e) {
   createFilteredList(e);
 });
-
 destinationSearchBar.addEventListener('mouseout', function(e) {
   resetDestinations(e);
 });
-
-/* -----------------FETCH API ERROR HANDLING --------------------------*/
-const checkForErrors = (res) => {
-  if (!res.ok || res.message === "No traveler found with an id of NaN") {
-    throw new Error(`${res}`);
-  } else {
-    return res.json();
-  }
-}
 
 /* -----------USER LOGIN & DASHBOARD/FETCH DATA FUNCTIONS -----------------*/
 const fetchUser = (username) => {
@@ -88,9 +81,7 @@ const checkUserLoginInputs = () => {
   const userID = parseInt(usernameInput.value.slice(8));
   
   if (document.getElementById('password').value.toString().trimEnd() === "travel") {
-    return fetchUser(`travelers/${userID}`).then((isValidUser) => {
-      return isValidUser;
-    });
+    return fetchUser(`travelers/${userID}`).then((isValidUser) => isValidUser);
   } else {
     displayErrorMessage(null, 'invalidCredentials')
   }
@@ -113,26 +104,26 @@ const validateUser = (e) => {
   })
 }
 
-function fetchUserDashboardData(userID) {
+const fetchUserDashboardData = (userID) => {
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
     .then((newAgency) => getUserTrips(newAgency, userID)).then(() => displayPage("userDashboard"))
 }
 
-function fetchUpdatedData(userID) {
+const fetchUpdatedData = (userID) => {
   return Promise.resolve(fetchAgencyData()).then((data) => generateAgency(data))
     .then((newAgency) => getUserTrips(newAgency, userID))
 }
 
-function fetchAgencyData() {
+const fetchAgencyData = () => {
   return Promise.all([fetchData('trips'), fetchData('destinations')]).then(values => values).catch((err) => displayErrorMessage(err, "fetchAgencyData"));
 }
 
-function generateAgency(dataSets) {
+const generateAgency = (dataSets) => {
   agency = new Agency(dataSets[0].trips, dataSets[1].destinations);
   return agency;
 }
 
-/* -----------------DISPLAY USER DASHBOARD FUNCTION --------------------------*/
+/* ----------------DISPLAY USER DASHBOARD FUNCTIONS --------------------------*/
 const displayUserTripData = (past, current, future, pending, yearlyExpenses) => {
   const year = todayDate.split('/')[0]
   renderUserTrips(past, current, future, pending, agency);
@@ -145,7 +136,7 @@ const getUserTrips = (newAgency, userID) => {
   const pastTrips = agency.getTripsByUser(userID, todayDate, 'past'); 
   const currentTrips = agency.getTripsByUser(userID, todayDate, 'current');
   const futureTrips = agency.getTripsByUser(userID, todayDate, 'future');
-  const pendingTrips = agency.getTripsByUser(userID, todayDate,'pending');
+  const pendingTrips = agency.getTripsByUser(userID, todayDate, 'pending');
   const yearlyExpenses = agency.getUserYearlyExpenses(userID, parseInt(todayDate.split('/')[0]), todayDate);
   displayUserTripData(pastTrips, currentTrips, futureTrips, pendingTrips, yearlyExpenses);
 
@@ -156,7 +147,6 @@ const getUserTrips = (newAgency, userID) => {
 const checkForDestinationSearchMatch = (substring) => {
   let isValid;
   let newSubstring = substring.trim().toLowerCase().toString().split(",")[0];
-
   if (!newSubstring) {
     document.getElementById("invalid-destination-error-field").innerHTML = 'Please select a valid destination';
     return;
@@ -174,6 +164,7 @@ const checkForDestinationSearchMatch = (substring) => {
 
 const getCityTripId = (substring) => {
   let newSubstring = substring.trim().toLowerCase();
+
   return agency.destinations.find(destination => destination.location.toLowerCase().includes(newSubstring)).id;
 }
 
@@ -240,7 +231,6 @@ const displayDestinationsData = (destinations) => {
   renderDestinations(destinations);
 }
 
-
 /* -----------------SEARCH BAR FILTER --------------------------*/
 const populateSearchBar = (e) => {
   const destinationChosen = destinations.find(destination => parseInt(destination.id) === parseInt(e.target.closest('li').id)) 
@@ -257,7 +247,6 @@ const createFilteredList = (e) => {
   if (!e.target.value) {
     return;
   }
-
   const searchedDestination = e.target.value.toLowerCase();
   let filteredDestinations = destinations.filter((destination) => {
     return (

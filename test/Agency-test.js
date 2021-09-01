@@ -36,7 +36,6 @@ describe('Agency', function() {
         "alt": "overview of city buildings and a lakeshore"
       })
     );
-
     expect(agency.destinations[0]).to.be.an.instanceof(Destination);
   });
 
@@ -66,7 +65,7 @@ describe('Agency', function() {
   });
 
   it('should return pending trips', () => {
-    expect(agency.getTripsByUser(51, todayDate,'pending')).to.deep.equal(pendingTrips);
+    expect(agency.getTripsByUser(51, todayDate, 'pending')).to.deep.equal(pendingTrips);
   });
 
   it('should return all trips regardless of year by default', () => {
@@ -75,7 +74,7 @@ describe('Agency', function() {
     expect(agency.getTripsByUser(51, todayDate, 'past')[1].date).to.equal('2020/01/26');
   });
 
- it('should return trips by year', () => {
+  it('should return trips by year', () => {
     expect(agency.getUserTripsByYear(51, todayDate, 2021)).to.deep.equal(tripsByYear);
     expect(agency.getUserTripsByYear(51, todayDate, 2021)[0].date).to.equal(
       '2021/08/05');
@@ -88,7 +87,7 @@ describe('Agency', function() {
   });
 
   it('should return a destination location based on id', () => {
-      expect(agency.getDestinationLocationByID(51)).to.equal("Chicago, Illinois");
+    expect(agency.getDestinationLocationByID(51)).to.equal("Chicago, Illinois");
   });
 });
 

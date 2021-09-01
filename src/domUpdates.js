@@ -18,7 +18,6 @@ const createCard = (destination, img, alt, flight, lodging) => {
 
 export const renderDestinations = (destinations) => {
   glideSlides.innerHTML = '';
-
   const config = {
     startAt: 0,
     perView: 4,
@@ -34,9 +33,7 @@ export const renderDestinations = (destinations) => {
       }
     }
   }
-
   let glide = new Glide('.glide', config)
-  
   destinations.forEach(destination => {
     glideSlides.innerHTML += `
       <li class="glide__slide" id="${destination.id}">
@@ -44,7 +41,6 @@ export const renderDestinations = (destinations) => {
       </li>
     `
   })
-
   glide.mount();
 };
 
@@ -55,7 +51,6 @@ export const setBookingCalendar = (todayDate) => {
   let splitDate = todayDate.split('/');
   splitDate.splice(0, 1, (parseInt(todayDate.split('/')[0]) + 1));
   let max = splitDate.join("-");
-
   calendar.setAttribute('min', (min.toString()));
   calendar.setAttribute('max', (max.toString()));
 }
@@ -72,12 +67,10 @@ export const renderUserTrips = (pastTrips, currentTrips, futureTrips, pendingTri
   const presentTripsContainer = document.getElementById('present-trips');
   const futureTripsContainer = document.getElementById('future-trips');
   const pendingTripsContainer = document.getElementById('pending-trips');
-
   pastTripsContainer.innerHTML = '';
   presentTripsContainer.innerHTML = '';
   futureTripsContainer.innerHTML = '';
   pendingTripsContainer.innerHTML = '';
- 
   if (pastTrips.length) {
     pastTrips.forEach(trip => {
       pastTripsContainer.innerHTML += `${createTripHTML(trip, agency)}`
@@ -85,17 +78,13 @@ export const renderUserTrips = (pastTrips, currentTrips, futureTrips, pendingTri
   } else {
     pastTripsContainer.innerHTML += `<p> No current trips.</p>`
   }
-
   if (currentTrips.length) {
     currentTrips.forEach(trip => {
       presentTripsContainer.innerHTML += `${createTripHTML(trip, agency)}`
-    
     })
-
   } else {
     presentTripsContainer.innerHTML += `<p> No present trips.</p>`
   }
-
   if (futureTrips.length) {
     futureTrips.forEach(trip => {
       futureTripsContainer.innerHTML += 
@@ -104,7 +93,6 @@ export const renderUserTrips = (pastTrips, currentTrips, futureTrips, pendingTri
   } else {
     futureTripsContainer.innerHTML += `<p> No future trips.</p>`
   }
-
   if (pendingTrips.length) {
     pendingTrips.forEach(trip => {
       pendingTripsContainer.innerHTML += `${createTripHTML(trip, agency)}`
@@ -112,7 +100,6 @@ export const renderUserTrips = (pastTrips, currentTrips, futureTrips, pendingTri
   } else {
     pendingTripsContainer.innerHTML += `<p> No pending trips.</p>`
   }
-  
 }
 
 const createTripHTML = (trip, agency) => {
@@ -127,8 +114,7 @@ const createTripHTML = (trip, agency) => {
 export const renderYearlyExpenses = (yearlyExpensesTotal, year) => {
   const yearlyExpenses = document.getElementById('yearly-spending');
   yearlyExpenses.innerHTML = '';
-  yearlyExpenses.innerHTML += 
-  `
+  yearlyExpenses.innerHTML += `
   <p>You spent $${yearlyExpensesTotal} in ${year}</p>
   `
 }
@@ -143,7 +129,6 @@ export const displayPage = (page) => {
     show('userDashboard');
     show('nav');    
   }
-
   if (page === 'trips') {
     show('userDashboard')
     hide('bookATrip')
@@ -177,9 +162,7 @@ const show = (what) => {
 export const displayErrorMessage = (err, scenario) => {
   const tripRequestError = document.getElementById("trip-request-error-field");
   const userLoginError = document.getElementById("user-login-error-field");
-  
   let message;
-
   switch (scenario) {
   case "postNewTrip":
     message = "Please fill out all input fields";
@@ -223,7 +206,7 @@ export const formatDate = (dateToFormat) => {
 
 export const welcomeUser = (currentUser) => {
   document.getElementById("welcome-traveler").innerHTML = `
-  Welcome Back to Travel Tracker, ${currentUser.returnFirstName()}!
+    Welcome Back to Travel Tracker, ${currentUser.returnFirstName()}!
   `
   document.getElementById("header-container").classList.remove("hidden")
 }

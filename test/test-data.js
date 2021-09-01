@@ -1,11 +1,10 @@
 import Trip from '../src/Trip.js'
-import Destination from '../src/Destination.js'
 import Agency from '../src/Agency.js';
 
 export const todayDate = "2021/08/05";
 
 export const tripData = [
-  //currentTrip
+  //currentTrip on 2021/08/05 below.
   {
     "id": 203,
     "userID": 51,
@@ -138,7 +137,7 @@ export const tripData = [
     "status": "pending",
     "suggestedActivities": []
   },
-  //different user
+  //different user (users with an id other than 51)
   {
     "id": 205,
     "userID": 52,
@@ -203,7 +202,6 @@ export const currentTrips = [ new Trip({
   "suggestedActivities": []
 })]
 
-//DATA FOR PAST TRIPS (STATUS APPROVED, ID OF 51, date previous to )
 export const pastTrips = [
   new Trip({
     id: 204,
@@ -237,7 +235,6 @@ export const pastTrips = [
   })
 ]
 
-//data for current trip
 export const currentTrip = new Trip( {
   "id": 203,
   "userID": 51,
@@ -249,7 +246,6 @@ export const currentTrip = new Trip( {
   "suggestedActivities": []
 })
 
-//data for future trips....
 export const futureTrips = [
   new Trip({
     id: 205,
@@ -336,8 +332,8 @@ export const pendingTrips = [
   })
 ]
 
-//paid for future trips if approved
-// data is for user id 51, approved trips in the year 2021.. could be at a date after todayDate of "2021/08/05" and including becuase it is in the year.
+//paid for future trips if approved to be calculated in total expenses per year
+// data is for user id 51, approved trips in the year 2021/ could contain date after and including todayDate of "2021/08/05" 
 export const tripsByYear = [
   new Trip ({
     id: 203,
@@ -397,7 +393,6 @@ export const destinationData = [
     "alt": "frozen man in a block of ice"
   }
 ];
-
 
 export const agency = new Agency(tripData, destinationData);
 
