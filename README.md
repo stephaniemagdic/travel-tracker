@@ -55,7 +55,7 @@ This project:
 
 ### Set-up:
 
-Note: You must run both your local server and the fitlit application at the same time to use this application.
+Note: You must run both your local server and the fitlit application at the same time to use this application. This project is also deployed [here](https://stephaniemagdic.github.io/travel-tracker/).
 
 #### Step 1: Run your local server.
   * Go to the [travel tracker API](https://github.com/turingschool-examples/travel-tracker-api) and follow the instructions in the README.md to run your local server.
@@ -80,7 +80,7 @@ Note: You must run both your local server and the fitlit application at the same
 
 * **Book a Trip:** 
   * Use the bookings form to choose a starting date, number of days you'd like to book your trip for, the number of travelers and the location.
-  * Trips are calculated by the estimated lodging cost (usually holds about 6), otherwise doubled, and the total airtravel cost. Remember this will be added to the total for every flyer! 
+  * Trips are calculated by the estimated lodging cost (usually holds about 6), otherwise doubled, and the total air travel cost. Remember the travel cost will be added to the total for every flyer! 
   * You can search for destinations using the search input which will `filter` through all 50 destinations and display only the destinations that match your input criteria!
   * You can also click on a destination to populate the input so you can then use that destination in your trip request!
 
@@ -98,7 +98,7 @@ Note: You must run both your local server and the fitlit application at the same
 
 
 ### Project Challenges 
- * Learning how to use new packages in a short amount of time always has its challenges, but teaches me how to research wiser.
+ * Learning how to use new packages in a short amount of time always has its challenges, but teaches me how to research and priortize my time wisely.
  * Using thorough error handling and post requests for the 'first' time in a large project like this was challenging and enlightenting. Many aha moments.
  
 ### Project Wins
@@ -106,8 +106,8 @@ Note: You must run both your local server and the fitlit application at the same
  * The search filter is a user friendly feature for searching through destinations. Not only can you click on and populate the search field, but you can also search by city to display only cities of interest.
 
 ### Future Iterations
-  * I would love to include a modal before the user accepts a trip.
-  * With more time, I would love to apply more styling to more accurately depict a real application.
-  * I would love to include a put request so users are not able to request trips on the same date and I would love to implement a delete request by an agent to approve/deny pending trips.
+  * I would love to include a modal before the user accepts a trip in order to allow the user to confirm their trip.
+  * With more time, I would love to apply more styling to more accurately depict some features and styles of a more real world user-friendly application.
+  * I would like to include a put request so users are not able to request trips on the same date and user as agent functionality so an agent can approve/deny pending trips.
   
 
