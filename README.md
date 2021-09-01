@@ -1,7 +1,7 @@
 # [Travel Tracker](https://stephaniemagdic.github.io/travel-tracker/) 
   #### Click link above to view deployed site.
   
-##### Week 12 (Mod2) at Turing School of Software and Design | Final Solo Project | TimeFrame: 7 days | [Project Spec](https://frontend.turing.edu/projects/travel-tracker.html)
+##### Week 12 at Turing School of Software and Design | Final Solo Project | TimeFrame: 7 days | [Project Spec](https://frontend.turing.edu/projects/travel-tracker.html)
 
 ## Project Description
 
