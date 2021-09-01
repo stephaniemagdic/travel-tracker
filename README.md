@@ -7,7 +7,7 @@
 
 Travel tracker is a web application that allows a user to navigate to their unique account, book, manage and track different their travel data.
 
-Run the application and spin up a local server to walk through a mock login, fetch mock user data and make travel plans! 
+Run the application and spin up a local server to walk through a mock login, fetch user data from the API, and make travel plans! 
 
 This project:
   - implements the fetch API to access data from a local server.
