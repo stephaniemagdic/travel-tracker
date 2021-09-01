@@ -18,3 +18,11 @@ export const fetchData = (endpoint) => {
       return err;
     })
 }
+
+export const checkForErrors = (res) => {
+  if (!res.ok || res.message === "No traveler found with an id of NaN") {
+    throw new Error(`${res}`);
+  } else {
+    return res.json();
+  }
+}

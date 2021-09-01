@@ -31,7 +31,7 @@ describe('Destination', function() {
       "suggestedActivities": []
     })
 
-     trip2 = new Trip( {
+    trip2 = new Trip( {
       "id": 203,
       "userID": 51,
       "destinationID": 51,

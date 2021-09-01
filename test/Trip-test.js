@@ -36,7 +36,7 @@ describe('Trip', function() {
       "image": "https://i.ibb.co/LPVszn3/dylan-lapierre-Rfeqh-K9-Bd-VI-unsplash.jpg",
       "alt": "two boats on the lake making waves"
     })
-   ]
+    ]
 
   });
 
@@ -98,30 +98,30 @@ describe('Trip', function() {
 
   it('trips that are pending should return a cost of 0', () => {
     const trip3 = new Trip({
-        "id": 209,
-        "userID": 53,
-        "destinationID": 51,
-        "travelers": 1,
-        "date": "2021/3/20",
-        "duration": 6,
-        "status": "pending",
-        "suggestedActivities": []
-      })
+      "id": 209,
+      "userID": 53,
+      "destinationID": 51,
+      "travelers": 1,
+      "date": "2021/3/20",
+      "duration": 6,
+      "status": "pending",
+      "suggestedActivities": []
+    })
       
     expect(trip3.calculateTotalTripCost(destinationData)).to.equal(0)
   });
 
-   it('should return the total of a new trip cost with a status of pending', () => {
-      const trip3 = new Trip({
-        "id": 209,
-        "userID": 53,
-        "destinationID": 51,
-        "travelers": 1,
-        "date": "2021/3/20",
-        "duration": 6,
-        "status": "pending",
-        "suggestedActivities": []
-      })
+  it('should return the total of a new trip cost with a status of pending', () => {
+    const trip3 = new Trip({
+      "id": 209,
+      "userID": 53,
+      "destinationID": 51,
+      "travelers": 1,
+      "date": "2021/3/20",
+      "duration": 6,
+      "status": "pending",
+      "suggestedActivities": []
+    })
 
     expect(trip3.calculateNewTripCost(destinationData)).to.equal(561)
   });

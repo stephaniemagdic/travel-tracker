@@ -42,8 +42,8 @@ class Agency {
   getUserTripsByYear(usersId, todayDate, searchYear = null) {
     let usersApprovedTrips = this.trips.filter(trip => trip.userID === usersId && trip.status === 'approved');
 
-      return usersApprovedTrips
-        .filter(trip => parseInt(trip.date.split('/')[0]) === parseInt(searchYear)) 
+    return usersApprovedTrips
+      .filter(trip => parseInt(trip.date.split('/')[0]) === parseInt(searchYear)) 
   }
 
   getUserYearlyExpenses(userID, searchYear, todayDate) {
