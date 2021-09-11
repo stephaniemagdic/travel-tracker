@@ -1,11 +1,11 @@
-# [Travel Tracker](https://stephaniemagdic.github.io/travel-tracker/) 
+# [Memory Travels](https://stephaniemagdic.github.io/travel-tracker/) 
   #### Click link above to view deployed site.
   
 ### Week 12 at Turing School of Software and Design | Final Solo Project | TimeFrame: 7 days | [Project Spec](https://frontend.turing.edu/projects/travel-tracker.html)
 
 ## Project Description
 
-Travel tracker is a web application that allows a user to navigate to their unique account, book, manage and track different their travel data.
+Memory Travels is a web application that allows a user to navigate to their unique account, book, manage and track different their travel data.
 
 Run the application and spin up a local server to walk through a mock login, fetch user data from the API, and make travel plans! 
 
@@ -58,9 +58,9 @@ Note: You must run both your local server and the fitlit application at the same
 
 #### Step 1: Run your local server.
   * Go to the [travel tracker API](https://github.com/turingschool-examples/travel-tracker-api) and follow the instructions in the README.md to run your local server.
-  * Make sure that the server is running in your terminal by checking that you see the following message in your terminal. `Travel Tracker is now running on http://localhost:3001 !`
-#### Step 2: Run the travel tracker application/client.
-  * You can access the travel tracker by `cloning this repository`, navigating to and `opening up your terminal`, and running the command `npm start` in your cloned project directory. This will run the bundle.js file, which will compile and run the application.
+  * Make sure that the server is running in your terminal by checking that you see the following message in your terminal. `Memory Travels is now running on http://localhost:3001 !`
+#### Step 2: Run the Memory Travels application/client.
+  * You can access Memory Travels by `cloning this repository`, navigating to and `opening up your terminal`, and running the command `npm start` in your cloned project directory. This will run the bundle.js file, which will compile and run the application.
   * You should see the following message in your terminal: `running at http://localhost:8080/`
   * Copy and paste this url link (`http://localhost:8080/`) in your browser to view the application. 
   
