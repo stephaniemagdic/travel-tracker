@@ -1,5 +1,5 @@
 # [Memory Travels](https://stephaniemagdic.github.io/travel-tracker/) 
-  #### Click link above to view deployed site.
+  #### [Deployed Site:](https://stephaniemagdic.github.io/travel-tracker/).
   
 ### Week 12 at Turing School of Software and Design | Final Solo Project | TimeFrame: 7 days | [Project Spec](https://frontend.turing.edu/projects/travel-tracker.html)
 
